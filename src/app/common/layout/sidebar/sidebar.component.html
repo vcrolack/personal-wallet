@@ -1,0 +1,60 @@
+<!-- app.component.html -->
+<div class="flex min-h-screen">
+  <aside class="w-60 border-r p-4 space-y-2">
+    <div class="text-xl font-semibold">Mi Billetera</div>
+    <nav class="flex flex-col gap-1">
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Dashboard</a
+      >
+      <a
+        routerLink="/transactions"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Transacciones</a
+      >
+      <a
+        routerLink="/budgets"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Presupuestos</a
+      >
+      <a
+        routerLink="/accounts"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Cuentas</a
+      >
+      <div class="mt-2 text-xs uppercase text-gray-500 px-3">Catálogo</div>
+      <a
+        routerLink="/catalog/categories"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Categorías</a
+      >
+      <a
+        routerLink="/catalog/rules"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Reglas</a
+      >
+      <a
+        routerLink="/settings"
+        routerLinkActive="bg-gray-200"
+        class="px-3 py-2 rounded hover:bg-gray-100"
+        >Ajustes</a
+      >
+    </nav>
+  </aside>
+  <main class="flex-1">
+    <header class="h-14 border-b flex items-center justify-between px-4">
+      <div class="font-medium">Bienvenido 👋</div>
+      <!-- Slot para user menu, mes actual, etc. -->
+    </header>
+    <section class="p-4">
+      <ng-content></ng-content>
+    </section>
+  </main>
+</div>
