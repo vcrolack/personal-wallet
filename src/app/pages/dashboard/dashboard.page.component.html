@@ -12,24 +12,24 @@
 
   <!-- KPIs -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-    <div class="rounded border p-4">
-      <div class="text-xs text-gray-500">Gasto del mes</div>
-      <div class="text-2xl font-semibold text-red-600">{{ 1000 | money }}</div>
-    </div>
-    <div class="rounded border p-4">
-      <div class="text-xs text-gray-500">Ingreso del mes</div>
-      <div class="text-2xl font-semibold text-green-600">
-        {{ 1000 | money }}
-      </div>
-    </div>
-    <div class="rounded border p-4">
-      <div class="text-xs text-gray-500">Balance del mes</div>
-      <div class="text-2xl font-semibold">{{ 1000 - 1000 | money }}</div>
-    </div>
-    <div class="rounded border p-4">
-      <div class="text-xs text-gray-500">Saldo total</div>
-      <div class="text-2xl font-semibold">{{ 10000 | money }}</div>
-    </div>
+    <app-amount-counter
+      label="Gastos del mes"
+      [amount]="100"
+      color="text-red-600"
+    ></app-amount-counter>
+    <app-amount-counter
+      label="Ingresos del mes"
+      [amount]="1000"
+      color="text-green-600"
+    ></app-amount-counter>
+    <app-amount-counter
+      label="Balance del mes"
+      [amount]="1000 - 100"
+    ></app-amount-counter>
+    <app-amount-counter
+      label="Balance total"
+      [amount]="10000"
+    ></app-amount-counter>
   </div>
 
   <!-- Gasto vs Presupuesto + Top merchants -->
