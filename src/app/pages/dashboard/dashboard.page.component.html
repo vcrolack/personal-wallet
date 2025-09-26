@@ -1,1 +1,54 @@
-<p>dashboard.page works!</p>
+<section class="space-y-6">
+  <!-- Filtros -->
+  <div class="flex items-center gap-3">
+    <!-- Month/year picker -->
+    <!-- Select account -->
+    <!-- Search -->
+    <div class="ml-auto flex gap-2">
+      <button class="px-3 py-2 rounded bg-black text-white">+ Nueva</button>
+      <button class="px-3 py-2 rounded border">Configurar presupuesto</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div class="rounded border p-4">
+      <div class="text-xs text-gray-500">Gasto del mes</div>
+      <div class="text-2xl font-semibold text-red-600">{{ 1000 | money }}</div>
+    </div>
+    <div class="rounded border p-4">
+      <div class="text-xs text-gray-500">Ingreso del mes</div>
+      <div class="text-2xl font-semibold text-green-600">
+        {{ 1000 | money }}
+      </div>
+    </div>
+    <div class="rounded border p-4">
+      <div class="text-xs text-gray-500">Balance del mes</div>
+      <div class="text-2xl font-semibold">{{ 1000 - 1000 | money }}</div>
+    </div>
+    <div class="rounded border p-4">
+      <div class="text-xs text-gray-500">Saldo total</div>
+      <div class="text-2xl font-semibold">{{ 10000 | money }}</div>
+    </div>
+  </div>
+
+  <!-- Gasto vs Presupuesto + Top merchants -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+    <div class="lg:col-span-2 rounded border p-4">
+      <div class="font-medium mb-3">Gasto por categoría</div>
+      <!-- barras horizontales -->
+      <!-- *ngFor="let row of categories" -->
+      <!-- label + progress + spent/budget -->
+    </div>
+    <div class="rounded border p-4">
+      <div class="font-medium mb-3">Top merchants</div>
+      <!-- lista -->
+    </div>
+  </div>
+
+  <!-- Últimas transacciones -->
+  <div class="rounded border p-4">
+    <div class="font-medium mb-3">Últimos movimientos</div>
+    <!-- tabla simple -->
+  </div>
+</section>
