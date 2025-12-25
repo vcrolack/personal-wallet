@@ -50,8 +50,16 @@
   </aside>
   <main class="flex-1">
     <header class="h-14 border-b flex items-center justify-between px-4">
-      <div class="font-medium">Bienvenido 👋</div>
+      <div class="font-medium">
+        Bienvenido, {{ currentUser?.name }} {{ currentUser?.lastName }} 👋
+      </div>
       <!-- Slot para user menu, mes actual, etc. -->
+      <button
+        class="bg-black text-white cursor-pointer px-4 py-2 rounded-lg"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
     </header>
     <section class="p-4">
       <ng-content></ng-content>
