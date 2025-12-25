@@ -1,1 +1,6 @@
-<p>budgets.page works!</p>
+<app-generic-table
+  [data]="budgets()"
+  [columns]="columns"
+  [isLoading]="loading()"
+  (rowClick)="openDetail($event)"
+/>
