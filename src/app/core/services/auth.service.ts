@@ -1,21 +1,57 @@
-import { inject, Injectable } from '@angular/core';
-import { SUPABASE } from '../integrations/supabase.client';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { ApiResponse } from '../interfaces/api-response.interface';
+import { AuthData } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private client = inject(SUPABASE);
+  private http = inject(HttpClient);
 
-  public getSession() {
-    return this.client.auth.getSession();
+  private _authData = signal<AuthData | null>(this.getAuthFromStorage());
+
+  public currentUser = this._authData.asReadonly();
+  public isAuthenticated = computed(() => !!this._authData());
+
+  public login(
+    email: string,
+    password: string
+  ): Observable<ApiResponse<AuthData>> {
+    const url = `${environment.merakiUrl}/auth/login`;
+    return this.http.post<ApiResponse<AuthData>>(url, { email, password }).pipe(
+      tap((response) => {
+        const authData = response.data;
+        this.saveToStorage(authData);
+        this._authData.set(authData);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError(() => new Error(error.error.message));
+      })
+    );
   }
 
-  public signIn(email: string, password: string) {
-    return this.client.auth.signInWithPassword({ email, password });
+  public logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user-active');
+    this._authData.set(null);
   }
 
-  public signOut() {
-    return this.client.auth.signOut();
+  private saveToStorage(data: AuthData): void {
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user-active', JSON.stringify(data));
+  }
+
+  private getAuthFromStorage(): AuthData | null {
+    const data = localStorage.getItem('user-active');
+    try {
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      console.error('Error parsing auth data from storage', error);
+      return null;
+    }
   }
 }

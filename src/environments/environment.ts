@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  merakiUrl: '',
   supabaseConfig: {
     url: 'https://yzwbaqmfynfbuzbxchff.supabase.co',
     anonKey:
