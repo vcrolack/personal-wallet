@@ -42,13 +42,13 @@ export class BudgetsPageComponent {
     {
       key: 'budgetAmount',
       header: 'Dinero destinado',
-      align: 'right',
+      align: 'center',
       formatter: (v) => `$ ${Number(v).toFixed(2)}`,
     },
     {
       key: 'actions',
       header: 'Acciones',
-      align: 'center',
+      align: 'left',
       actions: [
         {
           label: 'Editar',
