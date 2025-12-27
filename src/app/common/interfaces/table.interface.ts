@@ -12,4 +12,14 @@ export type ColumnDef<T> = {
   cellClass?: string;
 
   widthClass?: string;
+
+  actions?: TableAction<T>[];
 };
+
+export interface TableAction<T> {
+  label: string;
+  icon?: string;
+  class?: string;
+  callback: (row: T) => void;
+  show?: (row: T) => boolean;
+}

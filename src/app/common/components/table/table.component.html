@@ -57,7 +57,38 @@
                 getAlignClass(col.align)
               ]"
             >
-              {{ getCellValue(row, col) }}
+              <ng-container *ngIf="!col.actions; else actionsTemplate">
+                {{ getCellValue(row, col) }}
+              </ng-container>
+
+              <ng-template #actionsTemplate>
+                <div
+                  class="flex items-center gap-2"
+                  [ngClass]="getAlignClass(col.align)"
+                >
+                  <ng-container *ngFor="let action of col.actions">
+                    <button
+                      *ngIf="!action.show || action.show(row)"
+                      type="button"
+                      (click)="$event.stopPropagation(); action.callback(row)"
+                      class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
+                      [ngClass]="
+                        action.class ||
+                        'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                      "
+                      [title]="action.label"
+                    >
+                      <i
+                        *ngIf="action.icon"
+                        [class]="action.icon"
+                        class="text-lg"
+                        >{{ action.label }}</i
+                      >
+                      <span *ngIf="!action.icon">{{ action.label }}</span>
+                    </button>
+                  </ng-container>
+                </div>
+              </ng-template>
             </td>
           </tr>
         </ng-template>
