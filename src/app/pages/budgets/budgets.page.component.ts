@@ -3,6 +3,7 @@ import { ColumnDef } from '../../common/interfaces/table.interface';
 import { GenericTableComponent } from '../../common/components/table/table.component';
 import { BudgetService } from '../../core/services/budget.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budgets.page',
@@ -11,7 +12,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
   styleUrl: './budgets.page.component.css',
 })
 export class BudgetsPageComponent {
-  public budgetService = inject(BudgetService);
+  private budgetService = inject(BudgetService);
+  private router = inject(Router);
 
   public budgetsResource = rxResource({
     request: () => ({ limit: 10, offset: 0 }),
@@ -64,7 +66,7 @@ export class BudgetsPageComponent {
     },
   ];
 
-  openDetail() {
-    console.log('lol');
+  openDetail(id: string) {
+    this.router.navigate(['/budgets', id]);
   }
 }

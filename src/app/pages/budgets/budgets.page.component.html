@@ -7,6 +7,6 @@
   [data]="budgetsResource.value().data"
   [columns]="columns"
   [isLoading]="loading()"
-  (rowClick)="openDetail()"
+  (rowClick)="openDetail($event.id)"
 />
 }

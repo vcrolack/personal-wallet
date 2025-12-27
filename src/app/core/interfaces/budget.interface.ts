@@ -1,4 +1,5 @@
 export interface Budget {
+  id: string;
   title: string;
   budgetAmount: number;
   description: string;

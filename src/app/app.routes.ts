@@ -32,10 +32,22 @@ export const routes: Routes = [
       },
       {
         path: 'budgets',
-        loadComponent: () =>
-          import('./pages/budgets/budgets.page.component').then(
-            (m) => m.BudgetsPageComponent
-          ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/budgets/budgets.page.component').then(
+                (m) => m.BudgetsPageComponent
+              ),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                './pages/budgets/views/budget-detail/budget-detail.component'
+              ).then((m) => m.BudgetDetailComponent),
+          },
+        ],
       },
       {
         path: 'accounts',
