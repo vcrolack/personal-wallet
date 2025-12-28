@@ -1,8 +1,13 @@
-<form class="flex flex-col gap-4">
+<form
+  [formGroup]="form"
+  (ngSubmit)="createCategory()"
+  class="flex flex-col gap-4"
+>
   <app-input
     type="text"
     label="Nombre de la categoría"
     placeholder="Facturas"
+    formControlName="name"
   ></app-input>
 
   <app-button label="Crear"></app-button>

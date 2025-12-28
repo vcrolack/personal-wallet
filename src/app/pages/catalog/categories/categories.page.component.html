@@ -36,7 +36,10 @@
   (onClose)="toggleModal(undefined)"
 >
   @if(modalType() === 'category') {
-  <app-create-category></app-create-category>
+  <app-create-category
+    (refreshCategories)="categoryResource.reload()"
+    (closeModal)="toggleModal(undefined)"
+  ></app-create-category>
   } @if(modalType() === 'category-value') {
   <!-- <app-create-category-value></app-create-category-value> -->
   lolazo }
