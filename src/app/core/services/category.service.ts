@@ -8,6 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { Category } from '../interfaces/category.interface';
 import { environment } from '../../../environments/environment';
+import { CreateCategoryRequest } from '../requests/categories/create-category.request';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,22 @@ export class CategoryService {
       .get<ApiResponse<Category[]>>(
         `${environment.merakiUrl}/${this.endpoint}/find-all`,
         { params }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
+
+  public create(
+    category: CreateCategoryRequest
+  ): Observable<ApiResponse<Category>> {
+    return this.http
+      .post<ApiResponse<Category>>(
+        `${environment.merakiUrl}/${this.endpoint}/create`,
+        category
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
