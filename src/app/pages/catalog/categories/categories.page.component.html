@@ -1,7 +1,21 @@
 <app-header title="Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
+@if(categoryValuesResource.error()) {
+<p>Error al cargar los valores de la categoría</p>
+}
+
+<!--  -->
+
+@if(categoryValuesResource.isLoading()) {
+<p>Cargando valores de la categoría...</p>
+}
+
+<!--  -->
+
+@if(categoryValuesResource.hasValue()) {
 <app-generic-table
-  [data]="categoryValuesResource.value()?.data ?? []"
+  [data]="categoryValuesResource.value().data"
   [columns]="columns"
   [isLoading]="categoryValuesResource.isLoading()"
 ></app-generic-table>
+}
