@@ -1,7 +1,7 @@
 <app-header title="Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
 <div class="my-4 flex justify-end gap-4">
-  <app-button label="Crear categoría"></app-button>
+  <app-button label="Crear categoría" (onClick)="toggleModal()"></app-button>
   <app-button label="Crear valor de categoría"></app-button>
 </div>
 @if(categoryValuesResource.error()) {
@@ -23,3 +23,9 @@
   [isLoading]="categoryValuesResource.isLoading()"
 ></app-generic-table>
 }
+
+<app-modal
+  [isOpen]="isModalOpen()"
+  title="Lolazo"
+  (onClose)="toggleModal()"
+></app-modal>

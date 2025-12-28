@@ -8,6 +8,7 @@ import { BudgetCategoryValuesService } from '../../../core/services/budget-categ
 import { ColumnDef } from '../../../common/interfaces/table.interface';
 import { GenericTableComponent } from '../../../common/components/table/table.component';
 import { ButtonComponent } from '../../../common/components/button/button.component';
+import { ModalComponent } from '../../../common/components/modal/modal.component';
 
 @Component({
   selector: 'app-categories.page',
@@ -16,6 +17,7 @@ import { ButtonComponent } from '../../../common/components/button/button.compon
     HeaderComponent,
     GenericTableComponent,
     ButtonComponent,
+    ModalComponent,
   ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',
@@ -26,6 +28,7 @@ export class CategoriesPageComponent {
 
   public activeTabId = signal<string | number | undefined>(undefined);
   public isLoading = signal<boolean>(false);
+  public isModalOpen = signal<boolean>(false);
   public columns: ColumnDef<any>[] = [
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },
@@ -95,4 +98,8 @@ export class CategoriesPageComponent {
       id: category.id,
     }));
   });
+
+  public toggleModal() {
+    this.isModalOpen.update((value) => !value);
+  }
 }
