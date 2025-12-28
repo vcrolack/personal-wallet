@@ -4,6 +4,7 @@ import { TabItem } from '../../../common/interfaces/tab-item.interface';
 import { HeaderComponent } from '../../../common/components/header/header.component';
 import { CategoryService } from '../../../core/services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { BudgetCategoryValuesService } from '../../../core/services/budget-category-values.service';
 
 @Component({
   selector: 'app-categories.page',
@@ -13,6 +14,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 })
 export class CategoriesPageComponent {
   private categoryService = inject(CategoryService);
+  private categoryValuesService = inject(BudgetCategoryValuesService);
 
   public activeTabId = signal<string | number | undefined>(undefined);
 
@@ -29,6 +31,21 @@ export class CategoriesPageComponent {
     request: () => ({ limit: 10, offset: 0 }),
     loader: ({ request }) => {
       return this.categoryService.findAll(request.limit, request.offset);
+    },
+  });
+
+  public categoryValuesResource = rxResource({
+    request: () => ({
+      limit: 10,
+      offset: 0,
+      budgetCategoryId: this.activeTabId(),
+    }),
+    loader: ({ request }) => {
+      return this.categoryValuesService.findAll(
+        request.limit,
+        request.offset,
+        request.budgetCategoryId as number
+      );
     },
   });
 

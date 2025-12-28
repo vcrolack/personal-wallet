@@ -18,13 +18,30 @@ export class BudgetCategoryValuesService {
 
   public findAll(
     limit: number = 10,
-    offset: number = 0
+    offset: number = 0,
+    budgetCategoryId: number
   ): Observable<ApiResponse<BudgetCategoryValue[]>> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams()
+      .set('limit', limit)
+      .set('offset', offset)
+      .set('budgetCategoryId', budgetCategoryId);
     return this.http
       .get<ApiResponse<BudgetCategoryValue[]>>(
         `${environment.merakiUrl}/${this.endpoint}/find-all`,
         { params }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
+
+  public findOne(id: number): Observable<ApiResponse<BudgetCategoryValue>> {
+    return this.http
+      .get<ApiResponse<BudgetCategoryValue>>(
+        `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
