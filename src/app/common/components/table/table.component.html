@@ -58,7 +58,17 @@
               ]"
             >
               <ng-container *ngIf="!col.actions; else actionsTemplate">
-                {{ getCellValue(row, col) }}
+                <ng-container [ngSwitch]="col.pipe">
+                  <ng-container *ngSwitchCase="'date'">
+                    {{
+                      getCellValue(row, col)
+                        | date : col.pipeArgs || "dd/MM/yyyy"
+                    }}
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    {{ getCellValue(row, col) }}
+                  </ng-container>
+                </ng-container>
               </ng-container>
 
               <ng-template #actionsTemplate>

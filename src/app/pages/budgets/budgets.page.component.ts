@@ -22,18 +22,6 @@ export class BudgetsPageComponent {
     },
   });
 
-  budgets = signal<any[]>([
-    {
-      date: '2025-12-25',
-      description: 'Navidad',
-      amount: 1000,
-    },
-    {
-      date: '2025-12-26',
-      description: 'Navidad',
-      amount: 1000,
-    },
-  ]);
   loading = signal(false);
   columns: ColumnDef<any>[] = [
     { key: 'startDate', header: 'Fecha de inicio' },

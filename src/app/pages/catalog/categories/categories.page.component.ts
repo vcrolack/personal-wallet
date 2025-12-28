@@ -5,10 +5,12 @@ import { HeaderComponent } from '../../../common/components/header/header.compon
 import { CategoryService } from '../../../core/services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { BudgetCategoryValuesService } from '../../../core/services/budget-category-values.service';
+import { ColumnDef } from '../../../common/interfaces/table.interface';
+import { GenericTableComponent } from '../../../common/components/table/table.component';
 
 @Component({
   selector: 'app-categories.page',
-  imports: [TabsComponent, HeaderComponent],
+  imports: [TabsComponent, HeaderComponent, GenericTableComponent],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',
 })
@@ -17,6 +19,35 @@ export class CategoriesPageComponent {
   private categoryValuesService = inject(BudgetCategoryValuesService);
 
   public activeTabId = signal<string | number | undefined>(undefined);
+  public isLoading = signal<boolean>(false);
+  public columns: ColumnDef<any>[] = [
+    { key: 'id', header: 'ID' },
+    { key: 'name', header: 'Nombre' },
+    {
+      key: 'createdAt',
+      header: 'Creación',
+      pipe: 'date',
+      pipeArgs: 'dd/MM/yyyy',
+    },
+    {
+      key: 'actions',
+      header: 'Acciones',
+      actions: [
+        {
+          label: 'Editar',
+          icon: 'pi pi-pencil',
+          callback: (row) => console.log('Editar', row),
+          class: 'text-blue-500 hover:bg-blue-50',
+        },
+        {
+          label: 'Eliminar',
+          icon: 'pi pi-trash',
+          callback: (row) => console.log('Eliminar', row),
+          class: 'text-red-500 hover:bg-red-50',
+        },
+      ],
+    },
+  ];
 
   constructor() {
     effect(() => {

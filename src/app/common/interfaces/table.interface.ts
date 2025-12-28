@@ -12,7 +12,8 @@ export type ColumnDef<T> = {
   cellClass?: string;
 
   widthClass?: string;
-
+  pipe?: 'date' | 'currency' | 'number';
+  pipeArgs?: string;
   actions?: TableAction<T>[];
 };
 

@@ -1,2 +1,7 @@
 <app-header title="Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
+<app-generic-table
+  [data]="categoryValuesResource.value()?.data ?? []"
+  [columns]="columns"
+  [isLoading]="categoryValuesResource.isLoading()"
+></app-generic-table>
