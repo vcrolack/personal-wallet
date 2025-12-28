@@ -1,8 +1,14 @@
 <app-header title="Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
 <div class="my-4 flex justify-end gap-4">
-  <app-button label="Crear categoría" (onClick)="toggleModal()"></app-button>
-  <app-button label="Crear valor de categoría"></app-button>
+  <app-button
+    label="Crear categoría"
+    (onClick)="toggleModal('category')"
+  ></app-button>
+  <app-button
+    label="Crear valor de categoría"
+    (onClick)="toggleModal('category-value')"
+  ></app-button>
 </div>
 @if(categoryValuesResource.error()) {
 <p>Error al cargar los valores de la categoría</p>
@@ -26,6 +32,12 @@
 
 <app-modal
   [isOpen]="isModalOpen()"
-  title="Lolazo"
-  (onClose)="toggleModal()"
-></app-modal>
+  [title]="modalTitle"
+  (onClose)="toggleModal(undefined)"
+>
+  @if(modalType() === 'category') {
+  <app-create-category></app-create-category>
+  } @if(modalType() === 'category-value') {
+  <!-- <app-create-category-value></app-create-category-value> -->
+  lolazo }
+</app-modal>

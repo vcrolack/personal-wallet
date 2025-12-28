@@ -9,6 +9,7 @@ import { ColumnDef } from '../../../common/interfaces/table.interface';
 import { GenericTableComponent } from '../../../common/components/table/table.component';
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
+import { CreateCategoryComponent } from './forms/create-category/create-category.component';
 
 @Component({
   selector: 'app-categories.page',
@@ -18,6 +19,7 @@ import { ModalComponent } from '../../../common/components/modal/modal.component
     GenericTableComponent,
     ButtonComponent,
     ModalComponent,
+    CreateCategoryComponent,
   ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',
@@ -29,6 +31,9 @@ export class CategoriesPageComponent {
   public activeTabId = signal<string | number | undefined>(undefined);
   public isLoading = signal<boolean>(false);
   public isModalOpen = signal<boolean>(false);
+  public modalType = signal<'category' | 'category-value' | undefined>(
+    undefined
+  );
   public columns: ColumnDef<any>[] = [
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },
@@ -67,6 +72,12 @@ export class CategoriesPageComponent {
     });
   }
 
+  public get modalTitle(): string {
+    return this.modalType() === 'category'
+      ? 'Crear categoría'
+      : 'Crear valor de categoría';
+  }
+
   public categoryResource = rxResource({
     request: () => ({ limit: 10, offset: 0 }),
     loader: ({ request }) => {
@@ -99,7 +110,8 @@ export class CategoriesPageComponent {
     }));
   });
 
-  public toggleModal() {
+  public toggleModal(type: 'category' | 'category-value' | undefined) {
+    this.modalType.set(type);
     this.isModalOpen.update((value) => !value);
   }
 }
