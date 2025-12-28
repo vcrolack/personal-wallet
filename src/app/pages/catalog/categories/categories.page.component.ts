@@ -7,10 +7,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { BudgetCategoryValuesService } from '../../../core/services/budget-category-values.service';
 import { ColumnDef } from '../../../common/interfaces/table.interface';
 import { GenericTableComponent } from '../../../common/components/table/table.component';
+import { ButtonComponent } from '../../../common/components/button/button.component';
 
 @Component({
   selector: 'app-categories.page',
-  imports: [TabsComponent, HeaderComponent, GenericTableComponent],
+  imports: [
+    TabsComponent,
+    HeaderComponent,
+    GenericTableComponent,
+    ButtonComponent,
+  ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',
 })

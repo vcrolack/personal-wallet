@@ -1,5 +1,9 @@
 <app-header title="Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
+<div class="my-4 flex justify-end gap-4">
+  <app-button label="Crear categoría"></app-button>
+  <app-button label="Crear valor de categoría"></app-button>
+</div>
 @if(categoryValuesResource.error()) {
 <p>Error al cargar los valores de la categoría</p>
 }
