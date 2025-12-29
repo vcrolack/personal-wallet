@@ -10,6 +10,7 @@ import { GenericTableComponent } from '../../../common/components/table/table.co
 import { ButtonComponent } from '../../../common/components/button/button.component';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { CreateCategoryComponent } from './forms/create-category/create-category.component';
+import { CreateCategoryValueComponent } from './forms/create-category-value/create-category-value.component';
 
 @Component({
   selector: 'app-categories.page',
@@ -20,6 +21,7 @@ import { CreateCategoryComponent } from './forms/create-category/create-category
     ButtonComponent,
     ModalComponent,
     CreateCategoryComponent,
+    CreateCategoryValueComponent,
   ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',

@@ -8,6 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { BudgetCategoryValue } from '../interfaces/budget-category-value.interface';
 import { environment } from '../../../environments/environment';
+import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,22 @@ export class BudgetCategoryValuesService {
     return this.http
       .get<ApiResponse<BudgetCategoryValue>>(
         `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
+
+  public create(
+    budgetCategoryValue: CreateBudgetCategoryValue
+  ): Observable<ApiResponse<BudgetCategoryValue>> {
+    return this.http
+      .post<ApiResponse<BudgetCategoryValue>>(
+        `${environment.merakiUrl}/${this.endpoint}/create`,
+        budgetCategoryValue
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
