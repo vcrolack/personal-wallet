@@ -76,7 +76,11 @@ export class CategoriesPageComponent {
         {
           label: 'Eliminar',
           icon: 'pi pi-trash',
-          callback: (row) => console.log('Eliminar', row),
+          callback: (row) => {
+            console.log('Eliminar', row);
+            this.toggleModal('delete-category-value');
+            this.categoryToEdit.set(row);
+          },
           class: 'text-red-500 hover:bg-red-50',
         },
       ],
@@ -140,5 +144,18 @@ export class CategoriesPageComponent {
     this.isModalOpen.update((value) => !value);
   }
 
-  public deleteCategoryValue() {}
+  public deleteCategoryValue() {
+    const categoryValue = this.categoryToEdit();
+    if (!categoryValue) return;
+
+    this.categoryValuesService.delete(categoryValue.id).subscribe({
+      next: () => {
+        this.categoryValuesResource.reload();
+        this.toggleModal(undefined);
+      },
+      error: (error) => {
+        console.error('Error deleting category value:', error);
+      },
+    });
+  }
 }

@@ -72,11 +72,24 @@ export class BudgetCategoryValuesService {
   public update(
     id: number,
     budgetCategoryValue: UpdateBudgetCategoryValueRequest
-  ) {
+  ): Observable<ApiResponse<BudgetCategoryValue>> {
     return this.http
       .patch<ApiResponse<BudgetCategoryValue>>(
         `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
         budgetCategoryValue
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
+
+  public delete(id: number): Observable<ApiResponse<{ message: string }>> {
+    return this.http
+      .delete<ApiResponse<{ message: string }>>(
+        `${environment.merakiUrl}/${this.endpoint}/delete/${id}`
       )
       .pipe(
         catchError((error: HttpErrorResponse) => {
