@@ -1,5 +1,13 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  LOCALE_ID,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localeEsCl from '@angular/common/locales/es-CL';
+
+registerLocaleData(localeEsCl);
 
 import { routes } from './app.routes';
 import { provideSupabase } from './core/integrations/supabase.client';
@@ -12,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideSupabase(),
     provideHttpClient(withInterceptors([merakiInterceptor])),
+    { provide: LOCALE_ID, useValue: 'es-CL' },
   ],
 };

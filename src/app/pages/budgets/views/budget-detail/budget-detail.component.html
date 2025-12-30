@@ -1,3 +1,38 @@
+@if(isLoading()) { Cargando ... } @if(budget()) {
 <div>
-  <app-wrapper> </app-wrapper>
+  <app-wrapper>
+    <div class="flex flex-col gap-4 p-6">
+      <div class="flex justify-between">
+        <div>
+          <h2 class="text-2xl font-bold">{{ budget()?.title }}</h2>
+          <p class="text-gray-600">{{ budget()?.description }}</p>
+        </div>
+        <div class="flex flex-col">
+          <app-wrapper>
+            <div class="p-5">
+              <p class="text-sm font-medium text-gray-700">TOTAL DESTINADO</p>
+              <p class="text-center text-2xl font-bold">
+                {{
+                  budget()?.budgetAmount
+                    | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                }}
+              </p>
+            </div>
+          </app-wrapper>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <app-progress-bar
+          [currentValue]="450"
+          [totalValue]="budget()?.budgetAmount ?? 0"
+        >
+          <span label class="text-sm font-medium text-gray-700"
+            >Presupuesto gastado</span
+          >
+        </app-progress-bar>
+      </div>
+    </div>
+  </app-wrapper>
 </div>
+}
