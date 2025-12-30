@@ -46,4 +46,17 @@ export class BudgetService {
         })
       );
   }
+
+  public findOne(id: string): Observable<ApiResponse<Budget>> {
+    return this.http
+      .get<ApiResponse<Budget>>(
+        `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
 }
