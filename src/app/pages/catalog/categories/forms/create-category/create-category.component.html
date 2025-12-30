@@ -10,5 +10,5 @@
     formControlName="name"
   ></app-input>
 
-  <app-button label="Crear"></app-button>
+  <app-button [disabled]="form.invalid" label="Crear"></app-button>
 </form>
