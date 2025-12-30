@@ -23,6 +23,7 @@ export class ButtonComponent {
   public label = input.required<string>();
   public variant = input(Variants.PRIMARY);
   public size = input(Sizes.MEDIUM);
+  public disabled = input(false);
 
   public onClick = output<void>();
 
@@ -47,12 +48,17 @@ export class ButtonComponent {
       [Sizes.LARGE]: 'px-6 py-3 text-lg',
     };
 
+    const disabledClasses = this.disabled()
+      ? 'opacity-50 cursor-not-allowed pointer-events-none'
+      : '';
+
     return `${baseClasses} ${variantClasses[this.variant()]} ${
       sizeClasses[this.size()]
-    }`;
+    } ${disabledClasses}`;
   });
 
   public handleClick() {
+    if (this.disabled()) return;
     this.onClick.emit();
   }
 }

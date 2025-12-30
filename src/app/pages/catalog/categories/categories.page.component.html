@@ -51,4 +51,15 @@
     (closeModal)="toggleModal(undefined)"
   ></app-create-category-value>
   }
+
+  <!--  -->
+
+  @if(modalType() === 'edit-category-value' && categoryToEdit()) {
+  <app-edit-category-value
+    [categoryValue]="categoryToEdit()!"
+    [categories]="categoryResource.value()?.data ?? []"
+    (refreshCategoryValues)="categoryValuesResource.reload()"
+    (closeModal)="toggleModal(undefined)"
+  ></app-edit-category-value>
+  }
 </app-modal>

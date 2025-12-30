@@ -11,6 +11,9 @@ import { ButtonComponent } from '../../../common/components/button/button.compon
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { CreateCategoryComponent } from './forms/create-category/create-category.component';
 import { CreateCategoryValueComponent } from './forms/create-category-value/create-category-value.component';
+import { EditCategoryValueComponent } from './forms/edit-category-value/edit-category-value.component';
+import { Category } from '../../../core/interfaces/category.interface';
+import { BudgetCategoryValue } from '../../../core/interfaces/budget-category-value.interface';
 
 @Component({
   selector: 'app-categories.page',
@@ -22,6 +25,7 @@ import { CreateCategoryValueComponent } from './forms/create-category-value/crea
     ModalComponent,
     CreateCategoryComponent,
     CreateCategoryValueComponent,
+    EditCategoryValueComponent,
   ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',
@@ -33,9 +37,20 @@ export class CategoriesPageComponent {
   public activeTabId = signal<string | number | undefined>(undefined);
   public isLoading = signal<boolean>(false);
   public isModalOpen = signal<boolean>(false);
-  public modalType = signal<'category' | 'category-value' | undefined>(
-    undefined
-  );
+  public categoryToEdit = signal<BudgetCategoryValue | undefined>(undefined);
+  public modalType = signal<
+    | 'category'
+    | 'category-value'
+    | 'delete-category-value'
+    | 'edit-category-value'
+    | undefined
+  >(undefined);
+  private readonly MODAL_TITLES: Record<string, string> = {
+    category: 'Crear categoría',
+    'category-value': 'Crear valor de categoría',
+    'edit-category-value': 'Editar valor de categoría',
+    'delete-category-value': 'Eliminar valor de categoría',
+  };
   public columns: ColumnDef<any>[] = [
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },
@@ -52,7 +67,10 @@ export class CategoriesPageComponent {
         {
           label: 'Editar',
           icon: 'pi pi-pencil',
-          callback: (row) => console.log('Editar', row),
+          callback: (row) => {
+            this.toggleModal('edit-category-value');
+            this.categoryToEdit.set(row);
+          },
           class: 'text-blue-500 hover:bg-blue-50',
         },
         {
@@ -75,9 +93,7 @@ export class CategoriesPageComponent {
   }
 
   public get modalTitle(): string {
-    return this.modalType() === 'category'
-      ? 'Crear categoría'
-      : 'Crear valor de categoría';
+    return this.MODAL_TITLES[this.modalType() ?? ''] ?? '';
   }
 
   public categoryResource = rxResource({
@@ -112,8 +128,17 @@ export class CategoriesPageComponent {
     }));
   });
 
-  public toggleModal(type: 'category' | 'category-value' | undefined) {
+  public toggleModal(
+    type:
+      | 'category'
+      | 'category-value'
+      | 'delete-category-value'
+      | 'edit-category-value'
+      | undefined
+  ) {
     this.modalType.set(type);
     this.isModalOpen.update((value) => !value);
   }
+
+  public deleteCategoryValue() {}
 }

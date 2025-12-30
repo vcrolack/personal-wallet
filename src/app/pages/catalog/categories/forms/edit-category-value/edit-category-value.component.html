@@ -1,0 +1,19 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="editCategoryValue()"
+  class="flex flex-col gap-4"
+>
+  <app-input
+    type="text"
+    label="Nombre del valor de la categoría"
+    placeholder="Netflix"
+    formControlName="name"
+  ></app-input>
+  <app-select
+    label="Categoría a la que pertenece el valor"
+    placeholder="Seleccione una categoría"
+    [options]="categoriesForSelect()"
+    formControlName="budgetCategoryId"
+  ></app-select>
+  <app-button [disabled]="form.invalid" label="Editar"></app-button>
+</form>

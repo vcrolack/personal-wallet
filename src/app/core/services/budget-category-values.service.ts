@@ -9,6 +9,7 @@ import { ApiResponse } from '../interfaces/api-response.interface';
 import { BudgetCategoryValue } from '../interfaces/budget-category-value.interface';
 import { environment } from '../../../environments/environment';
 import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
+import { UpdateBudgetCategoryValueRequest } from '../requests/budget-category-values/update-budget-category-value.request';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +59,23 @@ export class BudgetCategoryValuesService {
     return this.http
       .post<ApiResponse<BudgetCategoryValue>>(
         `${environment.merakiUrl}/${this.endpoint}/create`,
+        budgetCategoryValue
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
+
+  public update(
+    id: number,
+    budgetCategoryValue: UpdateBudgetCategoryValueRequest
+  ) {
+    return this.http
+      .patch<ApiResponse<BudgetCategoryValue>>(
+        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
         budgetCategoryValue
       )
       .pipe(

@@ -39,8 +39,17 @@ export class SelectComponent implements ControlValueAccessor {
 
   public handleChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    this.value.set(selectElement.value);
-    this.onChange(selectElement.value);
+    const selectedValue = selectElement.value;
+
+    // Find the original option to preserve its type (e.g., number)
+    const option = this.options().find(
+      (opt) => String(opt.value) === selectedValue
+    );
+
+    const finalValue = option ? option.value : selectedValue;
+
+    this.value.set(finalValue);
+    this.onChange(finalValue);
   }
 
   public handleBlur() {
