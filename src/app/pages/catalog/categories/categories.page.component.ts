@@ -123,9 +123,9 @@ export class CategoriesPageComponent {
 
   public tabs = computed<TabItem[]>(() => {
     const response = this.categoryResource.value();
-    if (!response?.data) return [];
+    if (!response) return [];
 
-    return response.data.map((category) => ({
+    return response.map((category) => ({
       label: category.name,
       id: category.id,
     }));
