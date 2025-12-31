@@ -1,6 +1,6 @@
 import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ColumnAlign, ColumnDef } from '../../interfaces/table.interface';
+import { ColumnAlign, ColumnDef } from '../../../interfaces/table.interface';
 
 @Component({
   selector: 'app-generic-table',

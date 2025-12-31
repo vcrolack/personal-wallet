@@ -6,7 +6,7 @@ import {
   model,
   output,
 } from '@angular/core';
-import { TabItem } from '../../interfaces/tab-item.interface';
+import { TabItem } from '../../../interfaces/tab-item.interface';
 
 @Component({
   selector: 'app-tabs',
