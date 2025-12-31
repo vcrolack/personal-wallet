@@ -1,0 +1,55 @@
+<div
+  id="categories-list-container"
+  class="flex gap-6 overflow-x-auto pb-4 px-2"
+>
+  @for (group of groupedCategories; track group.categoryName) {
+  <div
+    class="min-w-[320px] max-w-[350px] transition-transform duration-200 hover:scale-[1.02]"
+  >
+    <app-wrapper
+      class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
+    >
+      <div class="mb-4">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
+          {{ group.categoryName }}
+        </h2>
+        <div class="h-1 w-12 bg-indigo-500 rounded-full mt-1"></div>
+      </div>
+
+      <ul class="flex-grow space-y-3">
+        @for(item of group.assignments; track item.id) {
+        <li
+          class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-slate-50 transition-colors"
+        >
+          <span class="text-slate-700 font-medium">{{
+            item.budgetCategoryValue.name
+          }}</span>
+          <span
+            class="text-slate-900 font-mono text-sm bg-slate-100 px-2 py-1 rounded"
+          >
+            {{
+              item.allocatedAmount
+                | currency : "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
+            }}
+          </span>
+        </li>
+        }
+      </ul>
+
+      <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
+        <div class="flex justify-between items-baseline">
+          <span class="text-slate-500 text-sm font-medium"
+            >Total presupuestado</span
+          >
+          <strong class="text-xl font-extrabold text-indigo-600">
+            {{
+              group.totalAllocated
+                | currency : "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
+            }}
+          </strong>
+        </div>
+      </div>
+    </app-wrapper>
+  </div>
+  }
+</div>

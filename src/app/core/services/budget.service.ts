@@ -10,6 +10,8 @@ import { Budget } from '../interfaces/budget.interface';
 import { environment } from '../../../environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
 
+import { BudgetDetail } from '../responses/find-one-budget.response';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -47,9 +49,9 @@ export class BudgetService {
       );
   }
 
-  public findOne(id: string): Observable<ApiResponse<Budget>> {
+  public findOne(id: string): Observable<ApiResponse<BudgetDetail>> {
     return this.http
-      .get<ApiResponse<Budget>>(
+      .get<ApiResponse<BudgetDetail>>(
         `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
       )
       .pipe(

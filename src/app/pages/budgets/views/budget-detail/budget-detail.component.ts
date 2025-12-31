@@ -3,10 +3,11 @@ import { BudgetService } from '../../../../core/services/budget.service';
 import { ActivatedRoute } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { HeroComponent } from './components/hero/hero.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 
 @Component({
   selector: 'app-budget-detail',
-  imports: [HeroComponent],
+  imports: [HeroComponent, CategoriesListComponent],
   templateUrl: './budget-detail.component.html',
   styleUrl: './budget-detail.component.css',
 })

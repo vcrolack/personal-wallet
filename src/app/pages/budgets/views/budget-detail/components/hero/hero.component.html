@@ -4,13 +4,13 @@
       <div class="flex justify-between">
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-4">
-            <h2 class="text-2xl font-bold">{{ budget()?.title }}</h2>
+            <h2 class="text-2xl font-bold">{{ budget().title }}</h2>
             <app-badge
               [label]="isShared.label"
               [variant]="isShared.variant"
             ></app-badge>
           </div>
-          <p class="text-gray-600">{{ budget()?.description }}</p>
+          <p class="text-gray-600">{{ budget().description }}</p>
           <app-badge [label]="period" variant="info"></app-badge>
         </div>
         <div class="flex flex-col">
@@ -19,7 +19,7 @@
               <p class="text-sm font-medium text-gray-700">TOTAL DESTINADO</p>
               <p class="text-center text-2xl font-bold">
                 {{
-                  budget()?.budgetAmount
+                  budget().budgetAmount
                     | currency : "CLP" : "symbol-narrow" : "1.0-0"
                 }}
               </p>
@@ -31,7 +31,7 @@
       <div class="mt-4">
         <app-progress-bar
           [currentValue]="450"
-          [totalValue]="budget()?.budgetAmount ?? 0"
+          [totalValue]="budget().budgetAmount"
         >
           <span label class="text-sm font-medium text-gray-700"
             >Presupuesto gastado</span

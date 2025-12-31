@@ -1,3 +1,5 @@
+import { BudgetCategoryAssignments } from './budget-category-assignments.interface';
+
 export interface Budget {
   id: string;
   title: string;
@@ -10,4 +12,5 @@ export interface Budget {
   updatedAt: string;
   createdAt: string;
   deletedAt: string | null;
+  budgetCategoryAssignments: BudgetCategoryAssignments[];
 }

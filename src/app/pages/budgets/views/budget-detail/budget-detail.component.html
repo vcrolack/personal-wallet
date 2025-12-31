@@ -3,5 +3,11 @@
 <!--  -->
 
 @if(budgetResource.hasValue()) {
-<app-hero [budget]="budgetResource.value().data"></app-hero>
+<section class="flex flex-col gap-10">
+  <app-hero [budget]="budgetResource.value().data"></app-hero>
+  <app-categories-list
+    [budget]="budgetResource.value().data"
+  ></app-categories-list>
+</section>
+
 }
