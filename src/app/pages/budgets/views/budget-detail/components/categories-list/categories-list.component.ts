@@ -1,16 +1,11 @@
-import { Component, input } from '@angular/core';
-import {
-  BudgetCategoryAssignment,
-  BudgetDetail,
-} from '../../../../../../core/responses/find-one-budget.response';
+import { Component, inject, input } from '@angular/core';
+import { BudgetDetail } from '../../../../../../core/responses/find-one-budget.response';
 import { CurrencyPipe } from '@angular/common';
 import { WrapperComponent } from '../../../../../../common/components/wrapper/wrapper.component';
-
-interface CategoryGroup {
-  categoryName: string;
-  assignments: BudgetCategoryAssignment[];
-  totalAllocated: number;
-}
+import {
+  BudgetMapperService,
+  CategoryGroup,
+} from '../../../../../../core/mappers/budget-mapper.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -19,37 +14,15 @@ interface CategoryGroup {
   styleUrl: './categories-list.component.css',
 })
 export class CategoriesListComponent {
+  private budgetMapperService = inject(BudgetMapperService);
+
   public budget = input.required<BudgetDetail>();
 
   public groupedCategories: CategoryGroup[] = [];
 
   ngOnInit() {
-    this.processBudgetData(this.budget().budgetCategoryAssignments);
-  }
-
-  processBudgetData(assignments: BudgetCategoryAssignment[]) {
-    const groups = assignments.reduce(
-      (acc: Record<string, CategoryGroup>, curr: BudgetCategoryAssignment) => {
-        const catName = curr.budgetCategoryValue.budgetCategory.name;
-
-        if (!acc[catName]) {
-          acc[catName] = {
-            categoryName: catName,
-            assignments: [],
-            totalAllocated: 0,
-          };
-        }
-
-        acc[catName].assignments.push(curr);
-        acc[catName].totalAllocated += curr.allocatedAmount;
-
-        return acc;
-      },
-      {}
+    this.groupedCategories = this.budgetMapperService.processBudgetData(
+      this.budget().budgetCategoryAssignments
     );
-
-    console.log(groups);
-
-    this.groupedCategories = Object.values(groups);
   }
 }
