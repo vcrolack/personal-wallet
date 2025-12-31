@@ -2,7 +2,7 @@
   id="categories-list-container"
   class="flex gap-6 overflow-x-auto pb-4 px-2"
 >
-  @for (group of groupedCategories; track group.categoryName) {
+  @for (group of groupedCategories(); track group.categoryName) {
   <div
     class="min-w-[320px] max-w-[350px] transition-transform duration-200 hover:scale-[1.02]"
   >

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Budget } from '../../../../../../core/interfaces/budget.interface';
 import {
   BadgeComponent,
@@ -6,7 +6,7 @@ import {
 } from '../../../../../../common/components/ui/badge/badge.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { ProgressBarComponent } from '../../../../../../common/components/ui/progress-bar/progress-bar.component';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
 
 @Component({
@@ -19,8 +19,10 @@ import { BudgetModel } from '../../../../../../core/models/budgets/budget.model'
   ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css',
+  providers: [DatePipe],
 })
 export class HeroComponent {
+  private datePipe = inject(DatePipe);
   public budget = input.required<BudgetModel>();
 
   public get isShared(): { label: string; variant: BadgeVariant } {
@@ -37,6 +39,9 @@ export class HeroComponent {
   }
 
   public get period(): string {
-    return `desde ${this.budget()?.startDate} hasta ${this.budget()?.endDate}`;
+    return `desde ${this.datePipe.transform(
+      this.budget().startDate,
+      'dd/MM/yyyy'
+    )} hasta ${this.datePipe.transform(this.budget().endDate, 'dd/MM/yyyy')}`;
   }
 }

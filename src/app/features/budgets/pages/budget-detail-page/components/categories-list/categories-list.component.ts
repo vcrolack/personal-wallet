@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { BudgetDetail } from '../../../../../../core/responses/find-one-budget.response';
 import { CurrencyPipe } from '@angular/common';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
@@ -20,9 +20,5 @@ export class CategoriesListComponent {
 
   public budget = input.required<BudgetModel>();
 
-  public groupedCategories: BudgetGroupModel[] = [];
-
-  ngOnInit() {
-    this.groupedCategories = this.budget().groups;
-  }
+  public groupedCategories = computed(() => this.budget().groups);
 }

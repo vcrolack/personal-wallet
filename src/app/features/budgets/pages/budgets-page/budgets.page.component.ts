@@ -24,8 +24,8 @@ export class BudgetsPageComponent {
 
   loading = signal(false);
   columns: ColumnDef<any>[] = [
-    { key: 'startDate', header: 'Fecha de inicio' },
-    { key: 'endDate', header: 'Fecha de término' },
+    { key: 'startDate', header: 'Fecha de inicio', pipe: 'date' },
+    { key: 'endDate', header: 'Fecha de término', pipe: 'date' },
     { key: 'description', header: 'Descripción' },
     {
       key: 'budgetAmount',
