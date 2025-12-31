@@ -7,6 +7,7 @@ import {
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { ProgressBarComponent } from '../../../../../../common/components/ui/progress-bar/progress-bar.component';
 import { CurrencyPipe } from '@angular/common';
+import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
 
 @Component({
   selector: 'app-hero',
@@ -20,7 +21,7 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './hero.component.css',
 })
 export class HeroComponent {
-  public budget = input.required<Budget>();
+  public budget = input.required<BudgetModel>();
 
   public get isShared(): { label: string; variant: BadgeVariant } {
     if (!this.budget()?.isShared)

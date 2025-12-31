@@ -15,7 +15,7 @@ export class BudgetDetailComponent {
   private budgetService = inject(BudgetService);
   private route = inject(ActivatedRoute);
 
-  public budget = computed(() => this.budgetResource.value()?.data);
+  public budget = computed(() => this.budgetResource.value());
   public isLoading = computed(() => this.budgetResource.isLoading());
 
   public budgetResource = rxResource({

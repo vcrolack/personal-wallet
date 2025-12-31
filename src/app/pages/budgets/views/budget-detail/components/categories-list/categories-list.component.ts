@@ -6,6 +6,8 @@ import {
   BudgetMapperService,
   CategoryGroup,
 } from '../../../../../../core/mappers/budget-mapper.service';
+import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
+import { BudgetGroupModel } from '../../../../../../core/models/budgets/budget-group.model';
 
 @Component({
   selector: 'app-categories-list',
@@ -16,13 +18,11 @@ import {
 export class CategoriesListComponent {
   private budgetMapperService = inject(BudgetMapperService);
 
-  public budget = input.required<BudgetDetail>();
+  public budget = input.required<BudgetModel>();
 
-  public groupedCategories: CategoryGroup[] = [];
+  public groupedCategories: BudgetGroupModel[] = [];
 
   ngOnInit() {
-    this.groupedCategories = this.budgetMapperService.processBudgetData(
-      this.budget().budgetCategoryAssignments
-    );
+    this.groupedCategories = this.budget().groups;
   }
 }

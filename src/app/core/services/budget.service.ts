@@ -9,8 +9,6 @@ import { ApiResponse } from '../interfaces/api-response.interface';
 import { Budget } from '../interfaces/budget.interface';
 import { environment } from '../../../environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
-
-import { BudgetDetail } from '../responses/find-one-budget.response';
 import { BudgetMapperService } from '../mappers/budget-mapper.service';
 import { FullBudgetDTO } from '../dtos/budgets/compose-definitions/full-budget.dto';
 import { BudgetModel } from '../models/budgets/budget.model';
