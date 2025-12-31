@@ -5,11 +5,11 @@ export interface BudgetModel {
   title: string;
   description: string;
   budgetAmount: number;
-  totalSpent?: number;
-  percentageSpent?: number;
+  totalSpent: number;
+  percentageSpent: number;
   startDate: Date;
   endDate: Date;
   isShared: boolean;
 
-  groups: BudgetGroupModel;
+  groups: BudgetGroupModel[];
 }

@@ -1,6 +1,6 @@
 export interface CategoryAssignmentModel {
   id: string;
   categoryName: string;
-  categoryNameValue: string;
+  categoryValueName: string;
   allocatedAmount: number;
 }
