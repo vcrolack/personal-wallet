@@ -1,9 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { ColumnDef } from '../../common/interfaces/table.interface';
-import { GenericTableComponent } from '../../common/components/table/table.component';
+
 import { BudgetService } from '../../core/services/budget.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { GenericTableComponent } from '../../common/components/ui/table/table.component';
 
 @Component({
   selector: 'app-budgets.page',

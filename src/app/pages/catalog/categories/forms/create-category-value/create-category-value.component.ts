@@ -1,11 +1,11 @@
 import { Component, computed, inject, input, output } from '@angular/core';
-import { InputComponent } from '../../../../../common/components/input/input.component';
+import { InputComponent } from '../../../../../common/components/form/input/input.component';
 import {
   SelectComponent,
   SelectOption,
-} from '../../../../../common/components/select/select.component';
+} from '../../../../../common/components/form/select/select.component';
 import { Category } from '../../../../../core/interfaces/category.interface';
-import { ButtonComponent } from '../../../../../common/components/button/button.component';
+import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { BudgetCategoryValuesService } from '../../../../../core/services/budget-category-values.service';
 import {
   FormBuilder,

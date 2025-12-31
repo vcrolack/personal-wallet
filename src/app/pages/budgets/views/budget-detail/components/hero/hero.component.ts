@@ -3,9 +3,9 @@ import { Budget } from '../../../../../../core/interfaces/budget.interface';
 import {
   BadgeComponent,
   BadgeVariant,
-} from '../../../../../../common/components/badge/badge.component';
-import { WrapperComponent } from '../../../../../../common/components/wrapper/wrapper.component';
-import { ProgressBarComponent } from '../../../../../../common/components/progress-bar/progress-bar.component';
+} from '../../../../../../common/components/ui/badge/badge.component';
+import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
+import { ProgressBarComponent } from '../../../../../../common/components/ui/progress-bar/progress-bar.component';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({

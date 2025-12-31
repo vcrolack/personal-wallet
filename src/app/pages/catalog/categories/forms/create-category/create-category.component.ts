@@ -5,8 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputComponent } from '../../../../../common/components/input/input.component';
-import { ButtonComponent } from '../../../../../common/components/button/button.component';
+import { InputComponent } from '../../../../../common/components/form/input/input.component';
+import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { CategoryService } from '../../../../../core/services/category.service';
 
 @Component({

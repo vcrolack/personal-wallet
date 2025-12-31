@@ -1,19 +1,18 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { TabsComponent } from '../../../common/components/tabs/tabs.component';
 import { TabItem } from '../../../common/interfaces/tab-item.interface';
-import { HeaderComponent } from '../../../common/components/header/header.component';
+import { HeaderComponent } from '../../../common/components/layout/header/header.component';
 import { CategoryService } from '../../../core/services/category.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { BudgetCategoryValuesService } from '../../../core/services/budget-category-values.service';
 import { ColumnDef } from '../../../common/interfaces/table.interface';
-import { GenericTableComponent } from '../../../common/components/table/table.component';
-import { ButtonComponent } from '../../../common/components/button/button.component';
-import { ModalComponent } from '../../../common/components/modal/modal.component';
+import { ButtonComponent } from '../../../common/components/form/button/button.component';
+import { ModalComponent } from '../../../common/components/ui/modal/modal.component';
 import { CreateCategoryComponent } from './forms/create-category/create-category.component';
 import { CreateCategoryValueComponent } from './forms/create-category-value/create-category-value.component';
 import { EditCategoryValueComponent } from './forms/edit-category-value/edit-category-value.component';
-import { Category } from '../../../core/interfaces/category.interface';
 import { BudgetCategoryValue } from '../../../core/interfaces/budget-category-value.interface';
+import { GenericTableComponent } from '../../../common/components/ui/table/table.component';
+import { TabsComponent } from '../../../common/components/layout/tabs/tabs.component';
 
 @Component({
   selector: 'app-categories.page',

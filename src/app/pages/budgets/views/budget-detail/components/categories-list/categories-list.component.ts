@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { BudgetDetail } from '../../../../../../core/responses/find-one-budget.response';
 import { CurrencyPipe } from '@angular/common';
-import { WrapperComponent } from '../../../../../../common/components/wrapper/wrapper.component';
+import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import {
   BudgetMapperService,
   CategoryGroup,
