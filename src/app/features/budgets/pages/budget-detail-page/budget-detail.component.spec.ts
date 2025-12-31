@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BudgetDetailComponent } from './budget-detail.component';
+import { BudgetDetailComponent } from '../../../../pages/budgets/views/budget-detail/budget-detail.component';
 
 describe('BudgetDetailComponent', () => {
   let component: BudgetDetailComponent;
@@ -8,9 +8,8 @@ describe('BudgetDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BudgetDetailComponent]
-    })
-    .compileComponents();
+      imports: [BudgetDetailComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BudgetDetailComponent);
     component = fixture.componentInstance;

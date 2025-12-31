@@ -7,7 +7,9 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+      import('./features/auth/pages/login-page/login.page.component').then(
+        (m) => m.LoginPageComponent
+      ),
     canActivate: [publicGuard],
   },
   {
@@ -19,16 +21,16 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () =>
-          import('./pages/dashboard/dashboard.page.component').then(
-            (m) => m.DashboardPageComponent
-          ),
+          import(
+            './features/dashboard/pages/dashboard-page/dashboard.page.component'
+          ).then((m) => m.DashboardPageComponent),
       },
       {
         path: 'transactions',
         loadComponent: () =>
-          import('./pages/transactions/transactions.page.component').then(
-            (m) => m.TransactionsPageComponent
-          ),
+          import(
+            './features/transactions/pages/transactions-page/transactions.page.component'
+          ).then((m) => m.TransactionsPageComponent),
       },
       {
         path: 'budgets',
@@ -36,15 +38,15 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () =>
-              import('./pages/budgets/budgets.page.component').then(
-                (m) => m.BudgetsPageComponent
-              ),
+              import(
+                './features/budgets/pages/budgets-page/budgets.page.component'
+              ).then((m) => m.BudgetsPageComponent),
           },
           {
             path: ':id',
             loadComponent: () =>
               import(
-                './pages/budgets/views/budget-detail/budget-detail.component'
+                './features/budgets/pages/budget-detail-page/budget-detail.component'
               ).then((m) => m.BudgetDetailComponent),
           },
         ],
@@ -52,9 +54,9 @@ export const routes: Routes = [
       {
         path: 'accounts',
         loadComponent: () =>
-          import('./pages/accounts/accounts.page.component').then(
-            (m) => m.AccountsPageComponent
-          ),
+          import(
+            './features/accounts/pages/accounts-page/accounts.page.component'
+          ).then((m) => m.AccountsPageComponent),
       },
       {
         path: 'catalog',
@@ -63,24 +65,24 @@ export const routes: Routes = [
             path: 'categories',
             loadComponent: () =>
               import(
-                './pages/catalog/categories/categories.page.component'
+                './features/catalog/categories/pages/categories-page/categories.page.component'
               ).then((m) => m.CategoriesPageComponent),
           },
           {
             path: 'rules',
             loadComponent: () =>
-              import('./pages/catalog/rules/rules.page.component').then(
-                (m) => m.RulesPageComponent
-              ),
+              import(
+                './features/catalog/rules/pages/rules-page/rules.page.component'
+              ).then((m) => m.RulesPageComponent),
           },
         ],
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('./pages/settings/settings.page.component').then(
-            (m) => m.SettingsPageComponent
-          ),
+          import(
+            './features/settings/pages/settings-page/settings.page.component'
+          ).then((m) => m.SettingsPageComponent),
       },
     ],
   },

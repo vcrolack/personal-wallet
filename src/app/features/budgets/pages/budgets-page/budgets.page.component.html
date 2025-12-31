@@ -8,7 +8,7 @@
 <p>Cargando presupuestos...</p>
 } @if(budgetsResource.hasValue()) {
 <app-generic-table
-  [data]="budgetsResource.value().data"
+  [data]="budgetsResource.value()"
   [columns]="columns"
   [isLoading]="loading()"
   (rowClick)="openDetail($event.id)"

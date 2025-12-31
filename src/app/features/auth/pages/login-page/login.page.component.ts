@@ -5,16 +5,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-auth',
   imports: [ReactiveFormsModule],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css',
+  templateUrl: './login.page.component.html',
 })
-export class AuthComponent {
+export class LoginPageComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
