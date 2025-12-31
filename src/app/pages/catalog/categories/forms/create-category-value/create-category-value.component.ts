@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CategoryModel } from '../../../../../core/models/categories/category.model';
 
 @Component({
   selector: 'app-create-category-value',
@@ -34,7 +35,7 @@ export class CreateCategoryValueComponent {
     budgetCategoryId: ['', Validators.required],
   });
 
-  public categories = input<Category[]>([]);
+  public categories = input<CategoryModel[]>([]);
   public categoriesForSelect = computed((): SelectOption[] => {
     return this.categories().map((category) => ({
       label: category.name,

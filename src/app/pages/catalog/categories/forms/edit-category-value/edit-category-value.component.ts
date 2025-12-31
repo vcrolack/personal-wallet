@@ -19,8 +19,9 @@ import {
   SelectComponent,
   SelectOption,
 } from '../../../../../common/components/form/select/select.component';
-import { Category } from '../../../../../core/interfaces/category.interface';
 import { InputComponent } from '../../../../../common/components/form/input/input.component';
+import { CategoryValueModel } from '../../../../../core/models/categories/category-value.model';
+import { CategoryModel } from '../../../../../core/models/categories/category.model';
 
 @Component({
   selector: 'app-edit-category-value',
@@ -37,8 +38,8 @@ export class EditCategoryValueComponent {
   private budgetCategoryValueService = inject(BudgetCategoryValuesService);
   private fb = inject(FormBuilder);
 
-  public categoryValue = input.required<BudgetCategoryValue>();
-  public categories = input<Category[]>([]);
+  public categoryValue = input.required<CategoryValueModel>();
+  public categories = input<CategoryModel[]>([]);
   public categoriesForSelect = computed<SelectOption[]>(() => {
     return this.categories().map((category) => ({
       label: category.name,
@@ -48,7 +49,7 @@ export class EditCategoryValueComponent {
 
   public form: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(30)]],
-    budgetCategoryId: [null, Validators.required],
+    categoryId: [null, Validators.required],
   });
 
   public closeModal = output<void>();
@@ -59,7 +60,7 @@ export class EditCategoryValueComponent {
       const value = this.categoryValue();
       this.form.patchValue({
         name: value.name,
-        budgetCategoryId: value.budgetCategory?.id,
+        categoryId: value.categoryId,
       });
     });
   }

@@ -13,6 +13,7 @@ import { EditCategoryValueComponent } from './forms/edit-category-value/edit-cat
 import { BudgetCategoryValue } from '../../../core/interfaces/budget-category-value.interface';
 import { GenericTableComponent } from '../../../common/components/ui/table/table.component';
 import { TabsComponent } from '../../../common/components/layout/tabs/tabs.component';
+import { CategoryValueModel } from '../../../core/models/categories/category-value.model';
 
 @Component({
   selector: 'app-categories.page',
@@ -36,7 +37,7 @@ export class CategoriesPageComponent {
   public activeTabId = signal<string | number | undefined>(undefined);
   public isLoading = signal<boolean>(false);
   public isModalOpen = signal<boolean>(false);
-  public categoryToEdit = signal<BudgetCategoryValue | undefined>(undefined);
+  public categoryToEdit = signal<CategoryValueModel | undefined>(undefined);
   public modalType = signal<
     | 'category'
     | 'category-value'

@@ -4,35 +4,45 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { BudgetCategoryValue } from '../interfaces/budget-category-value.interface';
 import { environment } from '../../../environments/environment';
 import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
 import { UpdateBudgetCategoryValueRequest } from '../requests/budget-category-values/update-budget-category-value.request';
+import { CategoryValueMapperService } from '../mappers/category-value-mapper.service';
+import { CategoryValueModel } from '../models/categories/category-value.model';
+import { BudgetCategoryValueDTO } from '../dtos/budgets/base-definitions/budget-category-value.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetCategoryValuesService {
   private http = inject(HttpClient);
+  private mapper = inject(CategoryValueMapperService);
   private endpoint = 'budget-category-values';
 
   public findAll(
     limit: number = 10,
     offset: number = 0,
     budgetCategoryId: number
-  ): Observable<ApiResponse<BudgetCategoryValue[]>> {
+  ): Observable<CategoryValueModel[]> {
     const params = new HttpParams()
       .set('limit', limit)
       .set('offset', offset)
       .set('budgetCategoryId', budgetCategoryId);
+
     return this.http
-      .get<ApiResponse<BudgetCategoryValue[]>>(
+      .get<ApiResponse<BudgetCategoryValueDTO[]>>(
         `${environment.merakiUrl}/${this.endpoint}/find-all`,
         { params }
       )
       .pipe(
+        map((response: ApiResponse<BudgetCategoryValueDTO[]>) =>
+          response.data.map((categoryValue) =>
+            this.mapper.toModel(categoryValue)
+          )
+        ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
@@ -40,12 +50,13 @@ export class BudgetCategoryValuesService {
       );
   }
 
-  public findOne(id: number): Observable<ApiResponse<BudgetCategoryValue>> {
+  public findOne(id: number): Observable<CategoryValueModel> {
     return this.http
-      .get<ApiResponse<BudgetCategoryValue>>(
+      .get<ApiResponse<BudgetCategoryValueDTO>>(
         `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
       )
       .pipe(
+        map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
@@ -55,13 +66,14 @@ export class BudgetCategoryValuesService {
 
   public create(
     budgetCategoryValue: CreateBudgetCategoryValue
-  ): Observable<ApiResponse<BudgetCategoryValue>> {
+  ): Observable<CategoryValueModel> {
     return this.http
-      .post<ApiResponse<BudgetCategoryValue>>(
+      .post<ApiResponse<BudgetCategoryValueDTO>>(
         `${environment.merakiUrl}/${this.endpoint}/create`,
         budgetCategoryValue
       )
       .pipe(
+        map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
@@ -72,13 +84,14 @@ export class BudgetCategoryValuesService {
   public update(
     id: number,
     budgetCategoryValue: UpdateBudgetCategoryValueRequest
-  ): Observable<ApiResponse<BudgetCategoryValue>> {
+  ): Observable<CategoryValueModel> {
     return this.http
-      .patch<ApiResponse<BudgetCategoryValue>>(
+      .patch<ApiResponse<BudgetCategoryValueDTO>>(
         `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
         budgetCategoryValue
       )
       .pipe(
+        map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
