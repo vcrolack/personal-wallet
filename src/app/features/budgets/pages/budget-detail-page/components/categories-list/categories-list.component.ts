@@ -1,10 +1,10 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
-import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
 import { CreateCategoryValueAndAssignmentComponent } from './forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
+import { BudgetService } from '../../../../../../core/services/budget.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -19,14 +19,14 @@ import { CreateCategoryValueAndAssignmentComponent } from './forms/create-catego
   styleUrl: './categories-list.component.css',
 })
 export class CategoriesListComponent {
+  private budgetService = inject(BudgetService);
+
   public isModalOpen = signal<boolean>(false);
   public selectedCategoryId = signal<number | null>(null);
 
-  public budget = input.required<BudgetModel>();
+  public budget = this.budgetService.budgetResourceDetail;
 
-  public reloadBudgetResource = output<void>();
-
-  public groupedCategories = computed(() => this.budget().groups);
+  public groupedCategories = computed(() => this.budget.value()?.groups ?? []);
 
   public toggleModal(categoryId?: number) {
     this.selectedCategoryId.set(categoryId ?? null);

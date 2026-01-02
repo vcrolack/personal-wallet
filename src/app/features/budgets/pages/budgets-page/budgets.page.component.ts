@@ -15,12 +15,7 @@ export class BudgetsPageComponent {
   private budgetService = inject(BudgetService);
   private router = inject(Router);
 
-  public budgetsResource = rxResource({
-    request: () => ({ limit: 10, offset: 0 }),
-    loader: ({ request }) => {
-      return this.budgetService.findAll(request.limit, request.offset);
-    },
-  });
+  public budgetsResource = this.budgetService.budgetResourceList;
 
   loading = signal(false);
   columns: ColumnDef<any>[] = [

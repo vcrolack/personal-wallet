@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { CreateBudgetRequest } from '../requests/budgets/create-budget.request';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { Budget } from '../interfaces/budget.interface';
@@ -12,6 +12,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { BudgetMapperService } from '../mappers/budget-mapper.service';
 import { FullBudgetDTO } from '../dtos/budgets/compose-definitions/full-budget.dto';
 import { BudgetModel } from '../models/budgets/budget.model';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,36 @@ export class BudgetService {
   private http = inject(HttpClient);
   private mapper = inject(BudgetMapperService);
   private endpoint = 'budgets';
+
+  // UI DATA MANAGEMENT //
+
+  private refreshListTrigger = signal<number>(0);
+  public budgetResourceList = rxResource({
+    request: () => ({
+      limit: 10,
+      offset: 0,
+      version: this.refreshListTrigger(),
+    }),
+    loader: ({ request }) => {
+      return this.findAll(request.limit, request.offset);
+    },
+  });
+
+  private budgetIdTrigger = signal<string | undefined>(undefined);
+  public budgetResourceDetail = rxResource({
+    request: () => this.budgetIdTrigger(),
+    loader: ({ request }) => this.findOne(request),
+  });
+
+  public reloadList() {
+    this.refreshListTrigger.update((prev) => prev + 1);
+  }
+
+  public selectBudget(id: string) {
+    this.budgetIdTrigger.set(id);
+  }
+
+  // HTTP METHODS //
 
   public create(body: CreateBudgetRequest): Observable<ApiResponse<Budget>> {
     return this.http

@@ -2,13 +2,10 @@
 
 <!--  -->
 
-@if(budgetResource.hasValue()) {
+@if(budget.hasValue()) {
 <section class="flex flex-col gap-10">
-  <app-hero [budget]="budgetResource.value()"></app-hero>
-  <app-categories-list
-    [budget]="budgetResource.value()"
-    (reloadBudgetResource)="budgetResource.reload()"
-  ></app-categories-list>
+  <app-hero [budget]="budget.value()"></app-hero>
+  <app-categories-list></app-categories-list>
 </section>
 
 }

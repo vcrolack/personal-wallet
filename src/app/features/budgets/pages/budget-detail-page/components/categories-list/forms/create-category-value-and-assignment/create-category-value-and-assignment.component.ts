@@ -5,8 +5,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BudgetCategoryValuesService } from '../../../../../../../../core/services/budget-category-values.service';
 import { BudgetCategoryAssignmentsService } from '../../../../../../../../core/services/budget-category-assignments.service';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BudgetService } from '../../../../../../../../core/services/budget.service';
 
 @Component({
   selector: 'app-create-category-value-and-assignment',
@@ -16,13 +16,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CreateCategoryValueAndAssignmentComponent {
   private fb = inject(FormBuilder);
+  private budgetService = inject(BudgetService);
   private categoryValueService = inject(BudgetCategoryValuesService);
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
 
   public categoryId = input.required<number>();
-  public budgetId = inject(ActivatedRoute).snapshot.paramMap.get('id')!;
+  public budget = this.budgetService.budgetResourceDetail;
 
-  public reload = output<void>();
   public closeModal = output<void>();
 
   public form = this.fb.group({
@@ -35,7 +35,9 @@ export class CreateCategoryValueAndAssignmentComponent {
       this.form.markAllAsTouched();
       return;
     }
-    console.log(this.categoryId());
+
+    if (!this.budget.hasValue()) return;
+
     return this.categoryValueService
       .create({
         name: this.form.value.categoryValueName!,
@@ -44,7 +46,7 @@ export class CreateCategoryValueAndAssignmentComponent {
       .pipe(
         switchMap((categoryValue) =>
           this.categoryAssignmentService.assignCategory({
-            budgetId: this.budgetId,
+            budgetId: this.budget.value()!.id,
             budgetCategoryValueId: categoryValue.id,
             allocatedAmount: +this.form.value.allocatedAmount!,
           })
@@ -56,7 +58,7 @@ export class CreateCategoryValueAndAssignmentComponent {
       )
       .subscribe({
         next: () => {
-          this.reload.emit();
+          this.budget.reload();
           this.closeModal.emit();
         },
         error: (error) => {

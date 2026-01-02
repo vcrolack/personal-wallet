@@ -70,6 +70,6 @@
   <app-create-category-value-and-assignment
     [categoryId]="selectedCategoryId()!"
     (closeModal)="toggleModal()"
-    (reload)="reloadBudgetResource.emit()"
+    (reload)="budget.reload()"
   ></app-create-category-value-and-assignment>
 </app-modal>

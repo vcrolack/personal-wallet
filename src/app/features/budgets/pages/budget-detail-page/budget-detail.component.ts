@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, input, effect } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { ActivatedRoute } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -13,15 +13,13 @@ import { CategoriesListComponent } from './components/categories-list/categories
 })
 export class BudgetDetailComponent {
   private budgetService = inject(BudgetService);
-  private route = inject(ActivatedRoute);
 
-  public budget = computed(() => this.budgetResource.value());
-  public isLoading = computed(() => this.budgetResource.isLoading());
+  public id = input.required<string>();
 
-  public budgetResource = rxResource({
-    request: () => ({ id: this.route.snapshot.paramMap.get('id')! }),
-    loader: ({ request }) => {
-      return this.budgetService.findOne(request.id);
-    },
-  });
+  public budget = this.budgetService.budgetResourceDetail;
+  public isLoading = this.budgetService.budgetResourceDetail.isLoading;
+
+  constructor() {
+    effect(() => this.budgetService.selectBudget(this.id()));
+  }
 }
