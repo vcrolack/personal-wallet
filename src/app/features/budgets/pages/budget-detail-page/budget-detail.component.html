@@ -5,6 +5,22 @@
 @if(budget.hasValue()) {
 <section class="flex flex-col gap-10">
   <app-hero [budget]="budget.value()"></app-hero>
+
+  <div id="budget-actions">
+    <app-button
+      label="Agregar categoría"
+      (onClick)="toggleModal()"
+    ></app-button>
+  </div>
+
   <app-categories-list></app-categories-list>
 </section>
+
+<app-modal
+  title="Agregar categoría"
+  [isOpen]="isModalOpen()"
+  (onClose)="toggleModal()"
+>
+  <app-add-category></app-add-category>
+</app-modal>
 }
