@@ -48,6 +48,7 @@ export class BudgetMapperService {
 
         if (!acc[catName]) {
           acc[catName] = {
+            id: curr.budgetCategoryValue.budgetCategoryId,
             categoryName: catName,
             assignments: [],
             totalAllocated: 0,

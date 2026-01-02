@@ -4,7 +4,7 @@
 >
   @for (group of groupedCategories(); track group.categoryName) {
   <div
-    class="min-w-[320px] max-w-[350px] transition-transform duration-200 hover:scale-[1.02]"
+    class="group min-w-[320px] max-w-[350px] transition-transform duration-200 hover:scale-[1.02]"
   >
     <app-wrapper
       class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
@@ -34,6 +34,14 @@
           </span>
         </li>
         }
+        <div
+          class="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pt-2"
+        >
+          <app-button
+            label="Agregar +"
+            (onClick)="toggleModal(group.id)"
+          ></app-button>
+        </div>
       </ul>
 
       <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
@@ -53,3 +61,15 @@
   </div>
   }
 </div>
+
+<app-modal
+  [isOpen]="isModalOpen()"
+  (onClose)="toggleModal()"
+  title="Crear nuevo valor de categoría"
+>
+  <app-create-category-value-and-assignment
+    [categoryId]="selectedCategoryId()!"
+    (closeModal)="toggleModal()"
+    (reload)="reloadBudgetResource.emit()"
+  ></app-create-category-value-and-assignment>
+</app-modal>

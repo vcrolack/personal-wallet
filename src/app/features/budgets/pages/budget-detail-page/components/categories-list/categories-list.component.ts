@@ -1,24 +1,35 @@
-import { Component, computed, inject, input } from '@angular/core';
-import { BudgetDetail } from '../../../../../../core/responses/find-one-budget.response';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
-import {
-  BudgetMapperService,
-  CategoryGroup,
-} from '../../../../../../core/mappers/budget-mapper.service';
 import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
-import { BudgetGroupModel } from '../../../../../../core/models/budgets/budget-group.model';
+import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
+import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
+import { CreateCategoryValueAndAssignmentComponent } from './forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 
 @Component({
   selector: 'app-categories-list',
-  imports: [CurrencyPipe, WrapperComponent],
+  imports: [
+    CurrencyPipe,
+    WrapperComponent,
+    ButtonComponent,
+    ModalComponent,
+    CreateCategoryValueAndAssignmentComponent,
+  ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
 })
 export class CategoriesListComponent {
-  private budgetMapperService = inject(BudgetMapperService);
+  public isModalOpen = signal<boolean>(false);
+  public selectedCategoryId = signal<number | null>(null);
 
   public budget = input.required<BudgetModel>();
 
+  public reloadBudgetResource = output<void>();
+
   public groupedCategories = computed(() => this.budget().groups);
+
+  public toggleModal(categoryId?: number) {
+    this.selectedCategoryId.set(categoryId ?? null);
+    this.isModalOpen.update((prev) => !prev);
+  }
 }
