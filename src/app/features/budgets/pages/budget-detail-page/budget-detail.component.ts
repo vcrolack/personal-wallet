@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { HeroComponent } from './components/hero/hero.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { IconButtonComponent } from '../../../../common/components/form/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-budget-detail',
-  imports: [HeroComponent, CategoriesListComponent],
+  imports: [HeroComponent, CategoriesListComponent, IconButtonComponent],
   templateUrl: './budget-detail.component.html',
   styleUrl: './budget-detail.component.css',
 })
