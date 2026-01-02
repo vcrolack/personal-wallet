@@ -5,6 +5,7 @@ import { ButtonComponent } from '../../../../../../common/components/form/button
 import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
 import { CreateCategoryValueAndAssignmentComponent } from './forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { BudgetService } from '../../../../../../core/services/budget.service';
+import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -14,6 +15,7 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
     ButtonComponent,
     ModalComponent,
     CreateCategoryValueAndAssignmentComponent,
+    IconButtonComponent,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',

@@ -21,7 +21,17 @@
         <li
           class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-slate-50 transition-colors"
         >
-          <span class="text-slate-700 font-medium">{{
+          <div
+            class="w-0 overflow-hidden group-hover/item:w-8 transition-all duration-300 flex items-center"
+          >
+            <app-icon-button
+              size="small"
+              color="danger"
+              name="trash-2"
+              class="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"
+            ></app-icon-button>
+          </div>
+          <span class="flex-grow text-slate-700 font-medium">{{
             item.categoryValueName
           }}</span>
           <span
