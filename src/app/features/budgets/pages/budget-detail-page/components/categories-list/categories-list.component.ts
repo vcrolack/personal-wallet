@@ -6,6 +6,7 @@ import { ModalComponent } from '../../../../../../common/components/ui/modal/mod
 import { CreateCategoryValueAndAssignmentComponent } from './forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
+import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -22,6 +23,7 @@ import { IconButtonComponent } from '../../../../../../common/components/form/ic
 })
 export class CategoriesListComponent {
   private budgetService = inject(BudgetService);
+  private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
 
   public isModalOpen = signal<boolean>(false);
   public selectedCategoryId = signal<number | null>(null);
@@ -33,5 +35,16 @@ export class CategoriesListComponent {
   public toggleModal(categoryId?: number) {
     this.selectedCategoryId.set(categoryId ?? null);
     this.isModalOpen.update((prev) => !prev);
+  }
+
+  public unassignCategoryValue(id: string) {
+    this.categoryAssignmentService.unassingCategory(id).subscribe({
+      next: () => {
+        this.budget.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

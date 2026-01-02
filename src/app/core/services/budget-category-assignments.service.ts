@@ -38,7 +38,7 @@ export class BudgetCategoryAssignmentsService {
   public unassingCategory(id: string): Observable<{ message: string }> {
     return this.http
       .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/${id}`
+        `${environment.merakiUrl}/${this.endpoint}/unassign-category/${id}`
       )
       .pipe(
         map((response: ApiResponse<{ message: string }>) => response.data),

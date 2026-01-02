@@ -35,13 +35,13 @@ export class BudgetsPageComponent {
       actions: [
         {
           label: 'Editar',
-          icon: 'pencil',
+          icon: 'pi pi-pencil',
           callback: (row) => console.log('Editar', row),
           class: 'text-blue-500 hover:bg-blue-50',
         },
         {
           label: 'Eliminar',
-          icon: 'trash-2',
+          icon: 'pi pi-trash',
           callback: (row) => console.log('Eliminar', row),
           class: 'text-red-500 hover:bg-red-50',
         },
