@@ -1,5 +1,4 @@
 import { Component, inject, signal, effect, computed } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { HeaderComponent } from '../../../../../common/components/layout/header/header.component';
 import { TabsComponent } from '../../../../../common/components/layout/tabs/tabs.component';
@@ -93,33 +92,23 @@ export class CategoriesPageComponent {
         this.activeTabId.set(currentTabs[0].id);
       }
     });
+
+    effect(() => {
+      const id = this.activeTabId();
+      if (id !== undefined) {
+        this.categoryValuesService.selectCategory(id as number);
+      }
+    });
   }
 
   public get modalTitle(): string {
     return this.MODAL_TITLES[this.modalType() ?? ''] ?? '';
   }
 
-  public categoryResource = rxResource({
-    request: () => ({ limit: 10, offset: 0 }),
-    loader: ({ request }) => {
-      return this.categoryService.findAll(request.limit, request.offset);
-    },
-  });
+  public categoryResource = this.categoryService.categoryResource;
 
-  public categoryValuesResource = rxResource({
-    request: () => ({
-      limit: 10,
-      offset: 0,
-      budgetCategoryId: this.activeTabId(),
-    }),
-    loader: ({ request }) => {
-      return this.categoryValuesService.findAll(
-        request.limit,
-        request.offset,
-        request.budgetCategoryId as number
-      );
-    },
-  });
+  public categoryValuesResource =
+    this.categoryValuesService.categoryValuesResource;
 
   public tabs = computed<TabItem[]>(() => {
     const response = this.categoryResource.value();

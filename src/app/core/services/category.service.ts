@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
@@ -11,6 +11,7 @@ import { CreateCategoryRequest } from '../requests/categories/create-category.re
 import { CategoryModel } from '../models/categories/category.model';
 import { CategoryMapperService } from '../mappers/category-mapper.service';
 import { BudgetCategoryDTO } from '../dtos/budgets/base-definitions/budget-category.dto';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,26 @@ export class CategoryService {
   private http = inject(HttpClient);
   private mapper = inject(CategoryMapperService);
   private endpoint = 'budget-categories';
+
+  // UI DATA MANAGEMENT
+
+  private refreshListTrigger = signal<number>(0);
+  public categoryResource = rxResource({
+    request: () => ({
+      limit: 10,
+      offset: 0,
+      version: this.refreshListTrigger(),
+    }),
+    loader: ({ request }) => {
+      return this.findAll(request.limit, request.offset);
+    },
+  });
+
+  public reloadList() {
+    this.refreshListTrigger.update((value) => value + 1);
+  }
+
+  // HTTP METHODS //
 
   public findAll(
     limit: number = 10,

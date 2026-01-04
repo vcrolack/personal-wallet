@@ -3,16 +3,16 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
-import { BudgetCategoryValue } from '../interfaces/budget-category-value.interface';
 import { environment } from '../../../environments/environment';
 import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
 import { UpdateBudgetCategoryValueRequest } from '../requests/budget-category-values/update-budget-category-value.request';
 import { CategoryValueMapperService } from '../mappers/category-value-mapper.service';
 import { CategoryValueModel } from '../models/categories/category-value.model';
 import { BudgetCategoryValueDTO } from '../dtos/budgets/base-definitions/budget-category-value.dto';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +21,30 @@ export class BudgetCategoryValuesService {
   private http = inject(HttpClient);
   private mapper = inject(CategoryValueMapperService);
   private endpoint = 'budget-category-values';
+
+  // UI DATA MANAGEMENT
+
+  private categoryValueIdTrigger = signal<number | undefined>(undefined);
+  public categoryValuesResource = rxResource({
+    request: () => ({
+      limit: 10,
+      offset: 0,
+      budgetCategoryId: this.categoryValueIdTrigger(),
+    }),
+    loader: ({ request }) => {
+      return this.findAll(
+        request.limit,
+        request.offset,
+        request.budgetCategoryId as number
+      );
+    },
+  });
+
+  public selectCategory(id: number) {
+    this.categoryValueIdTrigger.set(id);
+  }
+
+  // HTTP METHODS //
 
   public findAll(
     limit: number = 10,
