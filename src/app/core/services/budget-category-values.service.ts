@@ -4,7 +4,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError, of } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
@@ -26,16 +26,23 @@ export class BudgetCategoryValuesService {
 
   private categoryValueIdTrigger = signal<number | undefined>(undefined);
   public categoryValuesResource = rxResource({
-    request: () => ({
-      limit: 10,
-      offset: 0,
-      budgetCategoryId: this.categoryValueIdTrigger(),
-    }),
+    request: () => {
+      const budgetCategoryId = this.categoryValueIdTrigger();
+      if (!budgetCategoryId) return undefined;
+
+      return {
+        limit: 10,
+        offset: 0,
+        budgetCategoryId,
+      };
+    },
     loader: ({ request }) => {
+      if (!request) return of([]);
+
       return this.findAll(
         request.limit,
         request.offset,
-        request.budgetCategoryId as number
+        request.budgetCategoryId
       );
     },
   });

@@ -14,6 +14,7 @@ export class ButtonComponent {
   public variant = input<ButtonVariant>('primary');
   public size = input<ButtonSize>('medium');
   public disabled = input(false);
+  public loading = input(false);
 
   public onClick = output<void>();
 
@@ -36,9 +37,10 @@ export class ButtonComponent {
       large: 'px-6 py-3 text-lg',
     };
 
-    const disabledClasses = this.disabled()
-      ? 'opacity-50 cursor-not-allowed pointer-events-none'
-      : '';
+    const disabledClasses =
+      this.disabled() || this.loading()
+        ? 'opacity-50 cursor-not-allowed pointer-events-none'
+        : '';
 
     return `${baseClasses} ${variantClasses[this.variant()]} ${
       sizeClasses[this.size()]
@@ -46,7 +48,7 @@ export class ButtonComponent {
   });
 
   public handleClick() {
-    if (this.disabled()) return;
+    if (this.disabled() || this.loading()) return;
     this.onClick.emit();
   }
 }

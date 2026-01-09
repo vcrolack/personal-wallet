@@ -21,6 +21,8 @@
   [isOpen]="isModalOpen()"
   (onClose)="toggleModal()"
 >
-  <app-add-category></app-add-category>
+  @if (isModalOpen()) {
+  <app-add-category (closeModal)="toggleModal()"></app-add-category>
+  }
 </app-modal>
 }
