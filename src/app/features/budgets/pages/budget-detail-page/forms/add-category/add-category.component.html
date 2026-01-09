@@ -1,13 +1,71 @@
-<section>
-  <div id="description" class="flex items-start gap-4">
-    <span
-      class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
-    >
-      1
-    </span>
-    <p class="text-slate-600 leading-relaxed">
-      Selecciona la categoría que deseas agregar (Si no está, puedes ir a
-      crearla a la sección de categorías)
-    </p>
+<form [formGroup]="form" class="px-4" action="">
+  <section id="categor-section">
+    <div id="description" class="mb-10 flex items-start gap-4">
+      <span
+        class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
+      >
+        1
+      </span>
+      <p class="text-slate-600 leading-relaxed">
+        Selecciona la categoría que deseas agregar (Si no está, puedes ir a
+        crearla a la sección de categorías)
+      </p>
+    </div>
+    <app-select
+      placeholder="Seleccione una categoría"
+      formControlName="category"
+      [options]="categoriesForSelect()"
+    ></app-select>
+  </section>
+
+  <div class="expand-grid" [class.expanded]="categoryValuesResource.value()">
+    <div class="inner-content">
+      <section class="mt-12 section-enter" id="category-value-section">
+        <div id="description" class="mb-10 flex items-start gap-4">
+          <span
+            class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
+          >
+            2
+          </span>
+          <p class="text-slate-600 leading-relaxed">
+            Selecciona el valor de la categoría que deseas agregar (Si no está,
+            puedes ir a crearla a la sección de categorías)
+          </p>
+        </div>
+        <app-select
+          placeholder="Selecciona un valor de categoría"
+          formControlName="categoryValue"
+          [options]="categoryValuesForSelect()"
+        ></app-select>
+      </section>
+    </div>
   </div>
-</section>
+
+  <div class="expand-grid" [class.expanded]="categoryValueId()">
+    <div class="inner-content">
+      <section class="mt-12 section-enter" id="category-value-section">
+        <div id="description" class="mb-10 flex items-start gap-4">
+          <span
+            class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
+          >
+            3
+          </span>
+          <p class="text-slate-600 leading-relaxed">
+            Asigna el dinero que destinarás a este valor de categoría
+          </p>
+        </div>
+        <app-input
+          type="number"
+          formControlName="amount"
+          placeholder="Selecciona un valor de categoría"
+        ></app-input>
+      </section>
+    </div>
+  </div>
+  <section id="submit-form" class="mt-12 w-full flex justify-end">
+    <app-button
+      [disabled]="form.invalid"
+      label="Agregar categoría"
+    ></app-button>
+  </section>
+</form>

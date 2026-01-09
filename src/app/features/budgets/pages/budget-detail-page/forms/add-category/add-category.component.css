@@ -1,0 +1,50 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-1rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-in-from-top-4 {
+  animation-name: slideInFromTop;
+}
+
+/* Combined animation helper */
+.section-enter {
+  animation: fadeIn 500ms ease-out, slideInFromTop 500ms ease-out;
+}
+
+/* Smooth Height Transition Trick */
+.expand-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms ease-out;
+}
+
+.expand-grid.expanded {
+  grid-template-rows: 1fr;
+}
+
+.inner-content {
+  overflow: hidden;
+  min-height: 0;
+}
