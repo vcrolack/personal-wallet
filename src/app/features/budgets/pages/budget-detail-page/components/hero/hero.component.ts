@@ -26,6 +26,10 @@ export class HeroComponent {
   private datePipe = inject(DatePipe);
   public budget = input.required<BudgetModel>();
 
+  public get difference(): number {
+    return this.budget().budgetAmount - this.budget().totalSpent;
+  }
+
   public get isShared(): { label: string; variant: BadgeVariant } {
     if (!this.budget()?.isShared)
       return {

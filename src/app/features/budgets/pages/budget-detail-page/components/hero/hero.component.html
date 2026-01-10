@@ -71,10 +71,14 @@
                 >
                   Diferencia
                 </p>
-                <p class="text-2xl font-bold text-emerald-600">
+                <p
+                  [ngClass]="
+                    difference > 0 ? 'text-emerald-600' : 'text-red-600'
+                  "
+                  class="text-2xl font-bold"
+                >
                   {{
-                    budget().budgetAmount - budget().totalSpent
-                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                    difference | currency : "CLP" : "symbol-narrow" : "1.0-0"
                   }}
                 </p>
               </div>
