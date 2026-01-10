@@ -14,6 +14,7 @@ import {
   SelectOption,
   SelectComponent,
 } from '../../../../../../common/components/form/select/select.component';
+import { BudgetGroupModel } from '../../../../../../core/models/budgets/budget-group.model';
 import { InputComponent } from '../../../../../../common/components/form/input/input.component';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import {
@@ -75,7 +76,9 @@ export class AddCategoryComponent implements OnDestroy {
   public categoriesForSelect = computed((): SelectOption[] => {
     const allCategories = this.categoryResource.value() ?? [];
     const assignedCategoryIds =
-      this.budgetDetailResource.value()?.groups.map((g) => g.id) ?? [];
+      this.budgetDetailResource
+        .value()
+        ?.groups.map((g: BudgetGroupModel) => g.id) ?? [];
 
     return allCategories
       .filter((category) => !assignedCategoryIds.includes(category.id))

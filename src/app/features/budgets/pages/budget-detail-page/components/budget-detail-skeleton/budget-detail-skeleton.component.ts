@@ -48,7 +48,8 @@ import { WrapperComponent } from '../../../../../../common/components/ui/wrapper
 
       <!-- Categories List Skeleton -->
       <div class="flex flex-col gap-4">
-        <app-wrapper *ngFor="let i of [1, 2, 3]">
+        @for (i of [1,2,3]; track i) {
+        <app-wrapper>
           <div class="p-4 flex justify-between items-center">
             <div class="flex gap-4 items-center">
               <app-skeleton
@@ -64,6 +65,7 @@ import { WrapperComponent } from '../../../../../../common/components/ui/wrapper
             <app-skeleton width="80px" height="24px"></app-skeleton>
           </div>
         </app-wrapper>
+        }
       </div>
     </div>
   `,

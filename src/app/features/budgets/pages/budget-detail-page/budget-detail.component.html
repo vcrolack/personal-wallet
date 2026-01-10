@@ -1,11 +1,15 @@
-@if(isLoading() && !budget.hasValue()) {
+@if(isLoading() && !budget.value()) {
 <app-budget-detail-skeleton></app-budget-detail-skeleton>
-} @if(budget.hasValue()) {
+}
+
+<!--  -->
+
+@if(budget.value(); as budgetValue) {
 <section
   class="flex flex-col gap-10 transition-opacity duration-300"
-  [class.opacity-60]="isLoading() && budget.hasValue()"
+  [class.opacity-60]="isLoading()"
 >
-  <app-hero [budget]="budget.value()"></app-hero>
+  <app-hero [budget]="budgetValue"></app-hero>
 
   <div id="budget-actions">
     <app-button

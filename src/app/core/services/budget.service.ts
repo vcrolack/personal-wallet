@@ -39,15 +39,15 @@ export class BudgetService {
 
   private budgetIdTrigger = signal<string | undefined>(undefined);
   private detailVersion = signal<number>(0);
+
   public budgetResourceDetail = rxResource({
-    request: () => ({
-      id: this.budgetIdTrigger(),
-      version: this.detailVersion(),
-    }),
+    request: () => {
+      const id = this.budgetIdTrigger();
+      if (!id) return undefined;
+      return { id, version: this.detailVersion() };
+    },
     loader: ({ request }) => {
-      if (!request.id) {
-        return of(null);
-      }
+      if (!request) return of(null as any);
       return this.findOne(request.id);
     },
   });
