@@ -1,13 +1,13 @@
 import { Component, inject, input } from '@angular/core';
-import { Budget } from '../../../../../../core/interfaces/budget.interface';
 import {
   BadgeComponent,
   BadgeVariant,
 } from '../../../../../../common/components/ui/badge/badge.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { ProgressBarComponent } from '../../../../../../common/components/ui/progress-bar/progress-bar.component';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
 import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
+import { CircularProgressBarComponent } from '../../../../../../common/components/ui/circular-progress-bar/circular-progress-bar.component';
 
 @Component({
   selector: 'app-hero',
@@ -16,6 +16,8 @@ import { BudgetModel } from '../../../../../../core/models/budgets/budget.model'
     ProgressBarComponent,
     BadgeComponent,
     CurrencyPipe,
+    CommonModule,
+    CircularProgressBarComponent,
   ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css',

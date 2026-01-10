@@ -1,0 +1,39 @@
+<div
+  class="relative flex items-center justify-center"
+  [style.width.px]="size()"
+  [style.height.px]="size()"
+>
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    class="transform -rotate-90"
+  >
+    <!-- Background Circle -->
+    <circle
+      class="text-gray-200"
+      stroke="currentColor"
+      [attr.stroke-width]="strokeWidth()"
+      fill="transparent"
+      [attr.r]="radius()"
+      [attr.cx]="center()"
+      [attr.cy]="center()"
+    />
+    <!-- Progress Circle -->
+    <circle
+      [class]="color()"
+      stroke="currentColor"
+      [attr.stroke-width]="strokeWidth()"
+      stroke-linecap="round"
+      fill="transparent"
+      [attr.r]="radius()"
+      [attr.cx]="center()"
+      [attr.cy]="center()"
+      [style.stroke-dasharray]="circumference()"
+      [style.stroke-dashoffset]="dashOffset()"
+    />
+  </svg>
+
+  <div class="absolute inset-0 flex items-center justify-center">
+    <span class="text-xl font-bold text-gray-800"> {{ percentage() }}% </span>
+  </div>
+</div>

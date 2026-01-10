@@ -13,30 +13,74 @@
           <p class="text-gray-600">{{ budget().description }}</p>
           <app-badge [label]="period" variant="info"></app-badge>
         </div>
-        <div class="flex flex-col">
-          <app-wrapper class="gap-4">
-            <div class="p-5">
-              <p class="text-sm font-medium text-gray-700">TOTAL DESTINADO</p>
-              <p class="text-center text-2xl font-bold">
-                {{
-                  budget().budgetAmount
-                    | currency : "CLP" : "symbol-narrow" : "1.0-0"
-                }}
-              </p>
-            </div>
-          </app-wrapper>
-        </div>
-      </div>
+        <div class="grid grid-cols-[auto_1fr] gap-8 items-stretch">
+          <!-- Columna 1: Circular Progress Bar -->
+          <div class="flex h-full">
+            <app-wrapper>
+              <div class="flex h-full items-center justify-center">
+                <app-circular-progress-bar
+                  [currentValue]="budget().totalSpent"
+                  [totalValue]="budget().budgetAmount"
+                  [size]="160"
+                  [strokeWidth]="12"
+                ></app-circular-progress-bar>
+              </div>
+            </app-wrapper>
+          </div>
 
-      <div class="mt-4">
-        <app-progress-bar
-          [currentValue]="budget().totalSpent"
-          [totalValue]="budget().budgetAmount"
-        >
-          <span label class="text-sm font-medium text-gray-700"
-            >Presupuesto gastado</span
-          >
-        </app-progress-bar>
+          <!-- Columna 2: Detalles en Grid -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Fila 1: Total Destinado (Ocupa las 2 columnas) -->
+            <app-wrapper class="col-span-2">
+              <div class="p-4 text-center">
+                <p
+                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Total Destinado
+                </p>
+                <p class="text-3xl font-bold text-gray-900">
+                  {{
+                    budget().budgetAmount
+                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                  }}
+                </p>
+              </div>
+            </app-wrapper>
+
+            <!-- Fila 2: Gastado y Diferencia -->
+            <app-wrapper>
+              <div class="p-4 text-center">
+                <p
+                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Total Gastado
+                </p>
+                <p class="text-2xl font-bold text-blue-600">
+                  {{
+                    budget().totalSpent
+                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                  }}
+                </p>
+              </div>
+            </app-wrapper>
+
+            <app-wrapper>
+              <div class="p-4 text-center">
+                <p
+                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Diferencia
+                </p>
+                <p class="text-2xl font-bold text-emerald-600">
+                  {{
+                    budget().budgetAmount - budget().totalSpent
+                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                  }}
+                </p>
+              </div>
+            </app-wrapper>
+          </div>
+        </div>
       </div>
     </div>
   </app-wrapper>
