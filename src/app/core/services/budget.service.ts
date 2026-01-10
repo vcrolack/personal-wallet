@@ -5,10 +5,11 @@ import {
 } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { CreateBudgetRequest } from '../requests/budgets/create-budget.request';
+import { UpdateBudgetRequest } from '../requests/budgets/update-budget.request';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { Budget } from '../interfaces/budget.interface';
 import { environment } from '../../../environments/environment';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { BudgetMapperService } from '../mappers/budget-mapper.service';
 import { FullBudgetDTO } from '../dtos/budgets/compose-definitions/full-budget.dto';
 import { BudgetModel } from '../models/budgets/budget.model';
@@ -37,13 +38,26 @@ export class BudgetService {
   });
 
   private budgetIdTrigger = signal<string | undefined>(undefined);
+  private detailVersion = signal<number>(0);
   public budgetResourceDetail = rxResource({
-    request: () => this.budgetIdTrigger(),
-    loader: ({ request }) => this.findOne(request),
+    request: () => ({
+      id: this.budgetIdTrigger(),
+      version: this.detailVersion(),
+    }),
+    loader: ({ request }) => {
+      if (!request.id) {
+        return of(null);
+      }
+      return this.findOne(request.id);
+    },
   });
 
   public reloadList() {
     this.refreshListTrigger.update((prev) => prev + 1);
+  }
+
+  public reloadDetail() {
+    this.detailVersion.update((prev) => prev + 1);
   }
 
   public selectBudget(id: string) {
@@ -51,6 +65,23 @@ export class BudgetService {
   }
 
   // HTTP METHODS //
+
+  public update(
+    id: string,
+    body: UpdateBudgetRequest
+  ): Observable<ApiResponse<Budget>> {
+    return this.http
+      .patch<ApiResponse<Budget>>(
+        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
+        body
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        })
+      );
+  }
 
   public create(body: CreateBudgetRequest): Observable<ApiResponse<Budget>> {
     return this.http

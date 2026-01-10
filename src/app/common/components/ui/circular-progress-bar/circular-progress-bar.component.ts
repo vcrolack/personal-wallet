@@ -4,6 +4,7 @@ import {
   input,
   signal,
   afterNextRender,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -32,6 +33,16 @@ export class CircularProgressBarComponent {
         this.showProgress.set(true);
         this.animateValue(0, this.percentage(), 1000);
       }, 50);
+    });
+
+    // Sincronizar el porcentaje animado cuando cambie el valor real (después del montaje)
+    effect(() => {
+      const p = this.percentage();
+      if (this.showProgress()) {
+        // Si ya estamos mostrados, actualizamos el valor directamente
+        // para que el texto cambie junto con la transición CSS del círculo.
+        this.animatedPercentage.set(p);
+      }
     });
   }
 

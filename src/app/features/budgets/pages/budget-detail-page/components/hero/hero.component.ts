@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import {
   BadgeComponent,
   BadgeVariant,
@@ -8,6 +8,9 @@ import { ProgressBarComponent } from '../../../../../../common/components/ui/pro
 import { CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
 import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
 import { CircularProgressBarComponent } from '../../../../../../common/components/ui/circular-progress-bar/circular-progress-bar.component';
+import { EditableAmountComponent } from '../../../../../../common/components/ui/editable-amount/editable-amount.component';
+import { BudgetService } from '../../../../../../core/services/budget.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
@@ -17,14 +20,17 @@ import { CircularProgressBarComponent } from '../../../../../../common/component
     CurrencyPipe,
     CommonModule,
     CircularProgressBarComponent,
+    EditableAmountComponent,
   ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css',
   providers: [DatePipe],
 })
 export class HeroComponent {
+  private budgetService = inject(BudgetService);
   private datePipe = inject(DatePipe);
   public budget = input.required<BudgetModel>();
+  public isLoading = signal(false);
 
   public get difference(): number {
     return this.budget().budgetAmount - this.budget().totalSpent;
@@ -48,5 +54,20 @@ export class HeroComponent {
       this.budget().startDate,
       'dd/MM/yyyy'
     )} hasta ${this.datePipe.transform(this.budget().endDate, 'dd/MM/yyyy')}`;
+  }
+
+  public onAmountUpdate(newAmount: number) {
+    this.isLoading.set(true);
+    this.budgetService
+      .update(this.budget().id, { budgetAmount: newAmount })
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.budgetService.reloadDetail();
+        },
+        error: (err) => {
+          console.error('Error updating budget:', err);
+        },
+      });
   }
 }

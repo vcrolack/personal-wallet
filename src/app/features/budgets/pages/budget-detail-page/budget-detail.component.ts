@@ -5,6 +5,7 @@ import { CategoriesListComponent } from './components/categories-list/categories
 import { ButtonComponent } from '../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
 import { AddCategoryComponent } from './forms/add-category/add-category.component';
+import { BudgetDetailSkeletonComponent } from './components/budget-detail-skeleton/budget-detail-skeleton.component';
 
 @Component({
   selector: 'app-budget-detail',
@@ -14,6 +15,7 @@ import { AddCategoryComponent } from './forms/add-category/add-category.componen
     ButtonComponent,
     ModalComponent,
     AddCategoryComponent,
+    BudgetDetailSkeletonComponent,
   ],
   templateUrl: './budget-detail.component.html',
   styleUrl: './budget-detail.component.css',

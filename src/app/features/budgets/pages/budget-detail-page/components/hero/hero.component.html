@@ -31,20 +31,15 @@
           <!-- Columna 2: Detalles en Grid -->
           <div class="grid grid-cols-2 gap-4">
             <!-- Fila 1: Total Destinado (Ocupa las 2 columnas) -->
-            <app-wrapper class="col-span-2">
-              <div class="p-4 text-center">
-                <p
-                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Total Destinado
-                </p>
-                <p class="text-3xl font-bold text-gray-900">
-                  {{
-                    budget().budgetAmount
-                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
-                  }}
-                </p>
-              </div>
+            <app-wrapper
+              class="col-span-2 transition-opacity duration-300"
+              [class.opacity-50]="isLoading()"
+            >
+              <app-editable-amount
+                [label]="'Total Destinado'"
+                [value]="budget().budgetAmount"
+                (saved)="onAmountUpdate($event)"
+              ></app-editable-amount>
             </app-wrapper>
 
             <!-- Fila 2: Gastado y Diferencia -->
