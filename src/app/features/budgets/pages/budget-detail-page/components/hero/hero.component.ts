@@ -13,7 +13,6 @@ import { CircularProgressBarComponent } from '../../../../../../common/component
   selector: 'app-hero',
   imports: [
     WrapperComponent,
-    ProgressBarComponent,
     BadgeComponent,
     CurrencyPipe,
     CommonModule,

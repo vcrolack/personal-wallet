@@ -20,7 +20,7 @@
     />
     <!-- Progress Circle -->
     <circle
-      [class]="color()"
+      [style.color]="dynamicColor()"
       stroke="currentColor"
       [attr.stroke-width]="strokeWidth()"
       stroke-linecap="round"
@@ -34,6 +34,8 @@
   </svg>
 
   <div class="absolute inset-0 flex items-center justify-center">
-    <span class="text-xl font-bold text-gray-800"> {{ percentage() }}% </span>
+    <span class="text-xl font-bold text-gray-800">
+      {{ animatedPercentage() }}%
+    </span>
   </div>
 </div>
