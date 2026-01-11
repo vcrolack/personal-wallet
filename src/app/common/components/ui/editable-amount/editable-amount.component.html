@@ -14,7 +14,15 @@
       (click)="startEditing()"
       class="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
     >
+      @if(type() === 'number') {
       {{ value() | currency : "CLP" : "symbol-narrow" : "1.0-0" }}
+      }
+
+      <!--  -->
+
+      @if(type() === 'text') {
+      {{ value() }}
+      }
       <span
         class="opacity-0 group-hover:opacity-100 ml-1 text-sm text-blue-400"
       >
@@ -23,15 +31,20 @@
     </p>
     } @else {
     <div class="flex items-center gap-2 animate-fadeIn">
-      <input
-        #amountInput
-        type="number"
-        [(ngModel)]="editValue"
-        (keyup.enter)="save()"
-        (keyup.escape)="cancel()"
-        (blur)="save()"
-        class="text-3xl font-bold text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none w-48 text-center"
-      />
+      <div class="input-mirror-container">
+        <span class="mirror-span text-3xl font-bold">{{
+          editValue || " "
+        }}</span>
+        <input
+          #amountInput
+          [type]="type()"
+          [(ngModel)]="editValue"
+          (keyup.enter)="save()"
+          (keyup.escape)="cancel()"
+          (blur)="save()"
+          class="auto-width-input text-3xl font-bold text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none text-center"
+        />
+      </div>
     </div>
     }
   </div>

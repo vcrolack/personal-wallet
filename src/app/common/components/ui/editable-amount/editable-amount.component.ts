@@ -17,13 +17,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './editable-amount.component.html',
   styleUrl: './editable-amount.component.css',
 })
-export class EditableAmountComponent {
-  public value = input.required<number>();
+export class EditableAmountComponent<T extends number | string> {
+  public value = input.required<T>();
   public label = input<string>('');
-  public saved = output<number>();
+  public saved = output<T>();
+  public type = input<'number' | 'text'>('text');
 
   public isEditing = signal(false);
-  public editValue = signal(0);
+  public editValue!: T;
 
   private inputElement = viewChild<ElementRef<HTMLInputElement>>('amountInput');
 
@@ -37,7 +38,7 @@ export class EditableAmountComponent {
   }
 
   public startEditing() {
-    this.editValue.set(this.value());
+    this.editValue = this.value();
     this.isEditing.set(true);
 
     // We need to wait for the next render to focus,
@@ -51,8 +52,8 @@ export class EditableAmountComponent {
   }
 
   public save() {
-    if (this.editValue() !== this.value()) {
-      this.saved.emit(this.editValue());
+    if (this.editValue !== this.value()) {
+      this.saved.emit(this.editValue);
     }
     this.isEditing.set(false);
   }

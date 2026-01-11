@@ -22,4 +22,32 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.input-mirror-container {
+  display: inline-grid;
+  vertical-align: top;
+  align-items: center;
+  position: relative;
+  justify-items: center;
+}
+
+.input-mirror-container > * {
+  grid-area: 1 / 1;
+  font-family: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+
+.mirror-span {
+  visibility: hidden;
+  padding: 0 4px;
+  min-width: 1ch;
+}
+
+input.auto-width-input {
+  width: 100%;
+  background: transparent;
+  padding: 0 4px;
 }

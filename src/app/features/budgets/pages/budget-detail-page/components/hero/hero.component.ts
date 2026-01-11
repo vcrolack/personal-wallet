@@ -4,7 +4,6 @@ import {
   BadgeVariant,
 } from '../../../../../../common/components/ui/badge/badge.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
-import { ProgressBarComponent } from '../../../../../../common/components/ui/progress-bar/progress-bar.component';
 import { CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
 import { BudgetModel } from '../../../../../../core/models/budgets/budget.model';
 import { CircularProgressBarComponent } from '../../../../../../common/components/ui/circular-progress-bar/circular-progress-bar.component';
@@ -60,6 +59,21 @@ export class HeroComponent {
     this.isLoading.set(true);
     this.budgetService
       .update(this.budget().id, { budgetAmount: newAmount })
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.budgetService.reloadDetail();
+        },
+        error: (err) => {
+          console.error('Error updating budget:', err);
+        },
+      });
+  }
+
+  public onTitleUpdate(newTitle: string) {
+    this.isLoading.set(true);
+    this.budgetService
+      .update(this.budget().id, { title: newTitle })
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
