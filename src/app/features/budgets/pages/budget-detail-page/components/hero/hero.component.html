@@ -4,17 +4,22 @@
       <div class="flex justify-between">
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-4">
-            <app-editable-amount
+            <app-editable-field
               type="text"
               [value]="budget().title"
               (saved)="onTitleUpdate($event)"
-            ></app-editable-amount>
+            ></app-editable-field>
             <app-badge
               [label]="isShared.label"
               [variant]="isShared.variant"
             ></app-badge>
           </div>
-          <p class="text-gray-600">{{ budget().description }}</p>
+          <app-editable-field
+            type="text"
+            size="body"
+            [value]="budget().description"
+            (saved)="onDescriptionUpdate($event)"
+          ></app-editable-field>
           <app-badge [label]="period" variant="info"></app-badge>
         </div>
         <div class="grid grid-cols-[auto_1fr] gap-8 items-stretch">
@@ -39,12 +44,12 @@
               class="col-span-2 transition-opacity duration-300"
               [class.opacity-50]="isLoading()"
             >
-              <app-editable-amount
+              <app-editable-field
                 [label]="'Total Destinado'"
                 type="number"
                 [value]="budget().budgetAmount"
                 (saved)="onAmountUpdate($event)"
-              ></app-editable-amount>
+              ></app-editable-field>
             </app-wrapper>
 
             <!-- Fila 2: Gastado y Diferencia -->

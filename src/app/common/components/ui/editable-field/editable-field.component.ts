@@ -6,22 +6,38 @@ import {
   signal,
   viewChild,
   afterNextRender,
+  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-editable-amount',
+  selector: 'app-editable-field',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './editable-amount.component.html',
-  styleUrl: './editable-amount.component.css',
+  templateUrl: './editable-field.component.html',
+  styleUrl: './editable-field.component.css',
 })
-export class EditableAmountComponent<T extends number | string> {
+export class EditableFieldComponent<T extends number | string> {
   public value = input.required<T>();
   public label = input<string>('');
   public saved = output<T>();
   public type = input<'number' | 'text'>('text');
+  public size = input<'title' | 'subtitle' | 'body' | 'small'>('title');
+
+  public sizeClasses = computed(() => {
+    switch (this.size()) {
+      case 'title':
+        return 'text-3xl font-bold';
+      case 'subtitle':
+        return 'text-xl font-semibold';
+      case 'small':
+        return 'text-sm font-medium';
+      case 'body':
+      default:
+        return 'text-base font-normal';
+    }
+  });
 
   public isEditing = signal(false);
   public editValue!: T;
@@ -52,6 +68,8 @@ export class EditableAmountComponent<T extends number | string> {
   }
 
   public save() {
+    if (!this.isEditing()) return;
+
     if (this.editValue !== this.value()) {
       this.saved.emit(this.editValue);
     }

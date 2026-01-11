@@ -12,7 +12,8 @@
     @if (!isEditing()) {
     <p
       (click)="startEditing()"
-      class="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
+      [class]="sizeClasses()"
+      class="text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
     >
       @if(type() === 'number') {
       {{ value() | currency : "CLP" : "symbol-narrow" : "1.0-0" }}
@@ -32,7 +33,7 @@
     } @else {
     <div class="flex items-center gap-2 animate-fadeIn">
       <div class="input-mirror-container">
-        <span class="mirror-span text-3xl font-bold">{{
+        <span [class]="sizeClasses()" class="mirror-span">{{
           editValue || " "
         }}</span>
         <input
@@ -42,7 +43,8 @@
           (keyup.enter)="save()"
           (keyup.escape)="cancel()"
           (blur)="save()"
-          class="auto-width-input text-3xl font-bold text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none text-center"
+          [class]="sizeClasses()"
+          class="auto-width-input text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none text-center"
         />
       </div>
     </div>
