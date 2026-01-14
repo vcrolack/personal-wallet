@@ -1,10 +1,10 @@
 <div
   id="categories-list-container"
-  class="flex gap-6 overflow-x-auto pb-4 px-2"
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 px-2"
 >
   @for (group of groupedCategories(); track group.categoryName) {
   <div
-    class="group min-w-[320px] max-w-[350px] transition-transform duration-200 hover:scale-[1.02]"
+    class="group w-full transition-transform duration-200 hover:scale-[1.02]"
   >
     <app-wrapper
       class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"

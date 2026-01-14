@@ -18,7 +18,14 @@
     ></app-button>
   </div>
 
-  <app-categories-list></app-categories-list>
+  <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
+    <div class="xl:col-span-3">
+      <app-categories-list></app-categories-list>
+    </div>
+    <div class="xl:col-span-1">
+      <app-visual-resume></app-visual-resume>
+    </div>
+  </div>
 </section>
 
 <app-modal
