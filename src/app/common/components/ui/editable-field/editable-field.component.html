@@ -1,53 +1,54 @@
 <div class="flex flex-col items-center">
-  <p
-    *ngIf="label()"
-    class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1"
-  >
-    {{ label() }}
-  </p>
+  @if (label()) {
+    <p
+      class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1"
+      >
+      {{ label() }}
+    </p>
+  }
 
   <div
     class="relative group cursor-pointer w-full flex justify-center h-10 items-center"
-  >
-    @if (!isEditing()) {
-    <p
-      (click)="startEditing()"
-      [class]="sizeClasses()"
-      class="text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
     >
-      @if(type() === 'number') {
-      {{ value() | currency : "CLP" : "symbol-narrow" : "1.0-0" }}
-      }
+    @if (!isEditing()) {
+      <p
+        (click)="startEditing()"
+        [class]="sizeClasses()"
+        class="text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
+        >
+        @if(type() === 'number') {
+          {{ value() | currency : "CLP" : "symbol-narrow" : "1.0-0" }}
+        }
 
-      <!--  -->
+        <!--  -->
 
-      @if(type() === 'text') {
-      {{ value() }}
-      }
-      <span
-        class="opacity-0 group-hover:opacity-100 ml-1 text-sm text-blue-400"
-      >
-        ✎
-      </span>
-    </p>
+        @if(type() === 'text') {
+          {{ value() }}
+        }
+        <span
+          class="opacity-0 group-hover:opacity-100 ml-1 text-sm text-blue-400"
+          >
+          ✎
+        </span>
+      </p>
     } @else {
-    <div class="flex items-center gap-2 animate-fadeIn">
-      <div class="input-mirror-container">
-        <span [class]="sizeClasses()" class="mirror-span">{{
-          editValue || " "
-        }}</span>
-        <input
-          #amountInput
-          [type]="type()"
-          [(ngModel)]="editValue"
-          (keyup.enter)="save()"
-          (keyup.escape)="cancel()"
-          (blur)="save()"
-          [class]="sizeClasses()"
-          class="auto-width-input text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none text-center"
-        />
+      <div class="flex items-center gap-2 animate-fadeIn">
+        <div class="input-mirror-container">
+          <span [class]="sizeClasses()" class="mirror-span">{{
+            editValue || " "
+          }}</span>
+          <input
+            #amountInput
+            [type]="type()"
+            [(ngModel)]="editValue"
+            (keyup.enter)="save()"
+            (keyup.escape)="cancel()"
+            (blur)="save()"
+            [class]="sizeClasses()"
+            class="auto-width-input text-gray-900 bg-white border-b-2 border-blue-500 focus:outline-none text-center"
+            />
+        </div>
       </div>
-    </div>
     }
   </div>
 </div>

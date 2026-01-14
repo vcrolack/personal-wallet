@@ -25,13 +25,13 @@ export class CategoryService {
 
   private refreshListTrigger = signal<number>(0);
   public categoryResource = rxResource({
-    request: () => ({
+    params: () => ({
       limit: 10,
       offset: 0,
       version: this.refreshListTrigger(),
     }),
-    loader: ({ request }) => {
-      return this.findAll(request.limit, request.offset);
+    stream: ({ params }) => {
+      return this.findAll(params.limit, params.offset);
     },
   });
 

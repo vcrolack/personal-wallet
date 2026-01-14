@@ -4,105 +4,113 @@
     <table class="min-w-full border-separate border-spacing-0">
       <thead class="bg-slate-50">
         <tr>
-          <th
-            *ngFor="let col of columns()"
-            class="sticky top-0 z-10 border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-600"
+          @for (col of columns(); track col) {
+            <th
+              class="sticky top-0 z-10 border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-600"
             [ngClass]="[
               col.headerClass ?? '',
               col.widthClass ?? '',
               getAlignClass(col.align)
             ]"
-          >
-            {{ col.header }}
-          </th>
+              >
+              {{ col.header }}
+            </th>
+          }
         </tr>
       </thead>
 
       <tbody>
         <!-- Loading -->
-        <ng-container *ngIf="isLoading(); else dataState">
-          <tr *ngFor="let _ of [1, 2, 3, 4, 5]">
-            <td
-              *ngFor="let col of columns()"
-              class="border-b border-slate-100 px-4 py-3"
-            >
-              <div class="h-4 w-full animate-pulse rounded bg-slate-100"></div>
-            </td>
-          </tr>
-        </ng-container>
-
-        <ng-template #dataState>
+        @if (isLoading()) {
+          @for (_ of [1, 2, 3, 4, 5]; track _) {
+            <tr>
+              @for (col of columns(); track col) {
+                <td
+                  class="border-b border-slate-100 px-4 py-3"
+                  >
+                  <div class="h-4 w-full animate-pulse rounded bg-slate-100"></div>
+                </td>
+              }
+            </tr>
+          }
+        } @else {
           <!-- Empty -->
-          <tr *ngIf="!data().length">
-            <td
-              [attr.colspan]="colCount()"
-              class="px-4 py-10 text-center text-sm text-slate-500"
-            >
-              No hay datos para mostrar 🫠
-            </td>
-          </tr>
-
+          @if (!data().length) {
+            <tr>
+              <td
+                [attr.colspan]="colCount()"
+                class="px-4 py-10 text-center text-sm text-slate-500"
+                >
+                No hay datos para mostrar 🫠
+              </td>
+            </tr>
+          }
           <!-- Rows -->
-          <tr
-            *ngFor="let row of data(); trackBy: trackBy()"
-            class="cursor-pointer hover:bg-slate-50"
-            (click)="rowClick.emit(row)"
-          >
-            <td
-              *ngFor="let col of columns()"
-              class="border-b border-slate-100 px-4 py-3 text-sm text-slate-700"
+          @for (row of data(); track trackBy()($index, row)) {
+            <tr
+              class="cursor-pointer hover:bg-slate-50"
+              (click)="rowClick.emit(row)"
+              >
+              @for (col of columns(); track col) {
+                <td
+                  class="border-b border-slate-100 px-4 py-3 text-sm text-slate-700"
               [ngClass]="[
                 col.cellClass ?? '',
                 col.widthClass ?? '',
                 getAlignClass(col.align)
               ]"
-            >
-              <ng-container *ngIf="!col.actions; else actionsTemplate">
-                <ng-container [ngSwitch]="col.pipe">
-                  <ng-container *ngSwitchCase="'date'">
-                    {{
-                      getCellValue(row, col)
+                  >
+                  @if (!col.actions) {
+                    @switch (col.pipe) {
+                      @case ('date') {
+                        {{
+                        getCellValue(row, col)
                         | date : col.pipeArgs || "dd/MM/yyyy"
-                    }}
-                  </ng-container>
-                  <ng-container *ngSwitchDefault>
-                    {{ getCellValue(row, col) }}
-                  </ng-container>
-                </ng-container>
-              </ng-container>
-
-              <ng-template #actionsTemplate>
-                <div
-                  class="flex items-center gap-2"
-                  [ngClass]="getAlignClass(col.align)"
-                >
-                  <ng-container *ngFor="let action of col.actions">
-                    <button
-                      *ngIf="!action.show || action.show(row)"
-                      type="button"
-                      (click)="$event.stopPropagation(); action.callback(row)"
-                      class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
+                        }}
+                      }
+                      @default {
+                        {{ getCellValue(row, col) }}
+                      }
+                    }
+                  } @else {
+                    <div
+                      class="flex items-center gap-2"
+                      [ngClass]="getAlignClass(col.align)"
+                      >
+                      @for (action of col.actions; track action) {
+                        @if (!action.show || action.show(row)) {
+                          <button
+                            type="button"
+                            (click)="$event.stopPropagation(); action.callback(row)"
+                            class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
                       [ngClass]="
                         action.class ||
                         'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
                       "
-                      [title]="action.label"
-                    >
-                      <i
-                        *ngIf="action.icon"
-                        [class]="action.icon"
-                        class="text-lg"
-                        >{{ action.label }}</i
-                      >
-                      <span *ngIf="!action.icon">{{ action.label }}</span>
-                    </button>
-                  </ng-container>
-                </div>
-              </ng-template>
-            </td>
-          </tr>
-        </ng-template>
-      </tbody>
-    </table>
+                            [title]="action.label"
+                            >
+                            @if (action.icon) {
+                              <i
+                                [class]="action.icon"
+                                class="text-lg"
+                                >{{ action.label }}</i
+                                >
+                              }
+                              @if (!action.icon) {
+                                <span>{{ action.label }}</span>
+                              }
+                            </button>
+                          }
+                        }
+                      </div>
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          }
+
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>

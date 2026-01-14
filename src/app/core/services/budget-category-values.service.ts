@@ -26,7 +26,7 @@ export class BudgetCategoryValuesService {
 
   private categoryValueIdTrigger = signal<number | undefined>(undefined);
   public categoryValuesResource = rxResource({
-    request: () => {
+    params: () => {
       const budgetCategoryId = this.categoryValueIdTrigger();
       if (!budgetCategoryId) return undefined;
 
@@ -36,13 +36,13 @@ export class BudgetCategoryValuesService {
         budgetCategoryId,
       };
     },
-    loader: ({ request }) => {
-      if (!request) return of([]);
+    stream: ({ params }) => {
+      if (!params) return of([]);
 
       return this.findAll(
-        request.limit,
-        request.offset,
-        request.budgetCategoryId
+        params.limit,
+        params.offset,
+        params.budgetCategoryId
       );
     },
   });

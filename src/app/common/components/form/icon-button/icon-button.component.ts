@@ -1,5 +1,5 @@
 import { Component, computed, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LucideAngularModule, Trash2, Pencil, Plus } from 'lucide-angular';
 
 export type IconButtonVariant =
@@ -29,7 +29,7 @@ export type IconName = keyof typeof ICONS;
 @Component({
   selector: 'app-icon-button',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './icon-button.component.html',
   styleUrl: './icon-button.component.css',
 })

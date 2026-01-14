@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { GenericTableComponent } from '../../../../common/components/ui/table/table.component';
 import { ColumnDef } from '../../../../common/interfaces/table.interface';

@@ -27,13 +27,13 @@ export class BudgetService {
 
   private refreshListTrigger = signal<number>(0);
   public budgetResourceList = rxResource({
-    request: () => ({
+    params: () => ({
       limit: 10,
       offset: 0,
       version: this.refreshListTrigger(),
     }),
-    loader: ({ request }) => {
-      return this.findAll(request.limit, request.offset);
+    stream: ({ params }) => {
+      return this.findAll(params.limit, params.offset);
     },
   });
 
@@ -41,14 +41,14 @@ export class BudgetService {
   private detailVersion = signal<number>(0);
 
   public budgetResourceDetail = rxResource({
-    request: () => {
+    params: () => {
       const id = this.budgetIdTrigger();
       if (!id) return undefined;
       return { id, version: this.detailVersion() };
     },
-    loader: ({ request }) => {
-      if (!request) return of(null as any);
-      return this.findOne(request.id);
+    stream: ({ params }) => {
+      if (!params) return of(null as any);
+      return this.findOne(params.id);
     },
   });
 

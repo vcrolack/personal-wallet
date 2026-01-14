@@ -6,12 +6,12 @@ import {
   afterNextRender,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-circular-progress-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './circular-progress-bar.component.html',
   styleUrl: './circular-progress-bar.component.css',
 })

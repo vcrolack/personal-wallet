@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SkeletonComponent } from '../../../../../../common/components/ui/skeleton/skeleton.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 
 @Component({
   selector: 'app-budget-detail-skeleton',
   standalone: true,
-  imports: [CommonModule, SkeletonComponent, WrapperComponent],
+  imports: [SkeletonComponent, WrapperComponent],
   template: `
     <div class="flex flex-col gap-10">
       <!-- Hero Skeleton -->
