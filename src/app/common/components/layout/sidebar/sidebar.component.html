@@ -1,6 +1,6 @@
 <!-- app.component.html -->
-<div class="flex min-h-screen">
-  <aside class="w-60 border-r p-4 space-y-2">
+<div class="flex h-screen overflow-hidden">
+  <aside class="w-60 border-r p-4 space-y-2 overflow-y-auto">
     <div class="text-xl font-semibold">Mi Billetera</div>
     <nav class="flex flex-col gap-1">
       <a
@@ -48,20 +48,20 @@
       >
     </nav>
   </aside>
-  <main class="flex-1">
-    <header class="h-14 border-b flex items-center justify-between px-4">
+  <main class="flex-1 flex flex-col h-full overflow-hidden">
+    <header class="h-14 border-b flex items-center justify-between px-4 flex-shrink-0">
       <div class="font-medium">
         Bienvenido, {{ currentUser?.name }} {{ currentUser?.lastName }} 👋
       </div>
       <!-- Slot para user menu, mes actual, etc. -->
-      <button
-        class="bg-black text-white cursor-pointer px-4 py-2 rounded-lg"
+      <app-button
+        label="Cerrar sesión"
+        variant="danger"
         (click)="logout()"
       >
-        Cerrar sesión
-      </button>
+      </app-button>
     </header>
-    <section class="p-4">
+    <section class="flex-1 overflow-y-auto p-4">
       <ng-content></ng-content>
     </section>
   </main>
