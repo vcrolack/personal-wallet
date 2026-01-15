@@ -7,6 +7,7 @@ import {
 import { BudgetModel } from '../models/budgets/budget.model';
 import { BudgetGroupModel } from '../models/budgets/budget-group.model';
 import { CategoryAssignmentModel } from '../models/budgets/category-assignment.model';
+import { CategoryRule } from '../models/categories/category.model';
 
 export interface CategoryGroup {
   categoryName: string;
@@ -50,6 +51,7 @@ export class BudgetMapperService {
           acc[catName] = {
             id: curr.budgetCategoryValue.budgetCategoryId,
             categoryName: catName,
+            rule: CategoryRule[curr.budgetCategoryValue.budgetCategory.rule],
             assignments: [],
             totalAllocated: 0,
           };

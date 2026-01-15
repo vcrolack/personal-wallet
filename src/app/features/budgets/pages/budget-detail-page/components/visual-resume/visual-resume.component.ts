@@ -83,6 +83,32 @@ export class VisualResumeComponent {
     return sortedCategories.slice(0, 3);
   });
 
+  public purpuses = computed<PieChartData>(() => {
+    const budget = this.budget();
+    const groups = budget.groups;
+
+    const rulesMap = groups.reduce((acc, group) => {
+      const rule = group.rule;
+      acc[rule] = (acc[rule] || 0) + group.totalAllocated;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const series = Object.values(rulesMap);
+    const labels = Object.keys(rulesMap);
+
+    return {
+      series: series,
+      labels: labels,
+      colors: [
+        '#2563eb', // blue-600
+        '#91B2EB', // blue-300
+        '#10b981', // emerald-500
+        '#fbbf24', // amber-400
+        '#f87171', // red-400
+      ],
+    };
+  });
+
   public get budgetAmount(): string {
     return this.currencyPipe.transform(
       this.budget().budgetAmount,
