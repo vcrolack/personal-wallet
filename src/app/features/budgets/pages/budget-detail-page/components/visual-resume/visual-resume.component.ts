@@ -5,11 +5,18 @@ import { DonutChartComponent } from '../../../../../../common/components/charts/
 import { DonutChartData } from '../../../../../../common/components/charts/models/donut-chart.model';
 import { PieChartData } from '../../../../../../common/components/charts/models/pie-chart.model';
 import { PieChartComponent } from '../../../../../../common/components/charts/pie-chart/pie-chart.component';
+import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 
 @Component({
   selector: 'app-visual-resume',
   standalone: true,
-  imports: [CurrencyPipe, CommonModule, DonutChartComponent, PieChartComponent],
+  imports: [
+    CurrencyPipe,
+    CommonModule,
+    DonutChartComponent,
+    PieChartComponent,
+    WrapperComponent,
+  ],
   templateUrl: './visual-resume.component.html',
   styleUrl: './visual-resume.component.css',
   providers: [CurrencyPipe],
@@ -49,6 +56,15 @@ export class VisualResumeComponent {
         '#6366f1',
       ],
     };
+  });
+
+  public topCategoriesResume = computed(() => {
+    const budget = this.budget();
+    const categories = budget.groups;
+    const sortedCategories = categories.sort(
+      (a, b) => b.totalAllocated - a.totalAllocated
+    );
+    return sortedCategories.slice(0, 3);
   });
 
   public get budgetAmount(): string {
