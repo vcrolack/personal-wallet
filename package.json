@@ -19,7 +19,9 @@
     "@angular/platform-browser-dynamic": "^20.3.16",
     "@angular/router": "^20.3.16",
     "@supabase/supabase-js": "^2.58.0",
+    "apexcharts": "^5.3.6",
     "lucide-angular": "^0.562.0",
+    "ng-apexcharts": "^2.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

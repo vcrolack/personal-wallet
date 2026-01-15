@@ -1,0 +1,17 @@
+<div class="w-full flex-1 flex items-center justify-center">
+  @if (chartOptions()) {
+  <apx-chart
+    class="w-full"
+    [series]="chartOptions().series!"
+    [chart]="chartOptions().chart!"
+    [labels]="chartOptions().labels!"
+    [colors]="chartOptions().colors!"
+    [plotOptions]="chartOptions().plotOptions!"
+    [dataLabels]="chartOptions().dataLabels!"
+    [legend]="chartOptions().legend!"
+    [stroke]="chartOptions().stroke!"
+    [fill]="chartOptions().fill!"
+    [tooltip]="chartOptions().tooltip!"
+  ></apx-chart>
+  }
+</div>
