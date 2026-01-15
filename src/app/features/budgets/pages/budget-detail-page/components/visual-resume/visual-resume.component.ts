@@ -3,26 +3,26 @@ import { BudgetModel } from '../../../../../../core/models/budgets/budget.model'
 import { CurrencyPipe, CommonModule } from '@angular/common';
 import { DonutChartComponent } from '../../../../../../common/components/charts/donut-chart/donut-chart.component';
 import { DonutChartData } from '../../../../../../common/components/charts/models/donut-chart.model';
-
-
+import { PieChartData } from '../../../../../../common/components/charts/models/pie-chart.model';
+import { PieChartComponent } from '../../../../../../common/components/charts/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-visual-resume',
   standalone: true,
-  imports: [CurrencyPipe, CommonModule, DonutChartComponent],
+  imports: [CurrencyPipe, CommonModule, DonutChartComponent, PieChartComponent],
   templateUrl: './visual-resume.component.html',
   styleUrl: './visual-resume.component.css',
-  providers: [CurrencyPipe]
+  providers: [CurrencyPipe],
 })
 export class VisualResumeComponent {
   public budget = input.required<BudgetModel>();
 
   public currencyPipe = inject(CurrencyPipe);
 
-  public chartData = computed<DonutChartData>(() => {
+  public budgetAmountResume = computed<DonutChartData>(() => {
     const budget = this.budget();
     const remaining = Math.max(0, budget.budgetAmount - budget.totalSpent);
-    
+
     return {
       series: [budget.totalSpent, remaining],
       centerLabel: this.budgetAmount,
@@ -31,7 +31,32 @@ export class VisualResumeComponent {
     };
   });
 
+  public categoriesResume = computed<PieChartData>(() => {
+    const budget = this.budget();
+    const categories = budget.groups;
+    const totalSpentByCategory = categories.map((cat) => cat.totalAllocated);
+
+    return {
+      series: totalSpentByCategory,
+      centerLabel: this.budgetAmount,
+      labels: categories.map((cat) => cat.categoryName),
+      colors: [
+        '#2563eb',
+        '#91B2EB',
+        '#f87171',
+        '#fbbf24',
+        '#10b981',
+        '#6366f1',
+      ],
+    };
+  });
+
   public get budgetAmount(): string {
-    return this.currencyPipe.transform(this.budget().budgetAmount, 'CLP', 'symbol-narrow', '1.0-0')!;
+    return this.currencyPipe.transform(
+      this.budget().budgetAmount,
+      'CLP',
+      'symbol-narrow',
+      '1.0-0'
+    )!;
   }
 }
