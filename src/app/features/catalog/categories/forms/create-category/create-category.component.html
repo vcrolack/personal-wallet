@@ -10,5 +10,11 @@
     formControlName="name"
   ></app-input>
 
+  <app-select
+    label="Propósito"
+    formControlName="rule"
+    [options]="rulesSelect"
+  ></app-select>
+
   <app-button [disabled]="form.invalid" label="Crear"></app-button>
 </form>
