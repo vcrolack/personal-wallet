@@ -6,6 +6,8 @@ import { DonutChartData } from '../../../../../../common/components/charts/model
 import { PieChartData } from '../../../../../../common/components/charts/models/pie-chart.model';
 import { PieChartComponent } from '../../../../../../common/components/charts/pie-chart/pie-chart.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
+import { CarouselComponent } from '../../../../../../common/components/ui/carousel/carousel.component';
+import { CarouselSlideDirective } from '../../../../../../common/components/ui/carousel/carousel-slide.directive';
 
 @Component({
   selector: 'app-visual-resume',
@@ -16,6 +18,8 @@ import { WrapperComponent } from '../../../../../../common/components/ui/wrapper
     DonutChartComponent,
     PieChartComponent,
     WrapperComponent,
+    CarouselComponent,
+    CarouselSlideDirective,
   ],
   templateUrl: './visual-resume.component.html',
   styleUrl: './visual-resume.component.css',
@@ -41,12 +45,23 @@ export class VisualResumeComponent {
   public categoriesResume = computed<PieChartData>(() => {
     const budget = this.budget();
     const categories = budget.groups;
-    const totalSpentByCategory = categories.map((cat) => cat.totalAllocated);
+    const totalAllocated = categories.reduce(
+      (acc, cat) => acc + cat.totalAllocated,
+      0
+    );
+    const unallocated = Math.max(0, budget.budgetAmount - totalAllocated);
+
+    const series = [...categories.map((cat) => cat.totalAllocated)];
+    const labels = [...categories.map((cat) => cat.categoryName)];
+
+    if (unallocated > 0) {
+      series.push(unallocated);
+      labels.push('Sin asignar');
+    }
 
     return {
-      series: totalSpentByCategory,
-      centerLabel: this.budgetAmount,
-      labels: categories.map((cat) => cat.categoryName),
+      series: series,
+      labels: labels,
       colors: [
         '#2563eb',
         '#91B2EB',
@@ -54,6 +69,7 @@ export class VisualResumeComponent {
         '#fbbf24',
         '#10b981',
         '#6366f1',
+        '#e2e8f0', // added light gray for unallocated
       ],
     };
   });
@@ -61,7 +77,7 @@ export class VisualResumeComponent {
   public topCategoriesResume = computed(() => {
     const budget = this.budget();
     const categories = budget.groups;
-    const sortedCategories = categories.sort(
+    const sortedCategories = [...categories].sort(
       (a, b) => b.totalAllocated - a.totalAllocated
     );
     return sortedCategories.slice(0, 3);

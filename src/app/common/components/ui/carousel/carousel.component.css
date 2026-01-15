@@ -1,0 +1,111 @@
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 10px 0; /* Space for tooltips */
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-height: 100px;
+  padding: 0 10px; /* Small padding to prevent chart edge clipping */
+  box-sizing: border-box;
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  color: #475569;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.carousel-container:hover .nav-button {
+  opacity: 1;
+}
+
+.nav-button:hover {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.nav-button.prev {
+  left: 12px;
+}
+
+.nav-button.next {
+  right: 12px;
+}
+
+/* Bullets */
+.carousel-bullets {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.bullet:hover {
+  background: #94a3b8;
+}
+
+.bullet.active {
+  background: #2563eb;
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.carousel-slide.active {
+  animation: fadeIn 0.8s ease;
+}

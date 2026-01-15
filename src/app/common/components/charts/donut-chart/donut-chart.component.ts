@@ -11,7 +11,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 })
 export class DonutChartComponent {
   public chartData = input.required<DonutChartData>();
-  public height = input<number>(350);
+  public height = input<number>(300);
 
   public valueFormatter = input<(val: number) => string>(
     (val) => `$${val.toLocaleString('es-CL')}`
@@ -37,7 +37,7 @@ export class DonutChartComponent {
       plotOptions: {
         pie: {
           donut: {
-            size: '75%',
+            // size: '70%',
             labels: {
               show: true,
               name: {

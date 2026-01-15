@@ -12,7 +12,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 })
 export class PieChartComponent {
   public chartData = input.required<PieChartData>();
-  public height = input<number>(350);
+  public height = input<number>(300);
 
   public valueFormatter = input<(val: number) => string>(
     (val) => `$${val.toLocaleString('es-CL')}`
@@ -35,7 +35,8 @@ export class PieChartComponent {
       ],
       chart: {
         type: 'pie',
-        height: this.height(),
+        size: '70%',
+        height: 300,
         animations: {
           enabled: true,
           easing: 'easeinout',
