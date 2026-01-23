@@ -1,33 +1,45 @@
 <app-header title="Categorías"></app-header>
-<app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
 <div class="my-4 flex justify-end gap-4">
   <app-button
     label="Crear categoría"
     (onClick)="toggleModal('category')"
   ></app-button>
+</div>
+
+@if (categoryResource.hasValue()) {
+  <app-generic-table
+    [data]="categoryResource.value()"
+    [columns]="columnsCategories"
+    [isLoading]="categoryResource.isLoading()"
+  ></app-generic-table>
+}
+
+<app-header title="Valores de Categorías"></app-header>
+<app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
+<div class="my-4 flex justify-end gap-4">
   <app-button
     label="Crear valor de categoría"
     (onClick)="toggleModal('category-value')"
   ></app-button>
 </div>
-@if(categoryValuesResource.error()) {
-<p>Error al cargar los valores de la categoría</p>
+@if (categoryValuesResource.error()) {
+  <p>Error al cargar los valores de la categoría</p>
 }
 
 <!--  -->
 
-@if(categoryValuesResource.isLoading()) {
-<p>Cargando valores de la categoría...</p>
+@if (categoryValuesResource.isLoading()) {
+  <p>Cargando valores de la categoría...</p>
 }
 
 <!--  -->
 
-@if(categoryValuesResource.hasValue()) {
-<app-generic-table
-  [data]="categoryValuesResource.value()"
-  [columns]="columns"
-  [isLoading]="categoryValuesResource.isLoading()"
-></app-generic-table>
+@if (categoryValuesResource.hasValue()) {
+  <app-generic-table
+    [data]="categoryValuesResource.value()"
+    [columns]="columnsCategoryValues"
+    [isLoading]="categoryValuesResource.isLoading()"
+  ></app-generic-table>
 }
 
 <app-modal
@@ -35,55 +47,89 @@
   [title]="modalTitle"
   (onClose)="toggleModal(undefined)"
 >
-  @if(modalType() === 'category') {
-  <app-create-category
-    (refreshCategories)="categoryResource.reload()"
-    (closeModal)="toggleModal(undefined)"
-  ></app-create-category>
+  @if (modalType() === "category") {
+    <app-create-category
+      (refreshCategories)="categoryResource.reload()"
+      (closeModal)="toggleModal(undefined)"
+    ></app-create-category>
   }
 
   <!--  -->
 
-  @if(modalType() === 'category-value') {
-  <app-create-category-value
-    [categories]="categoryResource.value() ?? []"
-    (refreshCategories)="categoryValuesResource.reload()"
-    (closeModal)="toggleModal(undefined)"
-  ></app-create-category-value>
+  @if (modalType() === "edit-category" && categoryToEditNarrowed()) {
+    <app-edit-category
+      [category]="categoryToEditNarrowed()!"
+      (refreshCategories)="categoryResource.reload()"
+      (closeModal)="toggleModal(undefined)"
+    ></app-edit-category>
   }
 
   <!--  -->
 
-  @if(modalType() === 'edit-category-value' && categoryToEdit()) {
-  <app-edit-category-value
-    [categoryValue]="categoryToEdit()!"
-    [categories]="categoryResource.value() ?? []"
-    (refreshCategoryValues)="categoryValuesResource.reload()"
-    (closeModal)="toggleModal(undefined)"
-  ></app-edit-category-value>
-  }
-
-  <!--  -->
-
-  @if(modalType() === 'delete-category-value' && categoryToEdit()) {
-  <div class="flex flex-col gap-4">
-    <p>
-      ¿Estás seguro de que deseas eliminar el valor
-      <strong>{{ categoryToEdit()?.name }}</strong
-      >?
-    </p>
-    <div class="flex justify-end gap-4">
-      <app-button
-        label="Cancelar"
-        variant="secondary"
-        (onClick)="toggleModal(undefined)"
-      ></app-button>
-      <app-button
-        label="Eliminar"
-        variant="danger"
-        (onClick)="deleteCategoryValue()"
-      ></app-button>
+  @if (modalType() === "delete-category" && categoryToEdit()) {
+    <div class="flex flex-col gap-4">
+      <p>
+        ¿Estás seguro de que deseas eliminar la categoría
+        <strong>{{ categoryToEdit()?.name }}</strong
+        >?
+      </p>
+      <div class="flex justify-end gap-4">
+        <app-button
+          label="Cancelar"
+          variant="secondary"
+          (onClick)="toggleModal(undefined)"
+        ></app-button>
+        <app-button
+          label="Eliminar"
+          variant="danger"
+          (onClick)="deleteCategory()"
+        ></app-button>
+      </div>
     </div>
-  </div>
+  }
+
+  <!--  -->
+
+  @if (modalType() === "category-value") {
+    <app-create-category-value
+      [categories]="categoryResource.value() ?? []"
+      (refreshCategories)="categoryValuesResource.reload()"
+      (closeModal)="toggleModal(undefined)"
+    ></app-create-category-value>
+  }
+
+  <!--  -->
+
+  @if (modalType() === "edit-category-value" && categoryValueToEditNarrowed()) {
+    <app-edit-category-value
+      [categoryValue]="categoryValueToEditNarrowed()!"
+      [categories]="categoryResource.value() ?? []"
+      (refreshCategoryValues)="categoryValuesResource.reload()"
+      (closeModal)="toggleModal(undefined)"
+    ></app-edit-category-value>
+  }
+
+  <!--  -->
+
+  @if (modalType() === "delete-category-value" && categoryToEdit()) {
+    <div class="flex flex-col gap-4">
+      <p>
+        ¿Estás seguro de que deseas eliminar el valor
+        <strong>{{ categoryToEdit()?.name }}</strong
+        >?
+      </p>
+      <div class="flex justify-end gap-4">
+        <app-button
+          label="Cancelar"
+          variant="secondary"
+          (onClick)="toggleModal(undefined)"
+        ></app-button>
+        <app-button
+          label="Eliminar"
+          variant="danger"
+          (onClick)="deleteCategoryValue()"
+        ></app-button>
+      </div>
+    </div>
   }
 </app-modal>

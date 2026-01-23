@@ -1,0 +1,31 @@
+<form
+  (ngSubmit)="editCategory()"
+  [formGroup]="form"
+  class="flex flex-col gap-6"
+>
+  <app-input
+    label="Nombre de la categoría"
+    formControlName="name"
+    placeholder="Ej: Alimentación"
+  ></app-input>
+
+  <app-select
+    label="Regla de la categoría"
+    formControlName="rule"
+    [options]="rulesSelect"
+    placeholder="Selecciona una regla"
+  ></app-select>
+
+  <div class="mt-4 flex justify-end gap-4">
+    <app-button
+      label="Cancelar"
+      variant="secondary"
+      (onClick)="closeModal.emit()"
+    ></app-button>
+    <app-button
+      label="Guardar cambios"
+      type="submit"
+      [disabled]="form.invalid"
+    ></app-button>
+  </div>
+</form>

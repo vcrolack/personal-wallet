@@ -27,7 +27,7 @@ export class CategoryService {
   private refreshListTrigger = signal<number>(0);
   public categoryResource = rxResource({
     params: () => ({
-      limit: 10,
+      limit: 11,
       offset: 0,
       version: this.refreshListTrigger(),
     }),
