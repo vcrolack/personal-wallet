@@ -38,7 +38,6 @@ import { BudgetCategoryRules } from '../../../../../../core/enums/budget-categor
   selector: 'app-add-category',
   imports: [
     ReactiveFormsModule,
-    SelectComponent,
     InputComponent,
     ButtonComponent,
     AutocompleteComponent,
