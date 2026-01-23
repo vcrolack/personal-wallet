@@ -39,11 +39,7 @@ export class BudgetCategoryValuesService {
     stream: ({ params }) => {
       if (!params) return of([]);
 
-      return this.findAll(
-        params.limit,
-        params.offset,
-        params.budgetCategoryId
-      );
+      return this.findAll(params.limit, params.offset, params.budgetCategoryId);
     },
   });
 
@@ -51,12 +47,16 @@ export class BudgetCategoryValuesService {
     this.categoryValueIdTrigger.set(id);
   }
 
+  public reloadList() {
+    this.categoryValuesResource.reload();
+  }
+
   // HTTP METHODS //
 
   public findAll(
     limit: number = 10,
     offset: number = 0,
-    budgetCategoryId: number
+    budgetCategoryId: number,
   ): Observable<CategoryValueModel[]> {
     const params = new HttpParams()
       .set('limit', limit)
@@ -64,82 +64,79 @@ export class BudgetCategoryValuesService {
       .set('budgetCategoryId', budgetCategoryId);
 
     return this.http
-      .get<ApiResponse<BudgetCategoryValueDTO[]>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-all`,
-        { params }
-      )
+      .get<
+        ApiResponse<BudgetCategoryValueDTO[]>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
         map((response: ApiResponse<BudgetCategoryValueDTO[]>) =>
           response.data.map((categoryValue) =>
-            this.mapper.toModel(categoryValue)
-          )
+            this.mapper.toModel(categoryValue),
+          ),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findOne(id: number): Observable<CategoryValueModel> {
     return this.http
-      .get<ApiResponse<BudgetCategoryValueDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
-      )
+      .get<
+        ApiResponse<BudgetCategoryValueDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-one/${id}`)
       .pipe(
         map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public create(
-    budgetCategoryValue: CreateBudgetCategoryValue
+    budgetCategoryValue: CreateBudgetCategoryValue,
   ): Observable<CategoryValueModel> {
     return this.http
-      .post<ApiResponse<BudgetCategoryValueDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/create`,
-        budgetCategoryValue
-      )
+      .post<
+        ApiResponse<BudgetCategoryValueDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/create`, budgetCategoryValue)
       .pipe(
         map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public update(
     id: number,
-    budgetCategoryValue: UpdateBudgetCategoryValueRequest
+    budgetCategoryValue: UpdateBudgetCategoryValueRequest,
   ): Observable<CategoryValueModel> {
     return this.http
-      .patch<ApiResponse<BudgetCategoryValueDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
-        budgetCategoryValue
-      )
+      .patch<
+        ApiResponse<BudgetCategoryValueDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, budgetCategoryValue)
       .pipe(
         map((response) => this.mapper.toModel(response.data)),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
     return this.http
-      .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/delete/${id}`
-      )
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 }

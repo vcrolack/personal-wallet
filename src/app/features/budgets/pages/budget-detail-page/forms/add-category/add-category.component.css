@@ -30,7 +30,9 @@
 
 /* Combined animation helper */
 .section-enter {
-  animation: fadeIn 500ms ease-out, slideInFromTop 500ms ease-out;
+  animation:
+    fadeIn 500ms ease-out,
+    slideInFromTop 500ms ease-out;
 }
 
 /* Smooth Height Transition Trick */
@@ -47,4 +49,8 @@
 .inner-content {
   overflow: hidden;
   min-height: 0;
+}
+
+.expand-grid.expanded .inner-content {
+  overflow: visible;
 }

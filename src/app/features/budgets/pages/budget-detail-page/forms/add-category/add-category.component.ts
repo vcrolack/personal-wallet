@@ -28,6 +28,11 @@ import { CreateBudgetCategoryAssignmentRequest } from '../../../../../../core/re
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { catchError, finalize, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AutocompleteComponent,
+  AutocompleteOption,
+} from '../../../../../../common/components/form/autocomplete/autocomplete.component';
+import { BudgetCategoryRules } from '../../../../../../core/enums/budget-category-rules.enum';
 
 @Component({
   selector: 'app-add-category',
@@ -36,6 +41,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     SelectComponent,
     InputComponent,
     ButtonComponent,
+    AutocompleteComponent,
   ],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',
@@ -70,10 +76,10 @@ export class AddCategoryComponent implements OnDestroy {
     this.form.get('categoryValue')!.valueChanges,
     {
       initialValue: null,
-    }
+    },
   );
 
-  public categoriesForSelect = computed((): SelectOption[] => {
+  public categoriesForSelect = computed((): AutocompleteOption[] => {
     const allCategories = this.categoryResource.value() ?? [];
     const assignedCategoryIds =
       this.budgetDetailResource
@@ -89,11 +95,11 @@ export class AddCategoryComponent implements OnDestroy {
   });
 
   public categoryValuesForSelect = computed(
-    (): SelectOption[] =>
+    (): AutocompleteOption[] =>
       this.categoryValuesResource.value()?.map((categoryValue) => ({
         label: categoryValue.name,
         value: categoryValue.id,
-      })) ?? []
+      })) ?? [],
   );
 
   constructor() {
@@ -140,13 +146,61 @@ export class AddCategoryComponent implements OnDestroy {
         catchError((error: HttpErrorResponse) => {
           console.error(error);
           return throwError(() => new Error(error.error?.message));
-        })
+        }),
       )
       .subscribe({
         next: () => {
           this.form.reset();
           this.budgetDetailResource.reload();
           this.closeModal.emit();
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
+
+  public createCategory(name: string) {
+    this.categoryService
+      .create({
+        name,
+        rule: BudgetCategoryRules.WANT,
+      })
+      .pipe(
+        finalize(() => this.isLoadingCreatingAssignment.set(false)),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return throwError(() => new Error(error.error?.message));
+        }),
+      )
+      .subscribe({
+        next: (category) => {
+          this.categoryService.reloadList();
+          this.form.patchValue({ category: category.id });
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
+
+  public createCategoryValue(name: string) {
+    this.categoryValueService
+      .create({
+        name,
+        budgetCategoryId: this.form.value.category,
+      })
+      .pipe(
+        finalize(() => this.isLoadingCreatingAssignment.set(false)),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return throwError(() => new Error(error.error?.message));
+        }),
+      )
+      .subscribe({
+        next: (categoryValue) => {
+          this.categoryValueService.reloadList();
+          this.form.patchValue({ categoryValue: categoryValue.id });
         },
         error: (error) => {
           console.error(error);

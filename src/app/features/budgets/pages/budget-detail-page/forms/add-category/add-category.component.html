@@ -11,11 +11,12 @@
         crearla a la sección de categorías)
       </p>
     </div>
-    <app-select
+    <app-autocomplete
       placeholder="Seleccione una categoría"
       formControlName="category"
       [options]="categoriesForSelect()"
-    ></app-select>
+      (noResultsClick)="createCategory($event)"
+    ></app-autocomplete>
   </section>
 
   <div class="expand-grid" [class.expanded]="categoryValuesResource.value()">
@@ -32,11 +33,17 @@
             puedes ir a crearla a la sección de categorías)
           </p>
         </div>
-        <app-select
+        <!-- <app-select
           placeholder="Selecciona un valor de categoría"
           formControlName="categoryValue"
           [options]="categoryValuesForSelect()"
-        ></app-select>
+        ></app-select> -->
+        <app-autocomplete
+          placeholder="Selecciona un valor de categoría"
+          formControlName="categoryValue"
+          [options]="categoryValuesForSelect()"
+          (noResultsClick)="createCategoryValue($event)"
+        ></app-autocomplete>
       </section>
     </div>
   </div>
