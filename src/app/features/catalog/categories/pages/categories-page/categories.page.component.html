@@ -11,6 +11,8 @@
     [data]="categoryResource.value()"
     [columns]="columnsCategories"
     [isLoading]="categoryResource.isLoading()"
+    [pagination]="categoriesPagination()"
+    (pageChange)="onCategoryPageChange($event)"
   ></app-generic-table>
 }
 
@@ -39,6 +41,8 @@
     [data]="categoryValuesResource.value()"
     [columns]="columnsCategoryValues"
     [isLoading]="categoryValuesResource.isLoading()"
+    [pagination]="categoryValuesPagination()"
+    (pageChange)="onCategoryValuePageChange($event)"
   ></app-generic-table>
 }
 

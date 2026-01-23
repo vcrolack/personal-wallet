@@ -24,3 +24,10 @@ export interface TableAction<T> {
   callback: (row: T) => void;
   show?: (row: T) => boolean;
 }
+
+export interface TablePagination {
+  currentPage: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+}

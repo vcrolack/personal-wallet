@@ -25,16 +25,24 @@ export class CategoryService {
   // UI DATA MANAGEMENT
 
   private refreshListTrigger = signal<number>(0);
+  public paginationParams = signal({ limit: 10, offset: 0 });
+
   public categoryResource = rxResource({
     params: () => ({
-      limit: 11,
-      offset: 0,
+      ...this.paginationParams(),
       version: this.refreshListTrigger(),
     }),
     stream: ({ params }) => {
       return this.findAll(params.limit, params.offset);
     },
   });
+
+  public setPagination(page: number, pageSize: number) {
+    this.paginationParams.set({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+  }
 
   public reloadList() {
     this.refreshListTrigger.update((value) => value + 1);

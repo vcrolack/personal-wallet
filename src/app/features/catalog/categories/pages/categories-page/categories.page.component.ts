@@ -70,6 +70,50 @@ export class CategoriesPageComponent {
     if (!item) return undefined;
     return 'categoryId' in item ? (item as CategoryValueModel) : undefined;
   });
+
+  public categoriesPagination = computed(() => {
+    const data = this.categoryResource.value() ?? [];
+    const params = this.categoryService.paginationParams();
+    const currentPage = Math.floor(params.offset / params.limit) + 1;
+    
+    // NOTE: In a real app, Z (totalItems) should come from the backend.
+    // For now, we simulate pagination total items.
+    const hasMore = data.length === params.limit;
+    const totalItems = hasMore ? params.offset + data.length + params.limit : params.offset + data.length;
+    
+    return {
+      currentPage,
+      pageSize: params.limit,
+      totalItems,
+      totalPages: Math.ceil(totalItems / params.limit)
+    };
+  });
+
+  public categoryValuesPagination = computed(() => {
+    const data = this.categoryValuesResource.value() ?? [];
+    const params = this.categoryValuesService.paginationParams();
+    const currentPage = Math.floor(params.offset / params.limit) + 1;
+
+    // Simulate total items for category values
+    const hasMore = data.length === params.limit;
+    const totalItems = hasMore ? params.offset + data.length + params.limit : params.offset + data.length;
+
+    return {
+      currentPage,
+      pageSize: params.limit,
+      totalItems,
+      totalPages: Math.ceil(totalItems / params.limit)
+    };
+  });
+
+  public onCategoryPageChange(page: number) {
+    this.categoryService.setPagination(page, 10);
+  }
+
+  public onCategoryValuePageChange(page: number) {
+    this.categoryValuesService.setPagination(page, 10);
+  }
+
   public columnsCategoryValues: ColumnDef<any>[] = [
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },

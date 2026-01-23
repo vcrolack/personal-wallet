@@ -25,14 +25,15 @@ export class BudgetCategoryValuesService {
   // UI DATA MANAGEMENT
 
   private categoryValueIdTrigger = signal<number | undefined>(undefined);
+  public paginationParams = signal({ limit: 10, offset: 0 });
+
   public categoryValuesResource = rxResource({
     params: () => {
       const budgetCategoryId = this.categoryValueIdTrigger();
       if (!budgetCategoryId) return undefined;
 
       return {
-        limit: 10,
-        offset: 0,
+        ...this.paginationParams(),
         budgetCategoryId,
       };
     },
@@ -43,8 +44,16 @@ export class BudgetCategoryValuesService {
     },
   });
 
+  public setPagination(page: number, pageSize: number) {
+    this.paginationParams.set({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+    });
+  }
+
   public selectCategory(id: number) {
     this.categoryValueIdTrigger.set(id);
+    this.paginationParams.set({ limit: 10, offset: 0 }); // Reset page when category changes
   }
 
   public reloadList() {
