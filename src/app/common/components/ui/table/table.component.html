@@ -5,16 +5,16 @@
       <thead class="bg-slate-50">
         <tr>
           @for (col of columns(); track col) {
-          <th
-            class="sticky top-0 z-10 border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-600"
-            [ngClass]="[
-              col.headerClass ?? '',
-              col.widthClass ?? '',
-              getAlignClass(col.align)
-            ]"
-          >
-            {{ col.header }}
-          </th>
+            <th
+              class="sticky top-0 z-10 border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-600"
+              [ngClass]="[
+                col.headerClass ?? '',
+                col.widthClass ?? '',
+                getAlignClass(col.align),
+              ]"
+            >
+              {{ col.header }}
+            </th>
           }
         </tr>
       </thead>
@@ -22,82 +22,92 @@
       <tbody>
         <!-- Loading -->
         @if (isLoading()) {
-        @for (_ of [1, 2, 3, 4, 5]; track _) {
-        <tr>
-          @for (col of columns(); track col) {
-          <td class="border-b border-slate-100 px-4 py-3">
-            <div class="h-4 w-full animate-pulse rounded bg-slate-100"></div>
-          </td>
+          @for (_ of [1, 2, 3, 4, 5]; track _) {
+            <tr>
+              @for (col of columns(); track col) {
+                <td class="border-b border-slate-100 px-4 py-3">
+                  <div
+                    class="h-4 w-full animate-pulse rounded bg-slate-100"
+                  ></div>
+                </td>
+              }
+            </tr>
           }
-        </tr>
-        }
         } @else {
-        <!-- Empty -->
-        @if (!data().length) {
-        <tr>
-          <td
-            [attr.colspan]="colCount()"
-            class="px-4 py-10 text-center text-sm text-slate-500"
-          >
-            No hay datos para mostrar 🫠
-          </td>
-        </tr>
-        }
-        <!-- Rows -->
-        @for (row of data(); track trackBy()($index, row)) {
-        <tr class="cursor-pointer hover:bg-slate-50" (click)="rowClick.emit(row)">
-          @for (col of columns(); track col) {
-          <td
-            class="border-b border-slate-100 px-4 py-3 text-sm text-slate-700"
-            [ngClass]="[
-                col.cellClass ?? '',
-                col.widthClass ?? '',
-                getAlignClass(col.align)
-              ]"
-          >
-            @if (!col.actions) {
-            @switch (col.pipe) {
-            @case ('date') {
-            {{
-              getCellValue(row, col) | date : col.pipeArgs || "dd/MM/yyyy"
-            }}
-            }
-            @default {
-            {{ getCellValue(row, col) }}
-            }
-            }
-            } @else {
-            <div
-              class="flex items-center gap-2"
-              [ngClass]="getAlignClass(col.align)"
-            >
-              @for (action of col.actions; track action) {
-              @if (!action.show || action.show(row)) {
-              <button
-                type="button"
-                (click)="$event.stopPropagation(); action.callback(row)"
-                class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
-                [ngClass]="
-                        action.class ||
-                        'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
-                      "
-                [title]="action.label"
+          <!-- Empty -->
+          @if (!data().length) {
+            <tr>
+              <td
+                [attr.colspan]="colCount()"
+                class="px-4 py-10 text-center text-sm text-slate-500"
               >
-                @if (action.icon) {
-                <i [class]="action.icon" class="text-lg">{{ action.label }}</i>
-                }
-                @if (!action.icon) {
-                <span>{{ action.label }}</span>
-                }
-              </button>
-              }
-              }
-            </div>
-            }
-          </td>
+                No hay datos para mostrar 🫠
+              </td>
+            </tr>
           }
-        </tr>
-        }
+          <!-- Rows -->
+          @for (row of data(); track trackBy()($index, row)) {
+            <tr
+              class="cursor-pointer hover:bg-slate-50"
+              (click)="rowClick.emit(row)"
+            >
+              @for (col of columns(); track col) {
+                <td
+                  class="border-b border-slate-100 px-4 py-3 text-sm text-slate-700"
+                  [ngClass]="[
+                    col.cellClass ?? '',
+                    col.widthClass ?? '',
+                    getAlignClass(col.align),
+                  ]"
+                >
+                  @if (!col.actions) {
+                    @switch (col.pipe) {
+                      @case ("date") {
+                        {{
+                          getCellValue(row, col)
+                            | date: col.pipeArgs || "dd/MM/yyyy"
+                        }}
+                      }
+                      @default {
+                        {{ getCellValue(row, col) }}
+                      }
+                    }
+                  } @else {
+                    <div
+                      class="flex items-center gap-2"
+                      [ngClass]="getAlignClass(col.align)"
+                    >
+                      @for (action of col.actions; track action) {
+                        @if (!action.show || action.show(row)) {
+                          <button
+                            type="button"
+                            (click)="
+                              $event.stopPropagation(); action.callback(row)
+                            "
+                            class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
+                            [ngClass]="
+                              action.class ||
+                              'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                            "
+                            [title]="action.label"
+                          >
+                            @if (action.icon) {
+                              <i [class]="action.icon" class="text-lg">{{
+                                action.label
+                              }}</i>
+                            }
+                            @if (!action.icon) {
+                              <span>{{ action.label }}</span>
+                            }
+                          </button>
+                        }
+                      }
+                    </div>
+                  }
+                </td>
+              }
+            </tr>
+          }
         }
       </tbody>
     </table>
@@ -105,67 +115,67 @@
 
   <!-- Pagination -->
   @if (pagination()) {
-  <div
-    class="flex items-center justify-between border-t border-slate-200 bg-white px-4 py-3 sm:px-6 mt-4 rounded-xl shadow-sm"
-  >
-    <div class="flex flex-1 justify-between sm:hidden">
-      <button
-        (click)="pageChange.emit(pagination()!.currentPage - 1)"
-        [disabled]="!canGoPrevious()"
-        class="relative inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Anterior
-      </button>
-      <button
-        (click)="pageChange.emit(pagination()!.currentPage + 1)"
-        [disabled]="!canGoNext()"
-        class="relative ml-3 inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Siguiente
-      </button>
-    </div>
-    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-      <div>
-        <p class="text-sm text-slate-700">
-          Mostrando
-          <span class="font-medium">{{ showingFrom() }}</span>
-          a
-          <span class="font-medium">{{ showingTo() }}</span>
-          de
-          <span class="font-medium">{{ pagination()?.totalItems }}</span>
-          resultados
-        </p>
-      </div>
-      <div>
-        <nav
-          class="isolate inline-flex -space-x-px rounded-md shadow-sm"
-          aria-label="Pagination"
+    <div
+      class="flex items-center justify-between border-t border-slate-200 bg-white px-4 py-3 sm:px-6 mt-4 rounded-xl shadow-sm"
+    >
+      <div class="flex flex-1 justify-between sm:hidden">
+        <button
+          (click)="pageChange.emit(pagination()!.currentPage - 1)"
+          [disabled]="!canGoPrevious()"
+          class="relative inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <button
-            (click)="pageChange.emit(pagination()!.currentPage - 1)"
-            [disabled]="!canGoPrevious()"
-            class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          Anterior
+        </button>
+        <button
+          (click)="pageChange.emit(pagination()!.currentPage + 1)"
+          [disabled]="!canGoNext()"
+          class="relative ml-3 inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Siguiente
+        </button>
+      </div>
+      <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-slate-700">
+            Mostrando
+            <span class="font-medium">{{ showingFrom() }}</span>
+            a
+            <span class="font-medium">{{ showingTo() }}</span>
+            de
+            <span class="font-medium">{{ pagination()?.totalItems }}</span>
+            resultados
+          </p>
+        </div>
+        <div>
+          <nav
+            class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+            aria-label="Pagination"
           >
-            <span class="sr-only">Anterior</span>
-            <span class="material-symbols-outlined text-xl">chevron_left</span>
-          </button>
-          <div
-            class="flex items-center px-4 py-2 text-sm font-semibold text-slate-900 border-t border-b border-slate-300 ring-1 ring-inset ring-slate-300"
-          >
-            Página {{ pagination()?.currentPage }} de
-            {{ pagination()?.totalPages }}
-          </div>
-          <button
-            (click)="pageChange.emit(pagination()!.currentPage + 1)"
-            [disabled]="!canGoNext()"
-            class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-          >
-            <span class="sr-only">Siguiente</span>
-            <span class="material-symbols-outlined text-xl">chevron_right</span>
-          </button>
-        </nav>
+            <button
+              (click)="pageChange.emit(pagination()!.currentPage - 1)"
+              [disabled]="!canGoPrevious()"
+              class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <span class="sr-only">Anterior</span>
+              <lucide-icon [img]="ChevronLeft" class="w-5 h-5"></lucide-icon>
+            </button>
+            <div
+              class="flex items-center px-4 py-2 text-sm font-semibold text-slate-900 border-t border-b border-slate-300 ring-1 ring-inset ring-slate-300"
+            >
+              Página {{ pagination()?.currentPage }} de
+              {{ pagination()?.totalPages }}
+            </div>
+            <button
+              (click)="pageChange.emit(pagination()!.currentPage + 1)"
+              [disabled]="!canGoNext()"
+              class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <span class="sr-only">Siguiente</span>
+              <lucide-icon [img]="ChevronRight" class="w-5 h-5"></lucide-icon>
+            </button>
+          </nav>
+        </div>
       </div>
     </div>
-  </div>
   }
 </div>

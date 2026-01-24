@@ -6,15 +6,13 @@
   ></app-button>
 </div>
 
-@if (categoryResource.hasValue()) {
-  <app-generic-table
-    [data]="categoryResource.value()"
-    [columns]="columnsCategories"
-    [isLoading]="categoryResource.isLoading()"
-    [pagination]="categoriesPagination()"
-    (pageChange)="onCategoryPageChange($event)"
-  ></app-generic-table>
-}
+<app-generic-table
+  [data]="categoriesData()"
+  [columns]="columnsCategories"
+  [isLoading]="categoryResource.isLoading()"
+  [pagination]="categoriesPagination()"
+  (pageChange)="onCategoryPageChange($event)"
+></app-generic-table>
 
 <app-header title="Valores de Categorías"></app-header>
 <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
@@ -30,21 +28,13 @@
 
 <!--  -->
 
-@if (categoryValuesResource.isLoading()) {
-  <p>Cargando valores de la categoría...</p>
-}
-
-<!--  -->
-
-@if (categoryValuesResource.hasValue()) {
-  <app-generic-table
-    [data]="categoryValuesResource.value()"
-    [columns]="columnsCategoryValues"
-    [isLoading]="categoryValuesResource.isLoading()"
-    [pagination]="categoryValuesPagination()"
-    (pageChange)="onCategoryValuePageChange($event)"
-  ></app-generic-table>
-}
+<app-generic-table
+  [data]="categoryValuesData()"
+  [columns]="columnsCategoryValues"
+  [isLoading]="categoryValuesResource.isLoading()"
+  [pagination]="categoryValuesPagination()"
+  (pageChange)="onCategoryValuePageChange($event)"
+></app-generic-table>
 
 <app-modal
   [isOpen]="isModalOpen()"
@@ -96,7 +86,7 @@
 
   @if (modalType() === "category-value") {
     <app-create-category-value
-      [categories]="categoryResource.value() ?? []"
+      [categories]="categoriesData()"
       (refreshCategories)="categoryValuesResource.reload()"
       (closeModal)="toggleModal(undefined)"
     ></app-create-category-value>
@@ -107,7 +97,7 @@
   @if (modalType() === "edit-category-value" && categoryValueToEditNarrowed()) {
     <app-edit-category-value
       [categoryValue]="categoryValueToEditNarrowed()!"
-      [categories]="categoryResource.value() ?? []"
+      [categories]="categoriesData()"
       (refreshCategoryValues)="categoryValuesResource.reload()"
       (closeModal)="toggleModal(undefined)"
     ></app-edit-category-value>

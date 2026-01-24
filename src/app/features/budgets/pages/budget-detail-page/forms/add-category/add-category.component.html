@@ -19,7 +19,7 @@
     ></app-autocomplete>
   </section>
 
-  <div class="expand-grid" [class.expanded]="categoryValuesResource.value()">
+  <div class="expand-grid" [class.expanded]="categoryValuesData().length > 0">
     <div class="inner-content">
       <section class="mt-12 section-enter" id="category-value-section">
         <div id="description" class="mb-10 flex items-start gap-4">

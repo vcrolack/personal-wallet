@@ -71,42 +71,47 @@ export class CategoriesPageComponent {
     return 'categoryId' in item ? (item as CategoryValueModel) : undefined;
   });
 
-  public categoriesPagination = computed(() => {
-    const data = this.categoryResource.value() ?? [];
-    const params = this.categoryService.paginationParams();
-    const currentPage = Math.floor(params.page / params.limit) + 1;
+  public categoriesData = computed(() => {
+    const value = this.categoryResource.value();
+    if (!value || Array.isArray(value)) return [];
+    return value.data;
+  });
 
-    // NOTE: In a real app, Z (totalItems) should come from the backend.
-    // For now, we simulate pagination total items.
-    const hasMore = data.length === params.limit;
-    const totalItems = hasMore
-      ? params.page + data.length + params.limit
-      : params.page + data.length;
+  public categoryValuesData = computed(() => {
+    const value = this.categoryValuesResource.value();
+    if (!value || Array.isArray(value)) return [];
+    return value.data;
+  });
+
+  public categoriesPagination = computed(() => {
+    const value = this.categoryResource.value();
+    if (!value || Array.isArray(value) || !value.meta) {
+      return { currentPage: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
+    }
+
+    const { currentPage, itemsPerPage, totalItems, totalPages } = value.meta;
 
     return {
       currentPage,
-      pageSize: params.limit,
+      pageSize: itemsPerPage,
       totalItems,
-      totalPages: Math.ceil(totalItems / params.limit),
+      totalPages,
     };
   });
 
   public categoryValuesPagination = computed(() => {
-    const data = this.categoryValuesResource.value() ?? [];
-    const params = this.categoryValuesService.paginationParams();
-    const currentPage = Math.floor(params.page / params.limit) + 1;
+    const value = this.categoryValuesResource.value();
+    if (!value || Array.isArray(value) || !value.meta) {
+      return { currentPage: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
+    }
 
-    // Simulate total items for category values
-    const hasMore = data.length === params.limit;
-    const totalItems = hasMore
-      ? params.page + data.length + params.limit
-      : params.page + data.length;
+    const { currentPage, itemsPerPage, totalItems, totalPages } = value.meta;
 
     return {
       currentPage,
-      pageSize: params.limit,
+      pageSize: itemsPerPage,
       totalItems,
-      totalPages: Math.ceil(totalItems / params.limit),
+      totalPages,
     };
   });
 
@@ -221,9 +226,9 @@ export class CategoriesPageComponent {
 
   public tabs = computed<TabItem[]>(() => {
     const response = this.categoryResource.value();
-    if (!response) return [];
+    if (!response || !response.data) return [];
 
-    return response.map((category) => ({
+    return response.data.map((category: any) => ({
       label: category.name,
       id: category.id,
     }));

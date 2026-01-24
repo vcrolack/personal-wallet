@@ -13,6 +13,7 @@ import { CategoryValueMapperService } from '../mappers/category-value-mapper.ser
 import { CategoryValueModel } from '../models/categories/category-value.model';
 import { BudgetCategoryValueDTO } from '../dtos/budgets/base-definitions/budget-category-value.dto';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Metadata } from '../dtos/metadata.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class BudgetCategoryValuesService {
       };
     },
     stream: ({ params }) => {
-      if (!params) return of([]);
+      if (!params) return of({ data: [], meta: undefined });
 
       return this.findAll(params.limit, params.page, params.budgetCategoryId);
     },
@@ -66,7 +67,7 @@ export class BudgetCategoryValuesService {
     limit: number = 10,
     page: number = 1,
     budgetCategoryId: number,
-  ): Observable<CategoryValueModel[]> {
+  ): Observable<{ data: CategoryValueModel[]; meta?: Metadata }> {
     const params = new HttpParams()
       .set('limit', limit)
       .set('page', page)
@@ -77,11 +78,12 @@ export class BudgetCategoryValuesService {
         ApiResponse<BudgetCategoryValueDTO[]>
       >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
-        map((response: ApiResponse<BudgetCategoryValueDTO[]>) =>
-          response.data.map((categoryValue) =>
+        map((response: ApiResponse<BudgetCategoryValueDTO[]>) => ({
+          data: response.data.map((categoryValue) =>
             this.mapper.toModel(categoryValue),
           ),
-        ),
+          meta: response.meta,
+        })),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));

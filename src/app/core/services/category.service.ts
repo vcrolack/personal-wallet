@@ -13,6 +13,7 @@ import { CategoryMapperService } from '../mappers/category-mapper.service';
 import { BudgetCategoryDTO } from '../dtos/budgets/base-definitions/budget-category.dto';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UpdateCategoryRequest } from '../requests/categories/update-category.request';
+import { Metadata } from '../dtos/metadata.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -53,16 +54,17 @@ export class CategoryService {
   public findAll(
     limit: number = 10,
     page: number = 1,
-  ): Observable<CategoryModel[]> {
+  ): Observable<{ data: CategoryModel[]; meta?: Metadata }> {
     const params = new HttpParams().set('limit', limit).set('page', page);
     return this.http
       .get<
         ApiResponse<BudgetCategoryDTO[]>
       >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
-        map((response: ApiResponse<BudgetCategoryDTO[]>) =>
-          response.data.map((category) => this.mapper.toModel(category)),
-        ),
+        map((response: ApiResponse<BudgetCategoryDTO[]>) => ({
+          data: response.data.map((category) => this.mapper.toModel(category)),
+          meta: response.meta,
+        })),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));

@@ -79,7 +79,10 @@ export class AddCategoryComponent implements OnDestroy {
   );
 
   public categoriesForSelect = computed((): AutocompleteOption[] => {
-    const allCategories = this.categoryResource.value() ?? [];
+    const response = this.categoryResource.value();
+    if (!response || Array.isArray(response)) return [];
+
+    const allCategories = response.data;
     const assignedCategoryIds =
       this.budgetDetailResource
         .value()
@@ -93,13 +96,18 @@ export class AddCategoryComponent implements OnDestroy {
       }));
   });
 
-  public categoryValuesForSelect = computed(
-    (): AutocompleteOption[] =>
-      this.categoryValuesResource.value()?.map((categoryValue) => ({
-        label: categoryValue.name,
-        value: categoryValue.id,
-      })) ?? [],
-  );
+  public categoryValuesForSelect = computed((): AutocompleteOption[] => {
+    return this.categoryValuesData().map((categoryValue) => ({
+      label: categoryValue.name,
+      value: categoryValue.id,
+    }));
+  });
+
+  public categoryValuesData = computed(() => {
+    const response = this.categoryValuesResource.value();
+    if (!response || Array.isArray(response)) return [];
+    return response.data;
+  });
 
   constructor() {
     effect(() => {

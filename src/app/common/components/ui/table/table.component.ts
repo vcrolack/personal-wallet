@@ -1,11 +1,16 @@
 import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ColumnAlign, ColumnDef, TablePagination } from '../../../interfaces/table.interface';
+import {
+  ColumnAlign,
+  ColumnDef,
+  TablePagination,
+} from '../../../interfaces/table.interface';
+import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
 
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
@@ -15,8 +20,11 @@ export class GenericTableComponent<T> {
   public isLoading = input(false);
   public pagination = input<TablePagination | null>(null);
 
+  public readonly ChevronLeft = ChevronLeft;
+  public readonly ChevronRight = ChevronRight;
+
   public trackBy = input<(index: number, row: T) => any>(
-    (i, row) => (row as any)?.id ?? i
+    (i, row) => (row as any)?.id ?? i,
   );
 
   public rowClick = output<T>();
@@ -36,14 +44,15 @@ export class GenericTableComponent<T> {
 
   public showingFrom = computed(() => {
     const pag = this.pagination();
-    if (!pag) return 0;
+    if (!pag || this.data().length === 0) return 0;
     return (pag.currentPage - 1) * pag.pageSize + 1;
   });
 
   public showingTo = computed(() => {
     const pag = this.pagination();
-    if (!pag) return 0;
-    return Math.min(pag.currentPage * pag.pageSize, pag.totalItems);
+    if (!pag || this.data().length === 0) return 0;
+    const from = (pag.currentPage - 1) * pag.pageSize + 1;
+    return from + this.data().length - 1;
   });
 
   public getAlignClass(align?: ColumnAlign) {
