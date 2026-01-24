@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { GenericTableComponent } from '../../../../common/components/ui/table/table.component';
 import { ColumnDef } from '../../../../common/interfaces/table.interface';
@@ -16,8 +16,30 @@ export class BudgetsPageComponent {
 
   public budgetsResource = this.budgetService.budgetResourceList;
 
-  loading = signal(false);
-  columns: ColumnDef<any>[] = [
+  public budgetsData = computed(() => {
+    const value = this.budgetsResource.value();
+    if (!value || Array.isArray(value)) return [];
+    return value.data;
+  });
+
+  public pagination = computed(() => {
+    const value = this.budgetsResource.value();
+    if (!value || Array.isArray(value) || !value.meta) {
+      return { currentPage: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
+    }
+
+    const { currentPage, itemsPerPage, totalItems, totalPages } = value.meta;
+
+    return {
+      currentPage,
+      pageSize: itemsPerPage,
+      totalItems,
+      totalPages,
+    };
+  });
+
+  public loading = signal(false);
+  public columns: ColumnDef<any>[] = [
     { key: 'startDate', header: 'Fecha de inicio', pipe: 'date' },
     { key: 'endDate', header: 'Fecha de término', pipe: 'date' },
     { key: 'description', header: 'Descripción' },
@@ -30,7 +52,7 @@ export class BudgetsPageComponent {
     {
       key: 'actions',
       header: 'Acciones',
-      align: 'left',
+      align: 'center',
       actions: [
         {
           label: 'Editar',
@@ -48,7 +70,11 @@ export class BudgetsPageComponent {
     },
   ];
 
-  openDetail(id: string) {
+  public openDetail(id: string) {
     this.router.navigate(['/budgets', id]);
+  }
+
+  public onPageChange(page: number) {
+    this.budgetService.setPagination(page, 10);
   }
 }

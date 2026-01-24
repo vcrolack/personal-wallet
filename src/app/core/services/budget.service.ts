@@ -14,6 +14,7 @@ import { BudgetMapperService } from '../mappers/budget-mapper.service';
 import { FullBudgetDTO } from '../dtos/budgets/compose-definitions/full-budget.dto';
 import { BudgetModel } from '../models/budgets/budget.model';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Metadata } from '../dtos/metadata.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -26,16 +27,24 @@ export class BudgetService {
   // UI DATA MANAGEMENT //
 
   private refreshListTrigger = signal<number>(0);
+  public paginationParams = signal({ limit: 10, page: 1 });
+
   public budgetResourceList = rxResource({
     params: () => ({
-      limit: 10,
-      page: 1,
+      ...this.paginationParams(),
       version: this.refreshListTrigger(),
     }),
     stream: ({ params }) => {
       return this.findAll(params.limit, params.page);
     },
   });
+
+  public setPagination(page: number, pageSize: number) {
+    this.paginationParams.set({
+      limit: pageSize,
+      page,
+    });
+  }
 
   private budgetIdTrigger = signal<string | undefined>(undefined);
   private detailVersion = signal<number>(0);
@@ -98,17 +107,17 @@ export class BudgetService {
   public findAll(
     limit: number = 10,
     page: number = 1,
-  ): Observable<BudgetModel[]> {
+  ): Observable<{ data: BudgetModel[]; meta?: Metadata }> {
     const params = new HttpParams().set('limit', limit).set('page', page);
-
     return this.http
       .get<
         ApiResponse<FullBudgetDTO[]>
       >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
-        map((response: ApiResponse<FullBudgetDTO[]>) =>
-          response.data.map((budget) => this.mapper.toModel(budget)),
-        ),
+        map((response: ApiResponse<FullBudgetDTO[]>) => ({
+          data: response.data.map((budget) => this.mapper.toModel(budget)),
+          meta: response.meta,
+        })),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));

@@ -2,15 +2,14 @@
   <h2 class="text-lg font-bold">💰 P R E S U P U E S T O S</h2>
   <button class="bg-black text-white px-5 py-2 rounded-lg">CREAR</button>
 </div>
-@if(budgetsResource.error()) {
-<p>Error al cargar los presupuestos</p>
-} @if(budgetsResource.isLoading()) {
-<p>Cargando presupuestos...</p>
-} @if(budgetsResource.hasValue()) {
-<app-generic-table
-  [data]="budgetsResource.value()"
-  [columns]="columns"
-  [isLoading]="loading()"
-  (rowClick)="openDetail($event.id)"
-/>
+@if (budgetsResource.error()) {
+  <p>Error al cargar los presupuestos</p>
 }
+<app-generic-table
+  [data]="budgetsData()"
+  [pagination]="pagination()"
+  [columns]="columns"
+  [isLoading]="budgetsResource.isLoading()"
+  (rowClick)="openDetail($event.id)"
+  (pageChange)="onPageChange($event)"
+/>
