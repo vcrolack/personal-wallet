@@ -127,14 +127,9 @@ export class CategoriesPageComponent {
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },
     {
-      key: 'createdAt',
-      header: 'Creación',
-      pipe: 'date',
-      pipeArgs: 'dd/MM/yyyy',
-    },
-    {
       key: 'actions',
       header: 'Acciones',
+      align: 'center',
       actions: [
         {
           label: 'Editar',
@@ -163,18 +158,13 @@ export class CategoriesPageComponent {
     { key: 'id', header: 'ID' },
     { key: 'name', header: 'Nombre' },
     {
-      key: 'createdAt',
-      header: 'Creación',
-      pipe: 'date',
-      pipeArgs: 'dd/MM/yyyy',
-    },
-    {
       key: 'rule',
       header: 'Regla',
     },
     {
       key: 'actions',
       header: 'Acciones',
+      align: 'center',
       actions: [
         {
           label: 'Editar',
