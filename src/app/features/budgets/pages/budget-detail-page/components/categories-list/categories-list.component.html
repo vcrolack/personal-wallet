@@ -1,75 +1,87 @@
 <div
   id="categories-list-container"
-  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 px-2"
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 px-2 h-full"
 >
-  @for (group of groupedCategories(); track group.categoryName) {
-  <div
-    class="group w-full transition-transform duration-200 hover:scale-[1.02]"
-  >
-    <app-wrapper
-      class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
-    >
-      <div class="mb-4">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
-          {{ group.categoryName }}
-        </h2>
-        <div class="h-1 w-12 bg-indigo-500 rounded-full mt-1"></div>
-      </div>
-
-      <ul class="flex-grow space-y-3">
-        @for(item of group.assignments; track item.id) {
-        <li
-          class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-slate-50 transition-colors"
+  @if (groupedCategories().length > 0) {
+    @for (group of groupedCategories(); track group.categoryName) {
+      <div
+        class="group w-full transition-transform duration-200 hover:scale-[1.02]"
+      >
+        <app-wrapper
+          class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
         >
-          <div
-            class="w-0 overflow-hidden group-hover/item:w-8 transition-all duration-300 flex items-center"
-          >
-            <app-icon-button
-              size="small"
-              color="danger"
-              name="trash-2"
-              class="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"
-              (onClick)="unassignCategoryValue(item.id)"
-            ></app-icon-button>
+          <div class="mb-4">
+            <h2
+              class="text-sm font-bold uppercase tracking-wider text-slate-500"
+            >
+              {{ group.categoryName }}
+            </h2>
+            <div class="h-1 w-12 bg-indigo-500 rounded-full mt-1"></div>
           </div>
-          <span class="flex-grow text-slate-700 font-medium">{{
-            item.categoryValueName
-          }}</span>
-          <span
-            class="text-slate-900 font-mono text-sm bg-slate-100 px-2 py-1 rounded"
-          >
-            {{
-              item.allocatedAmount
-                | currency : "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
-            }}
-          </span>
-        </li>
-        }
-        <div
-          class="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pt-2"
-        >
-          <app-button
-            label="Agregar +"
-            (onClick)="toggleModal(group.id)"
-          ></app-button>
-        </div>
-      </ul>
 
-      <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
-        <div class="flex justify-between items-baseline">
-          <span class="text-slate-500 text-sm font-medium"
-            >Total presupuestado</span
-          >
-          <strong class="text-xl font-extrabold text-indigo-600">
-            {{
-              group.totalAllocated
-                | currency : "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
-            }}
-          </strong>
-        </div>
+          <ul class="flex-grow space-y-3">
+            @for (item of group.assignments; track item.id) {
+              <li
+                class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                <div
+                  class="w-0 overflow-hidden group-hover/item:w-8 transition-all duration-300 flex items-center"
+                >
+                  <app-icon-button
+                    size="small"
+                    color="danger"
+                    name="trash-2"
+                    class="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"
+                    (onClick)="unassignCategoryValue(item.id)"
+                  ></app-icon-button>
+                </div>
+                <span class="flex-grow text-slate-700 font-medium">{{
+                  item.categoryValueName
+                }}</span>
+                <span
+                  class="text-slate-900 font-mono text-sm bg-slate-100 px-2 py-1 rounded"
+                >
+                  {{
+                    item.allocatedAmount
+                      | currency: "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
+                  }}
+                </span>
+              </li>
+            }
+            <div
+              class="opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pt-2"
+            >
+              <app-button
+                label="Agregar +"
+                (onClick)="toggleModal(group.id)"
+              ></app-button>
+            </div>
+          </ul>
+
+          <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
+            <div class="flex justify-between items-baseline">
+              <span class="text-slate-500 text-sm font-medium"
+                >Total presupuestado</span
+              >
+              <strong class="text-xl font-extrabold text-indigo-600">
+                {{
+                  group.totalAllocated
+                    | currency: "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
+                }}
+              </strong>
+            </div>
+          </div>
+        </app-wrapper>
       </div>
-    </app-wrapper>
-  </div>
+    }
+  } @else {
+    <div class="col-span-full h-full">
+      <app-empty-state
+        [icon]="emptyStateIcon"
+        title="Presupuesto vacío"
+        description="Parece que no has agregado categorías a tu presupuesto. ¡Prueba añadiendo una!"
+      ></app-empty-state>
+    </div>
   }
 </div>
 

@@ -1,40 +1,40 @@
-@if(isLoading() && !budget.value()) {
-<app-budget-detail-skeleton></app-budget-detail-skeleton>
+@if (isLoading() && !budget.value()) {
+  <app-budget-detail-skeleton></app-budget-detail-skeleton>
 }
 
 <!--  -->
 
-@if(budget.value(); as budgetValue) {
-<section
-  class="flex flex-col gap-10 transition-opacity duration-300"
-  [class.opacity-60]="isLoading()"
->
-  <app-hero [budget]="budgetValue"></app-hero>
+@if (budget.value(); as budgetValue) {
+  <section
+    class="flex flex-col gap-10 transition-opacity duration-300"
+    [class.opacity-60]="isLoading()"
+  >
+    <app-hero [budget]="budgetValue"></app-hero>
 
-  <div id="budget-actions">
-    <app-button
-      label="Agregar categoría"
-      (onClick)="toggleModal()"
-    ></app-button>
-  </div>
-
-  <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
-    <div class="xl:col-span-3">
-      <app-categories-list></app-categories-list>
+    <div id="budget-actions">
+      <app-button
+        label="Agregar categoría"
+        (onClick)="toggleModal()"
+      ></app-button>
     </div>
-    <div class="xl:col-span-1">
-      <app-visual-resume [budget]="budgetValue"></app-visual-resume>
-    </div>
-  </div>
-</section>
 
-<app-modal
-  title="Agregar categoría"
-  [isOpen]="isModalOpen()"
-  (onClose)="toggleModal()"
->
-  @if (isModalOpen()) {
-  <app-add-category (closeModal)="toggleModal()"></app-add-category>
-  }
-</app-modal>
+    <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
+      <div class="xl:col-span-3 h-full">
+        <app-categories-list></app-categories-list>
+      </div>
+      <div class="xl:col-span-1">
+        <app-visual-resume [budget]="budgetValue"></app-visual-resume>
+      </div>
+    </div>
+  </section>
+
+  <app-modal
+    title="Agregar categoría"
+    [isOpen]="isModalOpen()"
+    (onClose)="toggleModal()"
+  >
+    @if (isModalOpen()) {
+      <app-add-category (closeModal)="toggleModal()"></app-add-category>
+    }
+  </app-modal>
 }

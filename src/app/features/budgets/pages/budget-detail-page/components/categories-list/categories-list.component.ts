@@ -7,6 +7,8 @@ import { CreateCategoryValueAndAssignmentComponent } from './forms/create-catego
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
 import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
+import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
+import { CircleDollarSign } from 'lucide-angular';
 
 @Component({
   selector: 'app-categories-list',
@@ -17,6 +19,7 @@ import { BudgetCategoryAssignmentsService } from '../../../../../../core/service
     ModalComponent,
     CreateCategoryValueAndAssignmentComponent,
     IconButtonComponent,
+    EmptyStateComponent,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
@@ -24,6 +27,8 @@ import { BudgetCategoryAssignmentsService } from '../../../../../../core/service
 export class CategoriesListComponent {
   private budgetService = inject(BudgetService);
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
+
+  public emptyStateIcon = CircleDollarSign;
 
   public isModalOpen = signal<boolean>(false);
   public selectedCategoryId = signal<number | null>(null);
