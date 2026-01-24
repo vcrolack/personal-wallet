@@ -22,68 +22,66 @@ export class TransactionsService {
 
   public create(body: CreateTransactionRequest): Observable<TransactionModel> {
     return this.http
-      .post<ApiResponse<TransactionDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/create`,
-        body
-      )
+      .post<
+        ApiResponse<TransactionDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/create`, body)
       .pipe(
         map((response: ApiResponse<TransactionDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findAll(
     limit: number = 10,
-    offset: number = 0
+    page: number = 1,
   ): Observable<TransactionModel[]> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams().set('limit', limit).set('page', page);
     return this.http
-      .get<ApiResponse<TransactionDTO[]>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-all`,
-        { params }
-      )
+      .get<
+        ApiResponse<TransactionDTO[]>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
         map((response: ApiResponse<TransactionDTO[]>) =>
-          response.data.map((transaction) => this.mapper.toModel(transaction))
+          response.data.map((transaction) => this.mapper.toModel(transaction)),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findOne(id: string): Observable<TransactionModel> {
     return this.http
-      .get<ApiResponse<TransactionDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
-      )
+      .get<
+        ApiResponse<TransactionDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-one/${id}`)
       .pipe(
         map((response: ApiResponse<TransactionDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public delete(id: string): Observable<ApiResponse<{ message: string }>> {
     return this.http
-      .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/delete/${id}`
-      )
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 }

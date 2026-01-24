@@ -29,11 +29,11 @@ export class BudgetService {
   public budgetResourceList = rxResource({
     params: () => ({
       limit: 10,
-      offset: 0,
+      page: 1,
       version: this.refreshListTrigger(),
     }),
     stream: ({ params }) => {
-      return this.findAll(params.limit, params.offset);
+      return this.findAll(params.limit, params.page);
     },
   });
 
@@ -68,70 +68,67 @@ export class BudgetService {
 
   public update(
     id: string,
-    body: UpdateBudgetRequest
+    body: UpdateBudgetRequest,
   ): Observable<ApiResponse<Budget>> {
     return this.http
-      .patch<ApiResponse<Budget>>(
-        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
-        body
-      )
+      .patch<
+        ApiResponse<Budget>
+      >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, body)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public create(body: CreateBudgetRequest): Observable<ApiResponse<Budget>> {
     return this.http
-      .post<ApiResponse<Budget>>(
-        `${environment.merakiUrl}/${this.endpoint}/create`,
-        body
-      )
+      .post<
+        ApiResponse<Budget>
+      >(`${environment.merakiUrl}/${this.endpoint}/create`, body)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findAll(
     limit: number = 10,
-    offset: number = 0
+    page: number = 1,
   ): Observable<BudgetModel[]> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams().set('limit', limit).set('page', page);
 
     return this.http
-      .get<ApiResponse<FullBudgetDTO[]>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-all`,
-        { params }
-      )
+      .get<
+        ApiResponse<FullBudgetDTO[]>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
         map((response: ApiResponse<FullBudgetDTO[]>) =>
-          response.data.map((budget) => this.mapper.toModel(budget))
+          response.data.map((budget) => this.mapper.toModel(budget)),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findOne(id: string): Observable<BudgetModel> {
     return this.http
-      .get<ApiResponse<FullBudgetDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-one/${id}`
-      )
+      .get<
+        ApiResponse<FullBudgetDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-one/${id}`)
       .pipe(
         map((response: ApiResponse<FullBudgetDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 }

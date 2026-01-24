@@ -25,7 +25,7 @@ export class CategoryService {
   // UI DATA MANAGEMENT
 
   private refreshListTrigger = signal<number>(0);
-  public paginationParams = signal({ limit: 10, offset: 0 });
+  public paginationParams = signal({ limit: 10, page: 1 });
 
   public categoryResource = rxResource({
     params: () => ({
@@ -33,14 +33,14 @@ export class CategoryService {
       version: this.refreshListTrigger(),
     }),
     stream: ({ params }) => {
-      return this.findAll(params.limit, params.offset);
+      return this.findAll(params.limit, params.page);
     },
   });
 
   public setPagination(page: number, pageSize: number) {
     this.paginationParams.set({
       limit: pageSize,
-      offset: (page - 1) * pageSize,
+      page,
     });
   }
 
@@ -52,9 +52,9 @@ export class CategoryService {
 
   public findAll(
     limit: number = 10,
-    offset: number = 0,
+    page: number = 1,
   ): Observable<CategoryModel[]> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams().set('limit', limit).set('page', page);
     return this.http
       .get<
         ApiResponse<BudgetCategoryDTO[]>

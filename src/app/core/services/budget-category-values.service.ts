@@ -25,7 +25,7 @@ export class BudgetCategoryValuesService {
   // UI DATA MANAGEMENT
 
   private categoryValueIdTrigger = signal<number | undefined>(undefined);
-  public paginationParams = signal({ limit: 10, offset: 0 });
+  public paginationParams = signal({ limit: 10, page: 1 });
 
   public categoryValuesResource = rxResource({
     params: () => {
@@ -40,20 +40,20 @@ export class BudgetCategoryValuesService {
     stream: ({ params }) => {
       if (!params) return of([]);
 
-      return this.findAll(params.limit, params.offset, params.budgetCategoryId);
+      return this.findAll(params.limit, params.page, params.budgetCategoryId);
     },
   });
 
   public setPagination(page: number, pageSize: number) {
     this.paginationParams.set({
       limit: pageSize,
-      offset: (page - 1) * pageSize,
+      page,
     });
   }
 
   public selectCategory(id: number) {
     this.categoryValueIdTrigger.set(id);
-    this.paginationParams.set({ limit: 10, offset: 0 }); // Reset page when category changes
+    this.paginationParams.set({ limit: 10, page: 1 }); // Reset page when category changes
   }
 
   public reloadList() {
@@ -64,12 +64,12 @@ export class BudgetCategoryValuesService {
 
   public findAll(
     limit: number = 10,
-    offset: number = 0,
+    page: number = 1,
     budgetCategoryId: number,
   ): Observable<CategoryValueModel[]> {
     const params = new HttpParams()
       .set('limit', limit)
-      .set('offset', offset)
+      .set('page', page)
       .set('budgetCategoryId', budgetCategoryId);
 
     return this.http

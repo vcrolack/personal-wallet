@@ -22,81 +22,78 @@ export class TransactionTypeService {
   private endpoint = 'transaction-types';
 
   public create(
-    body: CreateTransactionTypeRequest
+    body: CreateTransactionTypeRequest,
   ): Observable<TransactionTypeModel> {
     return this.http
-      .post<ApiResponse<TransactionTypeDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/create`,
-        body
-      )
+      .post<
+        ApiResponse<TransactionTypeDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/create`, body)
       .pipe(
         map((response: ApiResponse<TransactionTypeDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findAll(
     limit: number = 10,
-    offset: number = 0
+    page: number = 1,
   ): Observable<TransactionTypeModel[]> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams().set('limit', limit).set('page', page);
 
     return this.http
-      .get<ApiResponse<TransactionTypeDTO[]>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-all`,
-        { params }
-      )
+      .get<
+        ApiResponse<TransactionTypeDTO[]>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
         map((response: ApiResponse<TransactionTypeDTO[]>) =>
           response.data.map((transactionType) =>
-            this.mapper.toModel(transactionType)
-          )
+            this.mapper.toModel(transactionType),
+          ),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public update(
     id: number,
-    body: UpdateTransactionTypeRequest
+    body: UpdateTransactionTypeRequest,
   ): Observable<TransactionTypeModel> {
     if (!body.name || body.name.trim().length === 0)
       throw new Error('El nombre no puede estar vacío');
 
     return this.http
-      .put<ApiResponse<TransactionTypeDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
-        body
-      )
+      .put<
+        ApiResponse<TransactionTypeDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, body)
       .pipe(
         map((response: ApiResponse<TransactionTypeDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
     return this.http
-      .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/delete/${id}`
-      )
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 }

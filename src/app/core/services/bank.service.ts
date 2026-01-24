@@ -23,40 +23,38 @@ export class BankService {
 
   public create(body: CreateBankRequest): Observable<BankModel> {
     return this.http
-      .post<ApiResponse<BankDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/create`,
-        body
-      )
+      .post<
+        ApiResponse<BankDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/create`, body)
       .pipe(
         map((response: ApiResponse<BankDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public findAll(
     limit: number = 10,
-    offset: number = 0
+    page: number = 1,
   ): Observable<BankModel[]> {
-    const params = new HttpParams().set('limit', limit).set('offset', offset);
+    const params = new HttpParams().set('limit', limit).set('page', page);
 
     return this.http
-      .get<ApiResponse<BankDTO[]>>(
-        `${environment.merakiUrl}/${this.endpoint}/find-all`,
-        { params }
-      )
+      .get<
+        ApiResponse<BankDTO[]>
+      >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
         map((response: ApiResponse<BankDTO[]>) =>
-          response.data.map((bank) => this.mapper.toModel(bank))
+          response.data.map((bank) => this.mapper.toModel(bank)),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
@@ -65,31 +63,30 @@ export class BankService {
       throw new Error('Nombre no puede estar vacío');
 
     return this.http
-      .put<ApiResponse<BankDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/update/${id}`,
-        body
-      )
+      .put<
+        ApiResponse<BankDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, body)
       .pipe(
         map((response: ApiResponse<BankDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
     return this.http
-      .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/delete/${id}`
-      )
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 }
