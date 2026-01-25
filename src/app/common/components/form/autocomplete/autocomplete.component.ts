@@ -5,12 +5,14 @@ import {
   input,
   output,
   signal,
+  OnDestroy,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 
 export interface AutocompleteOption {
   label: string;
@@ -31,16 +33,18 @@ export interface AutocompleteOption {
     },
   ],
 })
-export class AutocompleteComponent implements ControlValueAccessor {
+export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   public label = input<string>('');
   public options = input<AutocompleteOption[]>([]);
   public placeholder = input<string>('Escribe para buscar...');
   public noResultsActionLabel = input<string>('Agregar nuevo');
+  public debounceTime = input<number>(500);
   public id = input<string>(
-    `autocomplete-${Math.random().toString(36).substring(2, 9)}`
+    `autocomplete-${Math.random().toString(36).substring(2, 9)}`,
   );
 
   public noResultsClick = output<string>();
+  public queryChange = output<string>();
 
   public query = signal<string>('');
   public isOpen = signal<boolean>(false);
@@ -49,6 +53,22 @@ export class AutocompleteComponent implements ControlValueAccessor {
 
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
+
+  private querySubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
+
+  constructor() {
+    this.querySubject
+      .pipe(debounceTime(this.debounceTime()), takeUntil(this.destroy$))
+      .subscribe((query) => {
+        this.queryChange.emit(query);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   public filteredOptions = computed(() => {
     const q = this.query().toLowerCase();
@@ -59,6 +79,7 @@ export class AutocompleteComponent implements ControlValueAccessor {
   public handleInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.query.set(inputElement.value);
+    this.querySubject.next(inputElement.value);
     this.isOpen.set(true);
 
     // Reset value if user is typing and it doesn't match a selection anymore

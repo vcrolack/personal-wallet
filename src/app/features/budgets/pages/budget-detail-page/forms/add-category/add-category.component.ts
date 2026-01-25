@@ -214,4 +214,8 @@ export class AddCategoryComponent implements OnDestroy {
         },
       });
   }
+
+  public searchCategory(term: string) {
+    this.categoryService.search(term);
+  }
 }

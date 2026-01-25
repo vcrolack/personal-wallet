@@ -16,6 +16,7 @@
       formControlName="category"
       [options]="categoriesForSelect()"
       (noResultsClick)="createCategory($event)"
+      (queryChange)="searchCategory($event)"
     ></app-autocomplete>
   </section>
 
