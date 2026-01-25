@@ -26,7 +26,7 @@ export class CategoryService {
   // UI DATA MANAGEMENT
 
   private refreshListTrigger = signal<number>(0);
-  public paginationParams = signal({ limit: 10, page: 1 });
+  public paginationParams = signal({ limit: 10, page: 1, query: '' });
 
   public categoryResource = rxResource({
     params: () => ({
@@ -34,7 +34,7 @@ export class CategoryService {
       version: this.refreshListTrigger(),
     }),
     stream: ({ params }) => {
-      return this.findAll(params.limit, params.page);
+      return this.findAll(params.limit, params.page, params.query);
     },
   });
 
@@ -42,7 +42,16 @@ export class CategoryService {
     this.paginationParams.set({
       limit: pageSize,
       page,
+      query: this.paginationParams().query,
     });
+  }
+
+  public search(term: string) {
+    this.paginationParams.update((prevValue) => ({
+      ...prevValue,
+      query: term,
+      page: 1,
+    }));
   }
 
   public reloadList() {
@@ -54,8 +63,14 @@ export class CategoryService {
   public findAll(
     limit: number = 10,
     page: number = 1,
+    query?: string,
   ): Observable<{ data: CategoryModel[]; meta?: Metadata }> {
-    const params = new HttpParams().set('limit', limit).set('page', page);
+    let params = new HttpParams().set('limit', limit).set('page', page);
+
+    if (query) {
+      params = params.set('query', query);
+    }
+
     return this.http
       .get<
         ApiResponse<BudgetCategoryDTO[]>
