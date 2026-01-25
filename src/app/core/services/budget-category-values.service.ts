@@ -27,6 +27,7 @@ export class BudgetCategoryValuesService {
 
   private categoryValueIdTrigger = signal<number | undefined>(undefined);
   public paginationParams = signal({ limit: 10, page: 1 });
+  public searchTerm = signal('');
 
   public categoryValuesResource = rxResource({
     params: () => {
@@ -36,12 +37,18 @@ export class BudgetCategoryValuesService {
       return {
         ...this.paginationParams(),
         budgetCategoryId,
+        query: this.searchTerm(),
       };
     },
     stream: ({ params }) => {
       if (!params) return of({ data: [], meta: undefined });
 
-      return this.findAll(params.limit, params.page, params.budgetCategoryId);
+      return this.findAll(
+        params.limit,
+        params.page,
+        params.budgetCategoryId,
+        params.query,
+      );
     },
   });
 
@@ -50,6 +57,11 @@ export class BudgetCategoryValuesService {
       limit: pageSize,
       page,
     });
+  }
+
+  public search(term: string) {
+    this.searchTerm.set(term);
+    this.paginationParams.set({ limit: 10, page: 1 });
   }
 
   public selectCategory(id: number) {
@@ -67,11 +79,14 @@ export class BudgetCategoryValuesService {
     limit: number = 10,
     page: number = 1,
     budgetCategoryId: number,
+    query?: string,
   ): Observable<{ data: CategoryValueModel[]; meta?: Metadata }> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('limit', limit)
       .set('page', page)
       .set('budgetCategoryId', budgetCategoryId);
+
+    if (query) params = params.set('query', query);
 
     return this.http
       .get<

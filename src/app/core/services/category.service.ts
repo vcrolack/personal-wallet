@@ -26,12 +26,14 @@ export class CategoryService {
   // UI DATA MANAGEMENT
 
   private refreshListTrigger = signal<number>(0);
-  public paginationParams = signal({ limit: 10, page: 1, query: '' });
+  public paginationParams = signal({ limit: 10, page: 1 });
+  public searchTerm = signal('');
 
   public categoryResource = rxResource({
     params: () => ({
       ...this.paginationParams(),
       version: this.refreshListTrigger(),
+      query: this.searchTerm(),
     }),
     stream: ({ params }) => {
       return this.findAll(params.limit, params.page, params.query);
@@ -42,16 +44,12 @@ export class CategoryService {
     this.paginationParams.set({
       limit: pageSize,
       page,
-      query: this.paginationParams().query,
     });
   }
 
   public search(term: string) {
-    this.paginationParams.update((prevValue) => ({
-      ...prevValue,
-      query: term,
-      page: 1,
-    }));
+    this.searchTerm.set(term);
+    this.paginationParams.set({ limit: 10, page: 1 });
   }
 
   public reloadList() {
