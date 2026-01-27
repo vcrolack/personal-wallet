@@ -8,7 +8,9 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
 import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
 import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
 import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
+import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
 import { CircleDollarSign } from 'lucide-angular';
+import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
 
 @Component({
   selector: 'app-categories-list',
@@ -20,6 +22,7 @@ import { CircleDollarSign } from 'lucide-angular';
     CreateCategoryValueAndAssignmentComponent,
     IconButtonComponent,
     EmptyStateComponent,
+    EditableFieldComponent,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
@@ -44,6 +47,20 @@ export class CategoriesListComponent {
 
   public unassignCategoryValue(id: string) {
     this.categoryAssignmentService.unassingCategory(id).subscribe({
+      next: () => {
+        this.budget.reload();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  public editAssignmentCategoryValue(
+    id: string,
+    body: UpdateBudgetCategoryAssignmentRequest,
+  ) {
+    this.categoryAssignmentService.updateAssignment(id, body).subscribe({
       next: () => {
         this.budget.reload();
       },

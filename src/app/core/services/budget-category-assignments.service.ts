@@ -7,6 +7,7 @@ import { BudgetCategoryAssignmentDTO } from '../dtos/categories/budget-category-
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { CategoryAssignmentMapperService } from '../mappers/category-assignment-mapper.service';
+import { UpdateBudgetCategoryAssignmentRequest } from '../requests/budget-category-assignments/update-budget-category-assignment.request';
 
 @Injectable({
   providedIn: 'root',
@@ -48,13 +49,24 @@ export class BudgetCategoryAssignmentsService {
       );
   }
 
-  public editAssignment(
-    body: CreateBudgetCategoryAssignmentRequest,
+  public updateAssignment(
+    id: string,
+    body: UpdateBudgetCategoryAssignmentRequest,
   ): Observable<CategoryAssignmentModel> {
+    const requestBody = {
+      ...body,
+      ...(body.allocatedAmount !== undefined && {
+        allocatedAmount: +body.allocatedAmount,
+      }),
+      ...(body.budgetCategoryValueId !== undefined && {
+        budgetCategoryValueId: +body.budgetCategoryValueId,
+      }),
+    };
+
     return this.http
-      .put<
+      .patch<
         ApiResponse<BudgetCategoryAssignmentDTO>
-      >(`${environment.merakiUrl}/${this.endpoint}/edit-assignment`, body)
+      >(`${environment.merakiUrl}/${this.endpoint}/update-assignment/${id}`, requestBody)
       .pipe(
         map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
           this.mapper.toModel(response.data),

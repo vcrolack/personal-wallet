@@ -38,14 +38,12 @@
                 <span class="flex-grow text-slate-700 font-medium">{{
                   item.categoryValueName
                 }}</span>
-                <span
-                  class="text-slate-900 font-mono text-sm bg-slate-100 px-2 py-1 rounded"
-                >
-                  {{
-                    item.allocatedAmount
-                      | currency: "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
-                  }}
-                </span>
+                <app-editable-field
+                  type="number"
+                  size="small"
+                  [value]="item.allocatedAmount"
+                  (saved)="editAssignmentCategoryValue(item.id, { allocatedAmount: $event })"
+                ></app-editable-field>
               </li>
             }
             <div
