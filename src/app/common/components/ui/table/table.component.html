@@ -68,6 +68,12 @@
                             | date: col.pipeArgs || "dd/MM/yyyy"
                         }}
                       }
+                      @case ("currency") {
+                        {{
+                          getCellValue(row, col)
+                            | currency: col.pipeArgs || "CLP"
+                        }}
+                      }
                       @default {
                         {{ getCellValue(row, col) }}
                       }

@@ -36,7 +36,7 @@ export class HeroComponent {
   }
 
   public get isShared(): { label: string; variant: BadgeVariant } {
-    if (!this.budget()?.isShared)
+    if (this.budget()?.isShared)
       return {
         label: 'Público',
         variant: 'success',
@@ -51,7 +51,7 @@ export class HeroComponent {
   public get period(): string {
     return `desde ${this.datePipe.transform(
       this.budget().startDate,
-      'dd/MM/yyyy'
+      'dd/MM/yyyy',
     )} hasta ${this.datePipe.transform(this.budget().endDate, 'dd/MM/yyyy')}`;
   }
 

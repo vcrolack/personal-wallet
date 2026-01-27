@@ -42,12 +42,29 @@ export class BudgetsPageComponent {
   public columns: ColumnDef<any>[] = [
     { key: 'startDate', header: 'Fecha de inicio', pipe: 'date' },
     { key: 'endDate', header: 'Fecha de término', pipe: 'date' },
-    { key: 'description', header: 'Descripción' },
+    { key: 'title', header: 'Nombre' },
+    {
+      key: 'isShared',
+      header: 'Acceso',
+      formatter: (v) => (v ? 'Compartido' : 'Privado'),
+    },
+    {
+      key: 'endDate',
+      header: 'Caducado',
+      formatter: (v) => {
+        const date = new Date(v as string);
+        const today = new Date();
+        if (date < today) {
+          return 'Sí';
+        }
+        return 'No';
+      },
+    },
     {
       key: 'budgetAmount',
       header: 'Dinero destinado',
       align: 'center',
-      formatter: (v) => `$ ${Number(v).toFixed(2)}`,
+      pipe: 'currency',
     },
     {
       key: 'actions',
