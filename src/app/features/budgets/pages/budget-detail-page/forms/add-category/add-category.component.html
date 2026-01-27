@@ -1,30 +1,6 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form" class="px-4" action="">
   <app-category-selector [form]="form"></app-category-selector>
-
-  <div class="expand-grid" [class.expanded]="categoryId()">
-    <div class="inner-content">
-      <section class="mt-12 section-enter" id="category-value-section">
-        <div id="description" class="mb-10 flex items-start gap-4">
-          <span
-            class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
-          >
-            2
-          </span>
-          <p class="text-slate-600 leading-relaxed">
-            Selecciona el valor de la categoría que deseas agregar (Si no está,
-            puedes ir a crearla a la sección de categorías)
-          </p>
-        </div>
-        <app-autocomplete
-          placeholder="Selecciona un valor de categoría"
-          formControlName="categoryValue"
-          [options]="categoryValuesForSelect()"
-          (noResultsClick)="createCategoryValue($event)"
-          (queryChange)="searchCategoryValue($event)"
-        ></app-autocomplete>
-      </section>
-    </div>
-  </div>
+  <app-category-value-selector [form]="form"></app-category-value-selector>
 
   <div class="expand-grid" [class.expanded]="categoryValueId()">
     <div class="inner-content">

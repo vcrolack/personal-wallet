@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -22,7 +21,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-category-selector',
   imports: [AutocompleteComponent, ReactiveFormsModule],
   templateUrl: './category-selector.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategorySelector {
   private categoryService = inject(CategoryService);

@@ -1,6 +1,6 @@
 import {
   Component,
-  computed,
+  effect,
   forwardRef,
   input,
   output,
@@ -67,6 +67,18 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
         }
         this.queryChange.emit(query);
       });
+
+    effect(() => {
+      const q = this.query().toLowerCase();
+      const opts = this.options();
+      if (!q) {
+        this.filteredOptions.set(opts);
+      } else {
+        this.filteredOptions.set(
+          opts.filter((opt) => opt.label.toLowerCase().includes(q))
+        );
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -74,11 +86,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
     this.destroy$.complete();
   }
 
-  public filteredOptions = computed(() => {
-    const q = this.query().toLowerCase();
-    if (!q) return this.options();
-    return this.options().filter((opt) => opt.label.toLowerCase().includes(q));
-  });
+  public filteredOptions = signal<AutocompleteOption[]>([]);
 
   public handleInput(event: Event) {
     if (this.isSelecting) {

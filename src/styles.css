@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+/* Smooth Height Transition Trick */
+.expand-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms ease-out;
+}
+
+.expand-grid.expanded {
+  grid-template-rows: 1fr;
+}
+
+.inner-content {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.expand-grid.expanded .inner-content {
+  overflow: visible;
+}

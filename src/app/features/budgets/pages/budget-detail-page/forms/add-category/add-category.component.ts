@@ -1,16 +1,5 @@
-import {
-  Component,
-  computed,
-  inject,
-  effect,
-  output,
-  OnDestroy,
-  signal,
-} from '@angular/core';
+import { Component, inject, output, OnDestroy, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CategoryService } from '../../../../../../core/services/category.service';
-import { BudgetCategoryValuesService } from '../../../../../../core/services/budget-category-values.service';
-import { BudgetGroupModel } from '../../../../../../core/models/budgets/budget-group.model';
 import { InputComponent } from '../../../../../../common/components/form/input/input.component';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import {
@@ -24,12 +13,10 @@ import { CreateBudgetCategoryAssignmentRequest } from '../../../../../../core/re
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { catchError, finalize, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  AutocompleteComponent,
-  AutocompleteOption,
-} from '../../../../../../common/components/form/autocomplete/autocomplete.component';
+
 import { BudgetCategoryRules } from '../../../../../../core/enums/budget-category-rules.enum';
 import { CategorySelector } from './category-selector/category-selector';
+import { CategoryValueSelector } from './category-value-selector/category-value-selector';
 
 @Component({
   selector: 'app-add-category',
@@ -37,14 +24,13 @@ import { CategorySelector } from './category-selector/category-selector';
     ReactiveFormsModule,
     InputComponent,
     ButtonComponent,
-    AutocompleteComponent,
     CategorySelector,
+    CategoryValueSelector,
   ],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',
 })
 export class AddCategoryComponent implements OnDestroy {
-  private categoryValueService = inject(BudgetCategoryValuesService);
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
   private budgetService = inject(BudgetService);
   private fb = inject(FormBuilder);
@@ -53,18 +39,12 @@ export class AddCategoryComponent implements OnDestroy {
 
   public isLoadingCreatingAssignment = signal<boolean>(false);
 
-  public categoryValuesResource =
-    this.categoryValueService.categoryValuesResource;
   public budgetDetailResource = this.budgetService.budgetResourceDetail;
 
   public form: FormGroup = this.fb.group({
     category: [null, Validators.required],
     categoryValue: [null, Validators.required],
     amount: [null, Validators.required],
-  });
-
-  public categoryId = toSignal(this.form.get('category')!.valueChanges, {
-    initialValue: null,
   });
 
   public categoryValueId = toSignal(
@@ -74,40 +54,7 @@ export class AddCategoryComponent implements OnDestroy {
     },
   );
 
-  public categoryValuesForSelect = computed((): AutocompleteOption[] => {
-    return this.categoryValuesData().map((categoryValue) => ({
-      label: categoryValue.name,
-      value: categoryValue.id,
-    }));
-  });
-
-  public categoryValuesData = computed(() => {
-    const response = this.categoryValuesResource.value();
-    if (!response || Array.isArray(response)) return [];
-    return response.data;
-  });
-
-  constructor() {
-    effect(() => {
-      const categoryId = this.categoryId();
-      if (categoryId) {
-        this.categoryValueService.selectCategory(categoryId);
-      }
-    });
-
-    // Debug: observar cambios en categoryValuesData
-    effect(() => {
-      const data = this.categoryValuesData();
-      console.log(
-        '[AddCategory] categoryValuesData changed:',
-        data.length,
-        'items',
-      );
-    });
-  }
-
   ngOnDestroy(): void {
-    this.categoryValueService.selectCategory(undefined as any);
     this.form.reset();
   }
 
@@ -153,33 +100,5 @@ export class AddCategoryComponent implements OnDestroy {
           console.error(error);
         },
       });
-  }
-
-  public createCategoryValue(name: string) {
-    this.categoryValueService
-      .create({
-        name,
-        budgetCategoryId: this.form.value.category,
-      })
-      .pipe(
-        finalize(() => this.isLoadingCreatingAssignment.set(false)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
-      )
-      .subscribe({
-        next: (categoryValue) => {
-          this.categoryValueService.reloadList();
-          this.form.patchValue({ categoryValue: categoryValue.id });
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
-  }
-
-  public searchCategoryValue(term: string) {
-    this.categoryValueService.search(term);
   }
 }
