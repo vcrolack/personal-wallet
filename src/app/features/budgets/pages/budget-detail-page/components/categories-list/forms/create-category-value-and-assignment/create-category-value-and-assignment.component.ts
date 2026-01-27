@@ -49,17 +49,18 @@ export class CreateCategoryValueAndAssignmentComponent {
             budgetId: this.budget.value()!.id,
             budgetCategoryValueId: categoryValue.id,
             allocatedAmount: +this.form.value.allocatedAmount!,
-          })
+          }),
         ),
         catchError((error: HttpErrorResponse) => {
           console.error(error);
           return throwError(() => new Error(error.error?.message));
-        })
+        }),
       )
       .subscribe({
         next: () => {
           this.budget.reload();
           this.closeModal.emit();
+          this.form.reset();
         },
         error: (error) => {
           console.error(error);
