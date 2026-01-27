@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CreateBudgetCategoryAssignmentRequest } from '../requests/budget-category-assignments/create-budget-category-assignment.request';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CategoryAssignmentModel } from '../models/categories/category-assignment.model';
 import { BudgetCategoryAssignmentDTO } from '../dtos/categories/budget-category-assignments.dto';
 import { ApiResponse } from '../interfaces/api-response.interface';
@@ -28,10 +28,6 @@ export class BudgetCategoryAssignmentsService {
         map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -40,13 +36,7 @@ export class BudgetCategoryAssignmentsService {
       .delete<
         ApiResponse<{ message: string }>
       >(`${environment.merakiUrl}/${this.endpoint}/unassign-category/${id}`)
-      .pipe(
-        map((response: ApiResponse<{ message: string }>) => response.data),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+      .pipe(map((response: ApiResponse<{ message: string }>) => response.data));
   }
 
   public updateAssignment(
@@ -61,10 +51,6 @@ export class BudgetCategoryAssignmentsService {
         map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 }

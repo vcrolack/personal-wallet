@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, throwError, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
@@ -99,10 +95,6 @@ export class BudgetCategoryValuesService {
           ),
           meta: response.meta,
         })),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -111,13 +103,7 @@ export class BudgetCategoryValuesService {
       .get<
         ApiResponse<BudgetCategoryValueDTO>
       >(`${environment.merakiUrl}/${this.endpoint}/find-one/${id}`)
-      .pipe(
-        map((response) => this.mapper.toModel(response.data)),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+      .pipe(map((response) => this.mapper.toModel(response.data)));
   }
 
   public create(
@@ -127,13 +113,7 @@ export class BudgetCategoryValuesService {
       .post<
         ApiResponse<BudgetCategoryValueDTO>
       >(`${environment.merakiUrl}/${this.endpoint}/create`, budgetCategoryValue)
-      .pipe(
-        map((response) => this.mapper.toModel(response.data)),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+      .pipe(map((response) => this.mapper.toModel(response.data)));
   }
 
   public update(
@@ -144,25 +124,12 @@ export class BudgetCategoryValuesService {
       .patch<
         ApiResponse<BudgetCategoryValueDTO>
       >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, budgetCategoryValue)
-      .pipe(
-        map((response) => this.mapper.toModel(response.data)),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+      .pipe(map((response) => this.mapper.toModel(response.data)));
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
-    return this.http
-      .delete<
-        ApiResponse<{ message: string }>
-      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+    return this.http.delete<ApiResponse<{ message: string }>>(
+      `${environment.merakiUrl}/${this.endpoint}/delete/${id}`,
+    );
   }
 }

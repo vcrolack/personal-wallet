@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BankModel } from '../models/banks/bank.model';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { BankDTO } from '../dtos/banks/bank.dto';
@@ -30,10 +26,6 @@ export class BankService {
         map((response: ApiResponse<BankDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -51,10 +43,6 @@ export class BankService {
         map((response: ApiResponse<BankDTO[]>) =>
           response.data.map((bank) => this.mapper.toModel(bank)),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -70,23 +58,12 @@ export class BankService {
         map((response: ApiResponse<BankDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
-    return this.http
-      .delete<
-        ApiResponse<{ message: string }>
-      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+    return this.http.delete<ApiResponse<{ message: string }>>(
+      `${environment.merakiUrl}/${this.endpoint}/delete/${id}`,
+    );
   }
 }

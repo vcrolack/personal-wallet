@@ -1,11 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TransactionTypeMapperService } from '../mappers/transaction-type-mapper.service';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TransactionTypeDTO } from '../dtos/transaction/transaction-type/transaction-type.dto';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { TransactionTypeModel } from '../models/transaction/transaction-type/transaction-type.model';
@@ -32,10 +28,6 @@ export class TransactionTypeService {
         map((response: ApiResponse<TransactionTypeDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -55,10 +47,6 @@ export class TransactionTypeService {
             this.mapper.toModel(transactionType),
           ),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -77,23 +65,12 @@ export class TransactionTypeService {
         map((response: ApiResponse<TransactionTypeDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
   public delete(id: number): Observable<ApiResponse<{ message: string }>> {
-    return this.http
-      .delete<
-        ApiResponse<{ message: string }>
-      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+    return this.http.delete<ApiResponse<{ message: string }>>(
+      `${environment.merakiUrl}/${this.endpoint}/delete/${id}`,
+    );
   }
 }

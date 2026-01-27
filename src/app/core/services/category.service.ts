@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { environment } from '../../../environments/environment';
 import { CreateCategoryRequest } from '../requests/categories/create-category.request';
@@ -78,10 +74,6 @@ export class CategoryService {
           data: response.data.map((category) => this.mapper.toModel(category)),
           meta: response.meta,
         })),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -94,10 +86,6 @@ export class CategoryService {
         map((response: ApiResponse<BudgetCategoryDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
@@ -113,23 +101,12 @@ export class CategoryService {
         map((response: ApiResponse<BudgetCategoryDTO>) =>
           this.mapper.toModel(response.data),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
       );
   }
 
   public delete(id: number): Observable<{ message: string }> {
-    return this.http
-      .delete<
-        ApiResponse<{ message: string }>
-      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+    return this.http.delete<ApiResponse<{ message: string }>>(
+      `${environment.merakiUrl}/${this.endpoint}/delete/${id}`,
+    );
   }
 }

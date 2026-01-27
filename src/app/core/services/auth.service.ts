@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ApiResponse } from '../interfaces/api-response.interface';
 import { AuthData } from '../interfaces/auth.interface';
 
@@ -18,7 +18,7 @@ export class AuthService {
 
   public login(
     email: string,
-    password: string
+    password: string,
   ): Observable<ApiResponse<AuthData>> {
     const url = `${environment.merakiUrl}/auth/login`;
     return this.http.post<ApiResponse<AuthData>>(url, { email, password }).pipe(
@@ -27,10 +27,6 @@ export class AuthService {
         this.saveToStorage(authData);
         this._authData.set(authData);
       }),
-      catchError((error: HttpErrorResponse) => {
-        console.error(error);
-        return throwError(() => new Error(error.error.message));
-      })
     );
   }
 
