@@ -50,6 +50,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   public isOpen = signal<boolean>(false);
   public value = signal<any>(null);
   public disabled = signal<boolean>(false);
+  private isSelecting = false;
 
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
@@ -61,6 +62,9 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
     this.querySubject
       .pipe(debounceTime(this.debounceTime()), takeUntil(this.destroy$))
       .subscribe((query) => {
+        if (this.value()) {
+          return;
+        }
         this.queryChange.emit(query);
       });
   }
@@ -77,13 +81,16 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   });
 
   public handleInput(event: Event) {
+    if (this.isSelecting) {
+      this.isSelecting = false;
+      return;
+    }
+
     const inputElement = event.target as HTMLInputElement;
     this.query.set(inputElement.value);
     this.querySubject.next(inputElement.value);
     this.isOpen.set(true);
 
-    // Reset value if user is typing and it doesn't match a selection anymore
-    // This is optional depending on requirements, but often desired
     if (this.value()) {
       this.value.set(null);
       this.onChange(null);
@@ -91,6 +98,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   }
 
   public selectOption(option: AutocompleteOption) {
+    this.isSelecting = true;
     this.value.set(option.value);
     this.query.set(option.label);
     this.isOpen.set(false);
@@ -98,6 +106,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
   }
 
   public handleNoResultsClick() {
+    this.isSelecting = true;
     this.noResultsClick.emit(this.query());
     this.isOpen.set(false);
   }

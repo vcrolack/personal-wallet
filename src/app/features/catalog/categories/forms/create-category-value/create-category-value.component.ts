@@ -58,8 +58,7 @@ export class CreateCategoryValueComponent {
         budgetCategoryId: +this.form.get('budgetCategoryId')?.value,
       })
       .subscribe({
-        next: (response) => {
-          console.log('Valor de categoría creado: ', response);
+        next: () => {
           this.form.reset();
           this.refreshCategories.emit();
           this.closeModal.emit();

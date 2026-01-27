@@ -45,8 +45,7 @@ export class CreateCategoryComponent {
     }
 
     this.categoryService.create(this.form.value).subscribe({
-      next: (response) => {
-        console.log('Categoría creada:', response);
+      next: () => {
         this.form.reset();
         this.refreshCategories.emit();
         this.closeModal.emit();

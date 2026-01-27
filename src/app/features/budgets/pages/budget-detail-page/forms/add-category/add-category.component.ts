@@ -10,10 +10,6 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CategoryService } from '../../../../../../core/services/category.service';
 import { BudgetCategoryValuesService } from '../../../../../../core/services/budget-category-values.service';
-import {
-  SelectOption,
-  SelectComponent,
-} from '../../../../../../common/components/form/select/select.component';
 import { BudgetGroupModel } from '../../../../../../core/models/budgets/budget-group.model';
 import { InputComponent } from '../../../../../../common/components/form/input/input.component';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
@@ -116,6 +112,16 @@ export class AddCategoryComponent implements OnDestroy {
         this.categoryValueService.selectCategory(categoryId);
       }
     });
+
+    // Debug: observar cambios en categoryValuesData
+    effect(() => {
+      const data = this.categoryValuesData();
+      console.log(
+        '[AddCategory] categoryValuesData changed:',
+        data.length,
+        'items',
+      );
+    });
   }
 
   ngOnDestroy(): void {
@@ -217,5 +223,9 @@ export class AddCategoryComponent implements OnDestroy {
 
   public searchCategory(term: string) {
     this.categoryService.search(term);
+  }
+
+  public searchCategoryValue(term: string) {
+    this.categoryValueService.search(term);
   }
 }

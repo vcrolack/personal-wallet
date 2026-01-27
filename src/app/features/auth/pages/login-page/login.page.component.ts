@@ -37,7 +37,6 @@ export class LoginPageComponent {
 
   public onSubmit(): void {
     if (this.loginForm.invalid) return;
-    console.log('lolazo');
 
     const { email, password } = this.loginForm.getRawValue();
 

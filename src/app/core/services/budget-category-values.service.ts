@@ -66,7 +66,7 @@ export class BudgetCategoryValuesService {
 
   public selectCategory(id: number) {
     this.categoryValueIdTrigger.set(id);
-    this.paginationParams.set({ limit: 10, page: 1 }); // Reset page when category changes
+    this.paginationParams.set({ limit: 10, page: 1 });
   }
 
   public reloadList() {
@@ -88,6 +88,12 @@ export class BudgetCategoryValuesService {
 
     if (query) params = params.set('query', query);
 
+    console.log('[CategoryValuesService] findAll called with:', {
+      limit,
+      page,
+      budgetCategoryId,
+      query,
+    });
     return this.http
       .get<
         ApiResponse<BudgetCategoryValueDTO[]>
