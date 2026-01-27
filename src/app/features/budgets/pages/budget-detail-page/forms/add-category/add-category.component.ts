@@ -29,6 +29,7 @@ import {
   AutocompleteOption,
 } from '../../../../../../common/components/form/autocomplete/autocomplete.component';
 import { BudgetCategoryRules } from '../../../../../../core/enums/budget-category-rules.enum';
+import { CategorySelector } from './category-selector/category-selector';
 
 @Component({
   selector: 'app-add-category',
@@ -37,12 +38,12 @@ import { BudgetCategoryRules } from '../../../../../../core/enums/budget-categor
     InputComponent,
     ButtonComponent,
     AutocompleteComponent,
+    CategorySelector,
   ],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',
 })
 export class AddCategoryComponent implements OnDestroy {
-  private categoryService = inject(CategoryService);
   private categoryValueService = inject(BudgetCategoryValuesService);
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
   private budgetService = inject(BudgetService);
@@ -52,7 +53,6 @@ export class AddCategoryComponent implements OnDestroy {
 
   public isLoadingCreatingAssignment = signal<boolean>(false);
 
-  public categoryResource = this.categoryService.categoryResource;
   public categoryValuesResource =
     this.categoryValueService.categoryValuesResource;
   public budgetDetailResource = this.budgetService.budgetResourceDetail;
@@ -73,24 +73,6 @@ export class AddCategoryComponent implements OnDestroy {
       initialValue: null,
     },
   );
-
-  public categoriesForSelect = computed((): AutocompleteOption[] => {
-    const response = this.categoryResource.value();
-    if (!response || Array.isArray(response)) return [];
-
-    const allCategories = response.data;
-    const assignedCategoryIds =
-      this.budgetDetailResource
-        .value()
-        ?.groups.map((g: BudgetGroupModel) => g.id) ?? [];
-
-    return allCategories
-      .filter((category) => !assignedCategoryIds.includes(category.id))
-      .map((category) => ({
-        label: category.name,
-        value: category.id,
-      }));
-  });
 
   public categoryValuesForSelect = computed((): AutocompleteOption[] => {
     return this.categoryValuesData().map((categoryValue) => ({
@@ -173,30 +155,6 @@ export class AddCategoryComponent implements OnDestroy {
       });
   }
 
-  public createCategory(name: string) {
-    this.categoryService
-      .create({
-        name,
-        rule: BudgetCategoryRules.WANT,
-      })
-      .pipe(
-        finalize(() => this.isLoadingCreatingAssignment.set(false)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
-      )
-      .subscribe({
-        next: (category) => {
-          this.categoryService.reloadList();
-          this.form.patchValue({ category: category.id });
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
-  }
-
   public createCategoryValue(name: string) {
     this.categoryValueService
       .create({
@@ -219,10 +177,6 @@ export class AddCategoryComponent implements OnDestroy {
           console.error(error);
         },
       });
-  }
-
-  public searchCategory(term: string) {
-    this.categoryService.search(term);
   }
 
   public searchCategoryValue(term: string) {

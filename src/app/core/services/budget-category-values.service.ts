@@ -88,12 +88,6 @@ export class BudgetCategoryValuesService {
 
     if (query) params = params.set('query', query);
 
-    console.log('[CategoryValuesService] findAll called with:', {
-      limit,
-      page,
-      budgetCategoryId,
-      query,
-    });
     return this.http
       .get<
         ApiResponse<BudgetCategoryValueDTO[]>
