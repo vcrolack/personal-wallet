@@ -17,35 +17,52 @@ export class BudgetCategoryAssignmentsService {
   private endpoint = 'budget-category-assignments';
 
   public assignCategory(
-    body: CreateBudgetCategoryAssignmentRequest
+    body: CreateBudgetCategoryAssignmentRequest,
   ): Observable<CategoryAssignmentModel> {
     return this.http
-      .post<ApiResponse<BudgetCategoryAssignmentDTO>>(
-        `${environment.merakiUrl}/${this.endpoint}/assign-category`,
-        body
-      )
+      .post<
+        ApiResponse<BudgetCategoryAssignmentDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/assign-category`, body)
       .pipe(
         map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
-          this.mapper.toModel(response.data)
+          this.mapper.toModel(response.data),
         ),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
       );
   }
 
   public unassingCategory(id: string): Observable<{ message: string }> {
     return this.http
-      .delete<ApiResponse<{ message: string }>>(
-        `${environment.merakiUrl}/${this.endpoint}/unassign-category/${id}`
-      )
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/unassign-category/${id}`)
       .pipe(
         map((response: ApiResponse<{ message: string }>) => response.data),
         catchError((error: HttpErrorResponse) => {
           console.log(error);
           return throwError(() => new Error(error.error.message));
-        })
+        }),
+      );
+  }
+
+  public editAssignment(
+    body: CreateBudgetCategoryAssignmentRequest,
+  ): Observable<CategoryAssignmentModel> {
+    return this.http
+      .put<
+        ApiResponse<BudgetCategoryAssignmentDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/edit-assignment`, body)
+      .pipe(
+        map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
+          this.mapper.toModel(response.data),
+        ),
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        }),
       );
   }
 }
