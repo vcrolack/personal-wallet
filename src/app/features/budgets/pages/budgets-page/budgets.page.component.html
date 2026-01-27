@@ -1,6 +1,9 @@
 <div class="flex justify-between items-center my-5 px-5">
   <h2 class="text-lg font-bold">💰 P R E S U P U E S T O S</h2>
-  <app-button label="Crear presupuesto" (onClick)="toggleModal()"></app-button>
+  <app-button
+    label="Crear presupuesto"
+    (onClick)="toggleModal('create')"
+  ></app-button>
 </div>
 @if (budgetsResource.error()) {
   <p>Error al cargar los presupuestos</p>
@@ -15,14 +18,42 @@
 />
 
 <app-modal
-  title="Crear presupuesto"
+  [title]="this.modalTitle"
   [isOpen]="isModalOpen()"
   (onClose)="toggleModal()"
 >
   @if (isModalOpen()) {
-    <app-create-budget
-      (closeModal)="toggleModal()"
-      (refresh)="budgetsResource.reload()"
-    ></app-create-budget>
+    @if (action() === "create") {
+      <app-create-or-update-budget
+        [canCreate]="true"
+        (closeModal)="toggleModal()"
+        (refresh)="budgetsResource.reload()"
+      ></app-create-or-update-budget>
+    }
+    @if (action() === "update") {
+      <app-create-or-update-budget
+        [canCreate]="false"
+        [budget]="budget()"
+        (closeModal)="toggleModal()"
+        (refresh)="budgetsResource.reload()"
+      ></app-create-or-update-budget>
+    }
+    @if (action() === "delete") {
+      <div>
+        <p>
+          ¿Estás seguro de eliminar el presupuesto
+          <strong>{{ budget()?.title }}</strong
+          >?
+        </p>
+        <div class="pt-4 flex justify-end gap-4">
+          <app-button label="Cancelar" (onClick)="toggleModal()"></app-button>
+          <app-button
+            label="Eliminar"
+            variant="danger"
+            (onClick)="delete(budget()?.id!)"
+          ></app-button>
+        </div>
+      </div>
+    }
   }
 </app-modal>

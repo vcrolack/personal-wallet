@@ -42,10 +42,23 @@ export class DateSelectorComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  writeValue(value: string): void {
-    // Receive YYYY/MM/DD, convert to YYYY-MM-DD for native input
-    const formattedValue = value ? value.replace(/\//g, '-') : '';
-    this.value.set(formattedValue);
+  writeValue(value: any): void {
+    if (!value) {
+      this.value.set('');
+      return;
+    }
+
+    let dateStr = '';
+
+    if (value instanceof Date) {
+      // Convert Date object to YYYY-MM-DD
+      dateStr = value.toISOString().split('T')[0];
+    } else if (typeof value === 'string') {
+      // Receive YYYY/MM/DD or ISO string, convert to YYYY-MM-DD for native input
+      dateStr = value.replace(/\//g, '-').split('T')[0];
+    }
+
+    this.value.set(dateStr);
   }
 
   registerOnChange(fn: (value: string) => void): void {

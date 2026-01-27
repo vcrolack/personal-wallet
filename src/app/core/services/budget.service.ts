@@ -140,4 +140,17 @@ export class BudgetService {
         }),
       );
   }
+
+  public delete(id: string): Observable<{ message: string }> {
+    return this.http
+      .delete<
+        ApiResponse<{ message: string }>
+      >(`${environment.merakiUrl}/${this.endpoint}/delete/${id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return throwError(() => new Error(error.error.message));
+        }),
+      );
+  }
 }

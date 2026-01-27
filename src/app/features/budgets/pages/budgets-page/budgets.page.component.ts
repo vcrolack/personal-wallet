@@ -5,7 +5,8 @@ import { ColumnDef } from '../../../../common/interfaces/table.interface';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { ButtonComponent } from '../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
-import { CreateBudget } from './forms/create-budget/create-budget';
+import { CreateOrUpdateBudget } from './forms/create-or-update-budget/create-or-update-budget';
+import { Budget } from '../../../../core/interfaces/budget.interface';
 
 @Component({
   selector: 'app-budgets.page',
@@ -13,7 +14,7 @@ import { CreateBudget } from './forms/create-budget/create-budget';
     GenericTableComponent,
     ButtonComponent,
     ModalComponent,
-    CreateBudget,
+    CreateOrUpdateBudget,
   ],
   templateUrl: './budgets.page.component.html',
   styleUrl: './budgets.page.component.css',
@@ -23,6 +24,7 @@ export class BudgetsPageComponent {
   private router = inject(Router);
 
   public isModalOpen = signal<boolean>(false);
+  public action = signal<'create' | 'update' | 'delete' | undefined>(undefined);
 
   public budgetsResource = this.budgetService.budgetResourceList;
 
@@ -31,6 +33,8 @@ export class BudgetsPageComponent {
     if (!value || Array.isArray(value)) return [];
     return value.data;
   });
+
+  public budget = signal<Budget | undefined>(undefined);
 
   public pagination = computed(() => {
     const value = this.budgetsResource.value();
@@ -84,18 +88,38 @@ export class BudgetsPageComponent {
         {
           label: 'Editar',
           icon: 'pi pi-pencil',
-          callback: (row) => console.log('Editar', row),
+          callback: (row) => {
+            console.log(row);
+            this.toggleModal('update');
+            this.budget.set(row);
+          },
           class: 'text-blue-500 hover:bg-blue-50',
         },
         {
           label: 'Eliminar',
           icon: 'pi pi-trash',
-          callback: (row) => console.log('Eliminar', row),
+          callback: (row) => {
+            this.toggleModal('delete');
+            this.budget.set(row);
+          },
           class: 'text-red-500 hover:bg-red-50',
         },
       ],
     },
   ];
+
+  public get modalTitle(): string {
+    switch (this.action()) {
+      case 'create':
+        return 'Crear presupuesto';
+      case 'update':
+        return 'Editar presupuesto';
+      case 'delete':
+        return 'Eliminar presupuesto';
+      default:
+        return '';
+    }
+  }
 
   public openDetail(id: string) {
     this.router.navigate(['/budgets', id]);
@@ -105,7 +129,17 @@ export class BudgetsPageComponent {
     this.budgetService.setPagination(page, 10);
   }
 
-  public toggleModal() {
+  public toggleModal(action?: 'create' | 'update' | 'delete') {
+    this.action.set(action);
     this.isModalOpen.update((prev) => !prev);
+  }
+
+  public delete(id: string) {
+    this.budgetService.delete(id).subscribe({
+      next: () => {
+        this.toggleModal();
+        this.budgetsResource.reload();
+      },
+    });
   }
 }
