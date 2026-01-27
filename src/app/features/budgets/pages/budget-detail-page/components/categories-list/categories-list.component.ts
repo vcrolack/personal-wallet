@@ -46,7 +46,7 @@ export class CategoriesListComponent {
   }
 
   public unassignCategoryValue(id: string) {
-    this.categoryAssignmentService.unassingCategory(id).subscribe({
+    this.categoryAssignmentService.unassignCategory(id).subscribe({
       next: () => {
         this.budget.reload();
       },

@@ -35,7 +35,7 @@ export class BudgetCategoryAssignmentsService {
       );
   }
 
-  public unassingCategory(id: string): Observable<{ message: string }> {
+  public unassignCategory(id: string): Observable<{ message: string }> {
     return this.http
       .delete<
         ApiResponse<{ message: string }>
