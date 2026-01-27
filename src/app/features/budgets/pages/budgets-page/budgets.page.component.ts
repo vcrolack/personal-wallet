@@ -3,16 +3,26 @@ import { Router } from '@angular/router';
 import { GenericTableComponent } from '../../../../common/components/ui/table/table.component';
 import { ColumnDef } from '../../../../common/interfaces/table.interface';
 import { BudgetService } from '../../../../core/services/budget.service';
+import { ButtonComponent } from '../../../../common/components/form/button/button.component';
+import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
+import { CreateBudget } from './forms/create-budget/create-budget';
 
 @Component({
   selector: 'app-budgets.page',
-  imports: [GenericTableComponent],
+  imports: [
+    GenericTableComponent,
+    ButtonComponent,
+    ModalComponent,
+    CreateBudget,
+  ],
   templateUrl: './budgets.page.component.html',
   styleUrl: './budgets.page.component.css',
 })
 export class BudgetsPageComponent {
   private budgetService = inject(BudgetService);
   private router = inject(Router);
+
+  public isModalOpen = signal<boolean>(false);
 
   public budgetsResource = this.budgetService.budgetResourceList;
 
@@ -93,5 +103,9 @@ export class BudgetsPageComponent {
 
   public onPageChange(page: number) {
     this.budgetService.setPagination(page, 10);
+  }
+
+  public toggleModal() {
+    this.isModalOpen.update((prev) => !prev);
   }
 }

@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center my-5 px-5">
   <h2 class="text-lg font-bold">💰 P R E S U P U E S T O S</h2>
-  <button class="bg-black text-white px-5 py-2 rounded-lg">CREAR</button>
+  <app-button label="Crear presupuesto" (onClick)="toggleModal()"></app-button>
 </div>
 @if (budgetsResource.error()) {
   <p>Error al cargar los presupuestos</p>
@@ -13,3 +13,16 @@
   (rowClick)="openDetail($event.id)"
   (pageChange)="onPageChange($event)"
 />
+
+<app-modal
+  title="Crear presupuesto"
+  [isOpen]="isModalOpen()"
+  (onClose)="toggleModal()"
+>
+  @if (isModalOpen()) {
+    <app-create-budget
+      (closeModal)="toggleModal()"
+      (refresh)="budgetsResource.reload()"
+    ></app-create-budget>
+  }
+</app-modal>

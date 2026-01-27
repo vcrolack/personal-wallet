@@ -1,0 +1,32 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col gap-5"
+  action=""
+>
+  <app-input label="Nombre" type="text" formControlName="title"></app-input>
+  <app-input
+    label="Monto presupuestado"
+    type="number"
+    formControlName="budgetAmount"
+  ></app-input>
+  <app-text-area
+    label="Descripción"
+    formControlName="description"
+  ></app-text-area>
+  <app-date-selector
+    label="Fecha de inicio"
+    formControlName="startDate"
+  ></app-date-selector>
+  <app-date-selector
+    label="Fecha de término"
+    formControlName="endDate"
+  ></app-date-selector>
+  <app-checkbox
+    label="¿Es compartido?"
+    formControlName="isShared"
+  ></app-checkbox>
+  <div class="w-full flex justify-end">
+    <app-button label="Crear"></app-button>
+  </div>
+</form>

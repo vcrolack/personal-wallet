@@ -32,8 +32,12 @@ export class InputComponent implements ControlValueAccessor {
 
   public handleInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    this.value.set(inputElement.value);
-    this.onChange(inputElement.value);
+    const value =
+      this.type() === 'number'
+        ? inputElement.valueAsNumber
+        : inputElement.value;
+    this.value.set(value);
+    this.onChange(value);
   }
 
   public handleBlur() {
