@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CategorySelector } from './category-selector/category-selector';
 import { CategoryValueSelector } from './category-value-selector/category-value-selector';
 import { AmountInput } from './amount-input/amount-input';
+import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-add-category',
@@ -32,6 +33,7 @@ import { AmountInput } from './amount-input/amount-input';
 export class AddCategoryComponent implements OnDestroy {
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
   private budgetService = inject(BudgetService);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
   public closeModal = output<void>();
@@ -94,9 +96,7 @@ export class AddCategoryComponent implements OnDestroy {
           this.form.reset();
           this.budgetDetailResource.reload();
           this.closeModal.emit();
-        },
-        error: (error) => {
-          console.error(error);
+          this.toastService.show('Categoría agregada correctamente', 'success');
         },
       });
   }

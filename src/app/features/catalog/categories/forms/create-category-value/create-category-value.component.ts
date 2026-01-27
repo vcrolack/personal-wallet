@@ -14,6 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CategoryModel } from '../../../../../core/models/categories/category.model';
+import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-create-category-value',
@@ -28,6 +29,7 @@ import { CategoryModel } from '../../../../../core/models/categories/category.mo
 })
 export class CreateCategoryValueComponent {
   private budgetCategoryValueService = inject(BudgetCategoryValuesService);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
   public form: FormGroup = this.fb.group({
@@ -59,12 +61,13 @@ export class CreateCategoryValueComponent {
       })
       .subscribe({
         next: () => {
+          this.toastService.show(
+            'Valor de categoría creado correctamente',
+            'success',
+          );
           this.form.reset();
           this.refreshCategories.emit();
           this.closeModal.emit();
-        },
-        error: (error) => {
-          console.error('Error al crear valor de categoría: ', error);
         },
       });
   }

@@ -20,6 +20,7 @@ import {
 import { CreateBudgetRequest } from '../../../../../../core/requests/budgets/create-budget.request';
 import { Budget } from '../../../../../../core/interfaces/budget.interface';
 import { UpdateBudgetRequest } from '../../../../../../core/requests/budgets/update-budget.request';
+import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-create-or-update-budget',
@@ -36,6 +37,7 @@ import { UpdateBudgetRequest } from '../../../../../../core/requests/budgets/upd
 })
 export class CreateOrUpdateBudget {
   private budgetService = inject(BudgetService);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
   public canCreate = input.required<boolean>();
@@ -73,10 +75,10 @@ export class CreateOrUpdateBudget {
   }
 
   public onSubmit() {
-    // if (this.form.invalid) {
-    //   this.form.markAllAsTouched();
-    //   return;
-    // }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     if (this.canCreate()) {
       this.create(this.form.value);
@@ -92,6 +94,7 @@ export class CreateOrUpdateBudget {
   private create(body: CreateBudgetRequest) {
     this.budgetService.create(body).subscribe({
       next: () => {
+        this.toastService.show('Presupuesto creado correctamente', 'success');
         this.form.reset();
         this.refresh.emit();
         this.closeModal.emit();
@@ -102,6 +105,10 @@ export class CreateOrUpdateBudget {
   private update(id: string, body: UpdateBudgetRequest) {
     this.budgetService.update(id, body).subscribe({
       next: () => {
+        this.toastService.show(
+          'Presupuesto actualizado correctamente',
+          'success',
+        );
         this.form.reset();
         this.refresh.emit();
         this.closeModal.emit();

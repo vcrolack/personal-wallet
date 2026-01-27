@@ -19,6 +19,7 @@ import { BudgetCategoryRules } from '../../../../../core/enums/budget-category-r
 import { InputComponent } from '../../../../../common/components/form/input/input.component';
 import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { SelectComponent } from '../../../../../common/components/form/select/select.component';
+import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -33,6 +34,7 @@ import { SelectComponent } from '../../../../../common/components/form/select/se
 })
 export class EditCategory {
   private categoryService = inject(CategoryService);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
   public category = input.required<CategoryModel>();
@@ -69,11 +71,9 @@ export class EditCategory {
 
     this.categoryService.update(this.category().id, this.form.value).subscribe({
       next: () => {
+        this.toastService.show('Categoría editada correctamente', 'success');
         this.refreshCategories.emit();
         this.closeModal.emit();
-      },
-      error: (error) => {
-        console.error('Error updating category:', error);
       },
     });
   }

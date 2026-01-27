@@ -22,6 +22,7 @@ import {
 import { InputComponent } from '../../../../../common/components/form/input/input.component';
 import { CategoryValueModel } from '../../../../../core/models/categories/category-value.model';
 import { CategoryModel } from '../../../../../core/models/categories/category.model';
+import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-edit-category-value',
@@ -36,6 +37,7 @@ import { CategoryModel } from '../../../../../core/models/categories/category.mo
 })
 export class EditCategoryValueComponent {
   private budgetCategoryValueService = inject(BudgetCategoryValuesService);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
   public categoryValue = input.required<CategoryValueModel>();
@@ -75,6 +77,10 @@ export class EditCategoryValueComponent {
       .update(this.categoryValue().id, this.form.value)
       .subscribe({
         next: () => {
+          this.toastService.show(
+            'Valor de categoría editado correctamente',
+            'success',
+          );
           this.refreshCategoryValues.emit();
           this.closeModal.emit();
         },

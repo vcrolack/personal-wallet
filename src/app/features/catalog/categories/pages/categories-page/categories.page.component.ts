@@ -14,6 +14,7 @@ import { CreateCategoryComponent } from '../../forms/create-category/create-cate
 import { EditCategoryValueComponent } from '../../forms/edit-category-value/edit-category-value.component';
 import { EditCategory } from '../../forms/edit-category/edit-category';
 import { CategoryModel } from '../../../../../core/models/categories/category.model';
+import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-categories.page',
@@ -33,6 +34,7 @@ import { CategoryModel } from '../../../../../core/models/categories/category.mo
 })
 export class CategoriesPageComponent {
   public categoryService = inject(CategoryService);
+  private toastService = inject(ToastService);
   private categoryValuesService = inject(BudgetCategoryValuesService);
 
   public activeTabId = signal<string | number | undefined>(undefined);
@@ -244,6 +246,10 @@ export class CategoriesPageComponent {
 
     this.categoryValuesService.delete(categoryValue.id).subscribe({
       next: () => {
+        this.toastService.show(
+          'Valor de categoría eliminado correctamente',
+          'success',
+        );
         this.categoryValuesResource.reload();
         this.toggleModal(undefined);
       },
@@ -259,6 +265,7 @@ export class CategoriesPageComponent {
 
     this.categoryService.delete(category.id).subscribe({
       next: () => {
+        this.toastService.show('Categoría eliminada correctamente', 'success');
         this.categoryResource.reload();
         this.toggleModal(undefined);
       },

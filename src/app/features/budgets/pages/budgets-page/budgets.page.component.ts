@@ -7,6 +7,7 @@ import { ButtonComponent } from '../../../../common/components/form/button/butto
 import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
 import { CreateOrUpdateBudget } from './forms/create-or-update-budget/create-or-update-budget';
 import { Budget } from '../../../../core/interfaces/budget.interface';
+import { ToastService } from '../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-budgets.page',
@@ -21,6 +22,7 @@ import { Budget } from '../../../../core/interfaces/budget.interface';
 })
 export class BudgetsPageComponent {
   private budgetService = inject(BudgetService);
+  private toastService = inject(ToastService);
   private router = inject(Router);
 
   public isModalOpen = signal<boolean>(false);
@@ -137,6 +139,10 @@ export class BudgetsPageComponent {
   public delete(id: string) {
     this.budgetService.delete(id).subscribe({
       next: () => {
+        this.toastService.show(
+          'Presupuesto eliminado correctamente',
+          'success',
+        );
         this.toggleModal();
         this.budgetsResource.reload();
       },

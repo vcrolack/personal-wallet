@@ -9,6 +9,7 @@ import { InputComponent } from '../../../../../common/components/form/input/inpu
 import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { CategoryService } from '../../../../../core/services/category.service';
 import { SelectComponent } from '../../../../../common/components/form/select/select.component';
+import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-create-category',
@@ -23,6 +24,7 @@ import { SelectComponent } from '../../../../../common/components/form/select/se
 })
 export class CreateCategoryComponent {
   private fb = inject(FormBuilder);
+  private toastService = inject(ToastService);
   private categoryService = inject(CategoryService);
   public refreshCategories = output<void>();
   public closeModal = output<void>();
@@ -46,6 +48,7 @@ export class CreateCategoryComponent {
 
     this.categoryService.create(this.form.value).subscribe({
       next: () => {
+        this.toastService.show('Categoría creada correctamente', 'success');
         this.form.reset();
         this.refreshCategories.emit();
         this.closeModal.emit();

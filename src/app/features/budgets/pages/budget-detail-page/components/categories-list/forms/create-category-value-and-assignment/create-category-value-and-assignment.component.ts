@@ -7,6 +7,7 @@ import { BudgetCategoryAssignmentsService } from '../../../../../../../../core/s
 import { catchError, switchMap, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BudgetService } from '../../../../../../../../core/services/budget.service';
+import { ToastService } from '../../../../../../../../common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-create-category-value-and-assignment',
@@ -16,6 +17,7 @@ import { BudgetService } from '../../../../../../../../core/services/budget.serv
 })
 export class CreateCategoryValueAndAssignmentComponent {
   private fb = inject(FormBuilder);
+  private toastService = inject(ToastService);
   private budgetService = inject(BudgetService);
   private categoryValueService = inject(BudgetCategoryValuesService);
   private categoryAssignmentService = inject(BudgetCategoryAssignmentsService);
@@ -58,12 +60,10 @@ export class CreateCategoryValueAndAssignmentComponent {
       )
       .subscribe({
         next: () => {
+          this.toastService.show('Categoría agregada correctamente', 'success');
           this.budget.reload();
           this.closeModal.emit();
           this.form.reset();
-        },
-        error: (error) => {
-          console.error(error);
         },
       });
   }
