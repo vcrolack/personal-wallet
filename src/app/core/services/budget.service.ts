@@ -96,12 +96,7 @@ export class BudgetService {
       .post<
         ApiResponse<Budget>
       >(`${environment.merakiUrl}/${this.endpoint}/create`, body)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          return throwError(() => new Error(error.error.message));
-        }),
-      );
+      .pipe();
   }
 
   public findAll(

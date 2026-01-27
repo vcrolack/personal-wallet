@@ -1,0 +1,11 @@
+<div class="fixed bottom-5 right-5 z-50 flex flex-col gap-3">
+  @for (toast of toasts(); track toast.id) {
+    <div
+      [class]="getStyles(toast.type)"
+      class="flex items-center justify-between min-w-[300px] p-4 rounded-lg shadow-lg border transition-all duration-300 animate-in fade-in slide-in-from-right-5"
+    >
+      <span class="text-sm font-medium">{{ toast.message }}</span>
+      <button (click)="toastService.remove(toast.id)">X</button>
+    </div>
+  }
+</div>

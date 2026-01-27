@@ -73,10 +73,10 @@ export class CreateOrUpdateBudget {
   }
 
   public onSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+    // if (this.form.invalid) {
+    //   this.form.markAllAsTouched();
+    //   return;
+    // }
 
     if (this.canCreate()) {
       this.create(this.form.value);
