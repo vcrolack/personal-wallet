@@ -7,7 +7,7 @@
             <app-editable-field
               type="text"
               [value]="budget().title"
-              (saved)="onTitleUpdate($event)"
+              (saved)="updateBudgetField('title', $event)"
             ></app-editable-field>
             <app-badge
               [label]="isShared.label"
@@ -18,7 +18,7 @@
             type="text"
             size="body"
             [value]="budget().description"
-            (saved)="onDescriptionUpdate($event)"
+            (saved)="updateBudgetField('description', $event)"
           ></app-editable-field>
           <app-badge [label]="period" variant="info"></app-badge>
         </div>
@@ -48,7 +48,7 @@
                 [label]="'Total Destinado'"
                 type="number"
                 [value]="budget().budgetAmount"
-                (saved)="onAmountUpdate($event)"
+                (saved)="updateBudgetField('budgetAmount', $event)"
               ></app-editable-field>
             </app-wrapper>
 
@@ -63,7 +63,7 @@
                 <p class="text-2xl font-bold text-blue-600">
                   {{
                     budget().totalSpent
-                      | currency : "CLP" : "symbol-narrow" : "1.0-0"
+                      | currency: "CLP" : "symbol-narrow" : "1.0-0"
                   }}
                 </p>
               </div>
@@ -82,9 +82,7 @@
                   "
                   class="text-2xl font-bold"
                 >
-                  {{
-                    difference | currency : "CLP" : "symbol-narrow" : "1.0-0"
-                  }}
+                  {{ difference | currency: "CLP" : "symbol-narrow" : "1.0-0" }}
                 </p>
               </div>
             </app-wrapper>

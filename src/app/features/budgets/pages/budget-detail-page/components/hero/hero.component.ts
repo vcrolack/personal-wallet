@@ -55,43 +55,12 @@ export class HeroComponent {
     )} hasta ${this.datePipe.transform(this.budget().endDate, 'dd/MM/yyyy')}`;
   }
 
-  public onAmountUpdate(newAmount: number) {
+  public updateBudgetField(field: keyof BudgetModel, value: any): void {
     if (this.isLoading()) return;
     this.isLoading.set(true);
-    this.budgetService
-      .update(this.budget().id, { budgetAmount: +newAmount })
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: () => {
-          this.budgetService.reloadDetail();
-        },
-        error: (err) => {
-          console.error('Error updating budget:', err);
-        },
-      });
-  }
 
-  public onTitleUpdate(newTitle: string) {
-    if (this.isLoading()) return;
-    this.isLoading.set(true);
     this.budgetService
-      .update(this.budget().id, { title: newTitle })
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: () => {
-          this.budgetService.reloadDetail();
-        },
-        error: (err) => {
-          console.error('Error updating budget:', err);
-        },
-      });
-  }
-
-  public onDescriptionUpdate(newDescription: string) {
-    if (this.isLoading()) return;
-    this.isLoading.set(true);
-    this.budgetService
-      .update(this.budget().id, { description: newDescription })
+      .update(this.budget().id, { [field]: value })
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
