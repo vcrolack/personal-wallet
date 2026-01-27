@@ -53,20 +53,10 @@ export class BudgetCategoryAssignmentsService {
     id: string,
     body: UpdateBudgetCategoryAssignmentRequest,
   ): Observable<CategoryAssignmentModel> {
-    const requestBody = {
-      ...body,
-      ...(body.allocatedAmount !== undefined && {
-        allocatedAmount: +body.allocatedAmount,
-      }),
-      ...(body.budgetCategoryValueId !== undefined && {
-        budgetCategoryValueId: +body.budgetCategoryValueId,
-      }),
-    };
-
     return this.http
       .patch<
         ApiResponse<BudgetCategoryAssignmentDTO>
-      >(`${environment.merakiUrl}/${this.endpoint}/update-assignment/${id}`, requestBody)
+      >(`${environment.merakiUrl}/${this.endpoint}/update-assignment/${id}`, body)
       .pipe(
         map((response: ApiResponse<BudgetCategoryAssignmentDTO>) =>
           this.mapper.toModel(response.data),

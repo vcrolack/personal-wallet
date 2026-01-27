@@ -57,10 +57,6 @@ export class EditableFieldComponent<T extends number | string> {
     this.editValue = this.value();
     this.isEditing.set(true);
 
-    // We need to wait for the next render to focus,
-    // but afterNextRender in constructor handles it if it's already editing.
-    // For manual toggle, we use a simple setTimeout or effect if needed,
-    // but a simpler way is to just use a template variable and focus it.
     setTimeout(() => {
       this.inputElement()?.nativeElement.focus();
       this.inputElement()?.nativeElement.select();
@@ -70,8 +66,14 @@ export class EditableFieldComponent<T extends number | string> {
   public save() {
     if (!this.isEditing()) return;
 
-    if (this.editValue !== this.value()) {
-      this.saved.emit(this.editValue);
+    let finalValue: T = this.editValue;
+
+    if (this.type() === 'number' && typeof this.editValue === 'string') {
+      finalValue = Number(this.editValue) as T;
+    }
+
+    if (finalValue !== this.value()) {
+      this.saved.emit(finalValue);
     }
     this.isEditing.set(false);
   }
