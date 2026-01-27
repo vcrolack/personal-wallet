@@ -1,6 +1,5 @@
 import { Component, inject, output, OnDestroy, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { InputComponent } from '../../../../../../common/components/form/input/input.component';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import {
   FormBuilder,
@@ -14,18 +13,18 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
 import { catchError, finalize, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BudgetCategoryRules } from '../../../../../../core/enums/budget-category-rules.enum';
 import { CategorySelector } from './category-selector/category-selector';
 import { CategoryValueSelector } from './category-value-selector/category-value-selector';
+import { AmountInput } from './amount-input/amount-input';
 
 @Component({
   selector: 'app-add-category',
   imports: [
     ReactiveFormsModule,
-    InputComponent,
     ButtonComponent,
     CategorySelector,
     CategoryValueSelector,
+    AmountInput,
   ],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',

@@ -1,0 +1,21 @@
+<section
+  class="mt-12 section-enter"
+  id="category-value-section"
+  [formGroup]="form()"
+>
+  <div id="description" class="mb-10 flex items-start gap-4">
+    <span
+      class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm"
+    >
+      3
+    </span>
+    <p class="text-slate-600 leading-relaxed">
+      Asigna el dinero que destinarás a este valor de categoría
+    </p>
+  </div>
+  <app-input
+    type="number"
+    formControlName="amount"
+    placeholder="Selecciona un valor de categoría"
+  ></app-input>
+</section>
