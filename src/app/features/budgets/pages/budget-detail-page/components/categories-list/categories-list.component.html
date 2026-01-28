@@ -5,6 +5,7 @@
   @if (groupedCategories().length > 0) {
     @for (group of groupedCategories(); track group.categoryName) {
       <div
+        [id]="group.id"
         class="group w-full transition-transform duration-200 hover:scale-[1.02]"
       >
         <app-wrapper
@@ -42,7 +43,11 @@
                   type="number"
                   size="small"
                   [value]="item.allocatedAmount"
-                  (saved)="editAssignmentCategoryValue(item.id, { allocatedAmount: $event })"
+                  (saved)="
+                    editAssignmentCategoryValue(item.id, {
+                      allocatedAmount: $event,
+                    })
+                  "
                 ></app-editable-field>
               </li>
             }

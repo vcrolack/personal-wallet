@@ -41,6 +41,7 @@ export class CategoriesListComponent {
   public groupedCategories = computed(() => this.budget.value()?.groups ?? []);
 
   public toggleModal(categoryId?: number) {
+    console.log(categoryId);
     this.selectedCategoryId.set(categoryId ?? null);
     this.isModalOpen.update((prev) => !prev);
   }

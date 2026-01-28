@@ -13,9 +13,9 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
 import { finalize } from 'rxjs';
 
 import { CategorySelector } from './category-selector/category-selector';
-import { CategoryValueSelector } from './category-value-selector/category-value-selector';
 import { AmountInput } from './amount-input/amount-input';
 import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
+import { CategoryValueSelector } from './category-value-selector/category-value-selector';
 
 @Component({
   selector: 'app-add-category',
