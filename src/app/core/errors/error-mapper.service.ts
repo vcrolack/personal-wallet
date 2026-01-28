@@ -22,7 +22,9 @@ export class ErrorMapperService {
       message = 'El recurso solicitado no existe';
     if (error.status === HttpStatusCode.BadRequest)
       message = 'Valida la información ingresada';
-    console.log('[ErrorMapperService] mapHttpError', error);
+
+    if (error.status === HttpStatusCode.UnprocessableEntity)
+      message = 'Información duplicada';
     return {
       message,
       code: error.status,

@@ -7,6 +7,18 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(error: any): void {
     console.log('[GlobalErrorHandler] Error: ', error);
-    this.notificationService.showNotification(error.message, 'error');
+
+    let message = 'Ha ocurrido un error. Lo sentimos';
+
+    if (typeof error === 'string') {
+      message = error;
+    } else if (error && error.message) {
+      message = error.message;
+    } else if (error && typeof error === 'object' && error.error) {
+      // Fallback for some Angular unhandled errors
+      message = error.error.message || message;
+    }
+
+    this.notificationService.showNotification(message, 'error');
   }
 }

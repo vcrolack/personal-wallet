@@ -4,8 +4,7 @@ import { ButtonComponent } from '../../../../../../../../common/components/form/
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BudgetCategoryValuesService } from '../../../../../../../../core/services/budget-category-values.service';
 import { BudgetCategoryAssignmentsService } from '../../../../../../../../core/services/budget-category-assignments.service';
-import { catchError, switchMap, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { switchMap } from 'rxjs';
 import { BudgetService } from '../../../../../../../../core/services/budget.service';
 import { ToastService } from '../../../../../../../../common/components/ui/toast/toast.service';
 
@@ -53,10 +52,6 @@ export class CreateCategoryValueAndAssignmentComponent {
             allocatedAmount: +this.form.value.allocatedAmount!,
           }),
         ),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
       )
       .subscribe({
         next: () => {

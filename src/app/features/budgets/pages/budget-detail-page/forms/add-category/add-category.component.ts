@@ -10,8 +10,7 @@ import {
 import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
 import { CreateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/create-budget-category-assignment.request';
 import { BudgetService } from '../../../../../../core/services/budget.service';
-import { catchError, finalize, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs';
 
 import { CategorySelector } from './category-selector/category-selector';
 import { CategoryValueSelector } from './category-value-selector/category-value-selector';
@@ -84,13 +83,7 @@ export class AddCategoryComponent implements OnDestroy {
         budgetCategoryValueId: body.budgetCategoryValueId,
         allocatedAmount: +body.allocatedAmount,
       })
-      .pipe(
-        finalize(() => this.isLoadingCreatingAssignment.set(false)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
-      )
+      .pipe(finalize(() => this.isLoadingCreatingAssignment.set(false)))
       .subscribe({
         next: () => {
           this.form.reset();

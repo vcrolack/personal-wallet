@@ -2,11 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
   effect,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -16,8 +14,7 @@ import {
   AutocompleteComponent,
   AutocompleteOption,
 } from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
-import { catchError, finalize, startWith, switchMap, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { finalize, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-category-value-selector',
@@ -77,13 +74,7 @@ export class CategoryValueSelector {
         name,
         budgetCategoryId: this.form().value.category,
       })
-      .pipe(
-        finalize(() => this.isLoading.set(false)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
-      )
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (categoryValue) => {
           this.categoryValueService.reloadList();

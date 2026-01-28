@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { CategoryService } from '../../../../../../../core/services/category.service';
 import {
   AutocompleteOption,
@@ -12,8 +6,7 @@ import {
 } from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
 import { BudgetGroupModel } from '../../../../../../../core/models/budgets/budget-group.model';
 import { BudgetService } from '../../../../../../../core/services/budget.service';
-import { catchError, finalize, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs';
 import { BudgetCategoryRules } from '../../../../../../../core/enums/budget-category-rules.enum';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -60,13 +53,7 @@ export class CategorySelector {
         name,
         rule: BudgetCategoryRules.WANT,
       })
-      .pipe(
-        finalize(() => this.isLoading.set(false)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(() => new Error(error.error?.message));
-        }),
-      )
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (category) => {
           this.categoryService.reloadList();

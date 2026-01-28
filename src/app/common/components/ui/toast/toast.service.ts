@@ -20,7 +20,7 @@ export class ToastService {
     this._toastsSignal.update((all) => [...all, newToast]);
 
     setTimeout(() => {
-      (this.remove(id), duration);
+      this.remove(id);
     }, duration);
   }
 
