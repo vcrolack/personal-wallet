@@ -67,6 +67,7 @@ export const routes: Routes = [
         path: 'catalog',
         data: { breadcrumb: 'Catálogo' },
         children: [
+          { path: '', pathMatch: 'full', redirectTo: 'categories' },
           {
             path: 'categories',
             data: { breadcrumb: 'Categorías' },

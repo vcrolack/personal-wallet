@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule, ChevronRight, Home } from 'lucide-angular';
-import { BreadcrumbService } from '../../../../core/services/breadcrumb.service';
+import { BreadcrumbService } from './breadcrumb.service';
 
 export interface BreadcrumbItem {
   label: string;

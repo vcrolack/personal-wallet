@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from 'rxjs';
-import { BreadcrumbItem } from '../../common/components/ui/breadcrumb/breadcrumb.component';
+import { BreadcrumbItem } from './breadcrumb.component';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class BreadcrumbService {
   public breadcrumbs = toSignal(
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
-      startWith(null), // Para capturar la ruta inicial
+      startWith(null),
       map(() => this.buildBreadcrumbs(this.router.routerState.snapshot.root)),
     ),
     { initialValue: [] as BreadcrumbItem[] },
