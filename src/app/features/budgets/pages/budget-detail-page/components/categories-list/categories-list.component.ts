@@ -6,8 +6,9 @@ import { IconButtonComponent } from '../../../../../../common/components/form/ic
 import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
 import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
 import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
+import { LucideAngularModule, ChevronDown, ChevronRight } from 'lucide-angular';
 
 @Component({
   selector: 'app-categories-list',
@@ -18,11 +19,16 @@ import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-ca
     ModalComponent,
     EmptyStateComponent,
     CreateCategoryValueAndAssignmentComponent,
+    LucideAngularModule,
   ],
   templateUrl: './categories-list.component.html',
 })
 export class CategoriesList {
   private budgetViewService = inject(BudgetViewService);
+  public collapsedCategories = signal<Set<number>>(new Set());
+
+  public chevronDown = ChevronDown;
+  public chevronRight = ChevronRight;
 
   public isModalOpen = computed(() => this.budgetViewService.isModalOpen());
 
@@ -38,6 +44,18 @@ export class CategoriesList {
 
   public toggleModal(categoryId?: number) {
     this.budgetViewService.toggleModal(categoryId);
+  }
+
+  public toggleCategory(categoryId: number) {
+    this.collapsedCategories.update((prev) => {
+      const next = new Set(prev);
+      if (next.has(categoryId)) {
+        next.delete(categoryId);
+      } else {
+        next.add(categoryId);
+      }
+      return next;
+    });
   }
 
   public unassignCategoryValue(id: string) {
