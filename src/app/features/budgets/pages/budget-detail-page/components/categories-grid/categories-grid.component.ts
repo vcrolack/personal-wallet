@@ -1,17 +1,15 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
-import { CreateCategoryValueAndAssignmentComponent } from './forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
-import { BudgetService } from '../../../../../../core/services/budget.service';
 import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
-import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
 import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
 import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
 import { CircleDollarSign } from 'lucide-angular';
 import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
 import { BudgetViewService } from '../../services/budgetView.service';
+import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 
 @Component({
   selector: 'app-categories-grid',

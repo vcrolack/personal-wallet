@@ -5,10 +5,9 @@ import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/re
 import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
 import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
 import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
-import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
 import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
-import { CreateCategoryValueAndAssignmentComponent } from '../categories-grid/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { Component, computed, inject } from '@angular/core';
+import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 
 @Component({
   selector: 'app-categories-list',
