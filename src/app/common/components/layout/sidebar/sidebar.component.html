@@ -49,19 +49,20 @@
     </nav>
   </aside>
   <main class="flex-1 flex flex-col h-full overflow-hidden">
-    <header class="h-14 border-b flex items-center justify-between px-4 flex-shrink-0">
+    <header
+      class="h-14 border-b flex items-center justify-between px-4 flex-shrink-0"
+    >
       <div class="font-medium">
         Bienvenido, {{ currentUser?.name }} {{ currentUser?.lastName }} 👋
       </div>
       <!-- Slot para user menu, mes actual, etc. -->
-      <app-button
-        label="Cerrar sesión"
-        variant="danger"
-        (click)="logout()"
-      >
+      <app-button label="Cerrar sesión" variant="danger" (click)="logout()">
       </app-button>
     </header>
     <section class="flex-1 overflow-y-auto p-4">
+      <div class="mb-6">
+        <app-breadcrumb></app-breadcrumb>
+      </div>
       <ng-content></ng-content>
     </section>
   </main>

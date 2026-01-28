@@ -8,7 +8,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./features/auth/pages/login-page/login.page.component').then(
-        (m) => m.LoginPageComponent
+        (m) => m.LoginPageComponent,
       ),
     canActivate: [publicGuard],
   },
@@ -20,69 +20,78 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       {
         path: 'dashboard',
+        data: { breadcrumb: 'Dashboard' },
         loadComponent: () =>
-          import(
-            './features/dashboard/pages/dashboard-page/dashboard.page.component'
-          ).then((m) => m.DashboardPageComponent),
+          import('./features/dashboard/pages/dashboard-page/dashboard.page.component').then(
+            (m) => m.DashboardPageComponent,
+          ),
       },
       {
         path: 'transactions',
+        data: { breadcrumb: 'Transacciones' },
         loadComponent: () =>
-          import(
-            './features/transactions/pages/transactions-page/transactions.page.component'
-          ).then((m) => m.TransactionsPageComponent),
+          import('./features/transactions/pages/transactions-page/transactions.page.component').then(
+            (m) => m.TransactionsPageComponent,
+          ),
       },
       {
         path: 'budgets',
+        data: { breadcrumb: 'Presupuestos' },
         children: [
           {
             path: '',
             loadComponent: () =>
-              import(
-                './features/budgets/pages/budgets-page/budgets.page.component'
-              ).then((m) => m.BudgetsPageComponent),
+              import('./features/budgets/pages/budgets-page/budgets.page.component').then(
+                (m) => m.BudgetsPageComponent,
+              ),
           },
           {
             path: ':id',
+            data: { breadcrumb: 'Detalle' },
             loadComponent: () =>
-              import(
-                './features/budgets/pages/budget-detail-page/budget-detail.component'
-              ).then((m) => m.BudgetDetailComponent),
+              import('./features/budgets/pages/budget-detail-page/budget-detail.component').then(
+                (m) => m.BudgetDetailComponent,
+              ),
           },
         ],
       },
       {
         path: 'accounts',
+        data: { breadcrumb: 'Cuentas' },
         loadComponent: () =>
-          import(
-            './features/accounts/pages/accounts-page/accounts.page.component'
-          ).then((m) => m.AccountsPageComponent),
+          import('./features/accounts/pages/accounts-page/accounts.page.component').then(
+            (m) => m.AccountsPageComponent,
+          ),
       },
       {
         path: 'catalog',
+        data: { breadcrumb: 'Catálogo' },
         children: [
           {
             path: 'categories',
+            data: { breadcrumb: 'Categorías' },
             loadComponent: () =>
-              import(
-                './features/catalog/categories/pages/categories-page/categories.page.component'
-              ).then((m) => m.CategoriesPageComponent),
+              import('./features/catalog/categories/pages/categories-page/categories.page.component').then(
+                (m) => m.CategoriesPageComponent,
+              ),
           },
           {
             path: 'rules',
+            data: { breadcrumb: 'Reglas' },
             loadComponent: () =>
-              import(
-                './features/catalog/rules/pages/rules-page/rules.page.component'
-              ).then((m) => m.RulesPageComponent),
+              import('./features/catalog/rules/pages/rules-page/rules.page.component').then(
+                (m) => m.RulesPageComponent,
+              ),
           },
         ],
       },
       {
         path: 'settings',
+        data: { breadcrumb: 'Ajustes' },
         loadComponent: () =>
-          import(
-            './features/settings/pages/settings-page/settings.page.component'
-          ).then((m) => m.SettingsPageComponent),
+          import('./features/settings/pages/settings-page/settings.page.component').then(
+            (m) => m.SettingsPageComponent,
+          ),
       },
     ],
   },
