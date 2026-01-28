@@ -11,16 +11,27 @@
   >
     <app-hero [budget]="budgetValue"></app-hero>
 
-    <div id="budget-actions">
+    <div
+      id="budget-actions"
+      class="px-4 flex flex-row justify-between items-center"
+    >
       <app-button
         label="Agregar categoría"
         (onClick)="toggleModal()"
       ></app-button>
+      <app-view-switcher
+        [mode]="viewMode()"
+        (onModeChange)="viewMode.set($event)"
+      ></app-view-switcher>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
       <div class="xl:col-span-3 h-full">
-        <app-categories-list></app-categories-list>
+        @if (viewMode() === "grid") {
+          <app-categories-grid></app-categories-grid>
+        } @else if (viewMode() === "list") {
+          <app-categories-list></app-categories-list>
+        }
       </div>
       <div class="xl:col-span-1">
         <app-visual-resume [budget]="budgetValue"></app-visual-resume>

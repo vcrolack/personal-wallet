@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BudgetDetailComponent } from '../../../../pages/budgets/views/budget-detail/budget-detail.component';
+import { BudgetDetailComponent } from './budget-detail.component';
 
 describe('BudgetDetailComponent', () => {
   let component: BudgetDetailComponent;

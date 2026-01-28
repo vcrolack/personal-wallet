@@ -1,24 +1,33 @@
 import { Component, inject, input, effect, signal } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { HeroComponent } from './components/hero/hero.component';
-import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { CategoriesGridComponent } from './components/categories-grid/categories-grid.component';
 import { ButtonComponent } from '../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
 import { AddCategoryComponent } from './forms/add-category/add-category.component';
 import { BudgetDetailSkeletonComponent } from './components/budget-detail-skeleton/budget-detail-skeleton.component';
-import { VisualResumeComponent } from "./components/visual-resume/visual-resume.component";
+import { VisualResumeComponent } from './components/visual-resume/visual-resume.component';
+import {
+  ViewSwitcherComponent,
+  ViewMode,
+} from '../../../../common/components/ui/view-switcher/view-switcher.component';
+import { CategoriesList } from './components/categories-list/categories-list.component';
+import { BudgetViewService } from './services/budgetView.service';
 
 @Component({
   selector: 'app-budget-detail',
   imports: [
     HeroComponent,
-    CategoriesListComponent,
+    CategoriesGridComponent,
     ButtonComponent,
     ModalComponent,
     AddCategoryComponent,
     BudgetDetailSkeletonComponent,
-    VisualResumeComponent
-],
+    VisualResumeComponent,
+    ViewSwitcherComponent,
+    CategoriesList,
+  ],
+  providers: [BudgetViewService],
   templateUrl: './budget-detail.component.html',
   styleUrl: './budget-detail.component.css',
 })
@@ -26,6 +35,7 @@ export class BudgetDetailComponent {
   private budgetService = inject(BudgetService);
 
   public isModalOpen = signal<boolean>(false);
+  public viewMode = signal<ViewMode>('grid');
 
   public id = input.required<string>();
 
@@ -38,5 +48,9 @@ export class BudgetDetailComponent {
 
   public toggleModal() {
     this.isModalOpen.update((prev) => !prev);
+  }
+
+  public setViewMode(mode: ViewMode) {
+    this.viewMode.set(mode);
   }
 }
