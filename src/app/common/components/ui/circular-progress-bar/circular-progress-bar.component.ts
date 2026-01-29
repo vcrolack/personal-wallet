@@ -6,12 +6,12 @@ import {
   afterNextRender,
   effect,
 } from '@angular/core';
-
+import { TextComponent } from '../typography/text/text.component';
 
 @Component({
   selector: 'app-circular-progress-bar',
   standalone: true,
-  imports: [],
+  imports: [TextComponent],
   templateUrl: './circular-progress-bar.component.html',
   styleUrl: './circular-progress-bar.component.css',
 })
@@ -64,7 +64,7 @@ export class CircularProgressBarComponent {
     if (this.totalValue() === 0) return 0;
     return Math.min(
       100,
-      Math.round((this.currentValue() / this.totalValue()) * 100)
+      Math.round((this.currentValue() / this.totalValue()) * 100),
     );
   });
 

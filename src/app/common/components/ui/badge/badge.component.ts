@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-
+import { TextComponent } from '../typography/text/text.component';
 
 export type BadgeVariant =
   | 'primary'
@@ -12,7 +12,7 @@ export type BadgeVariant =
 @Component({
   selector: 'app-badge',
   standalone: true,
-  imports: [],
+  imports: [TextComponent],
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.css',
 })
@@ -30,7 +30,8 @@ export class BadgeComponent {
       warning: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
       danger: 'bg-danger/15 text-danger hover:bg-danger/25',
       info: 'bg-primary-500/15 text-primary-400 hover:bg-primary-500/25',
-      neutral: 'bg-surface-subtle text-content-primary hover:bg-surface-subtle/80',
+      neutral:
+        'bg-surface-subtle text-content-primary hover:bg-surface-subtle/80',
     };
 
     return `${baseClasses} ${variantClasses[this.variant()]}`;

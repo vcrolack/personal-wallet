@@ -1,24 +1,24 @@
 <div class="border-b border-border-subtle">
   <nav class="-mb-px flex space-x-8" aria-label="Tabs">
     @for (item of items(); track item.id) {
-    <button
-      type="button"
-      (click)="selectTab(item)"
-      [class]="
-        'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-all duration-200 ' +
-        (activeTabId() === item.id
-          ? 'border-primary-500 text-primary-500'
-          : 'border-transparent text-content-secondary hover:border-border hover:text-content-primary')
-      "
-      [attr.aria-current]="activeTabId() === item.id ? 'page' : null"
-    >
-      <div class="flex items-center gap-2">
-        @if (item.icon) {
-        <i [class]="item.icon" aria-hidden="true"></i>
-        }
-        <span>{{ item.label }}</span>
-      </div>
-    </button>
+      <button
+        type="button"
+        (click)="selectTab(item)"
+        [class]="
+          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-all duration-200 ' +
+          (activeTabId() === item.id
+            ? 'border-primary-500 text-primary-500'
+            : 'border-transparent text-content-secondary hover:border-border hover:text-content-primary')
+        "
+        [attr.aria-current]="activeTabId() === item.id ? 'page' : null"
+      >
+        <div class="flex items-center gap-2">
+          @if (item.icon) {
+            <i [class]="item.icon" aria-hidden="true"></i>
+          }
+          <app-text tag="span">{{ item.label }}</app-text>
+        </div>
+      </button>
     }
   </nav>
 </div>

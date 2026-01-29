@@ -14,7 +14,7 @@ export class DonutChartComponent {
   public height = input<number>(300);
 
   public valueFormatter = input<(val: number) => string>(
-    (val) => `$${val.toLocaleString('es-CL')}`
+    (val) => `$${val.toLocaleString('es-CL')}`,
   );
 
   public chartOptions = computed<Partial<ChartOptions>>(() => {

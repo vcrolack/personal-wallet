@@ -1,7 +1,7 @@
-<span [class]="badgeClasses()">
+<app-text variant="xs" tag="span" [class]="badgeClasses()">
   @if (label()) {
-  {{ label() }}
+    {{ label() }}
   } @else {
-  <ng-content></ng-content>
+    <ng-content></ng-content>
   }
-</span>
+</app-text>
