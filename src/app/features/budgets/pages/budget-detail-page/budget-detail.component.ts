@@ -1,18 +1,21 @@
 import { Component, inject, input, effect, signal } from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { HeroComponent } from './components/hero/hero.component';
-import { CategoriesGridComponent } from './components/categories-grid/categories-grid.component';
+
 import { ButtonComponent } from '../../../../common/components/form/button/button.component';
 import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
 import { AddCategoryComponent } from './forms/add-category/add-category.component';
-import { BudgetDetailSkeletonComponent } from './components/budget-detail-skeleton/budget-detail-skeleton.component';
-import { VisualResumeComponent } from './components/visual-resume/visual-resume.component';
+
 import {
   ViewSwitcherComponent,
   ViewMode,
 } from '../../../../common/components/ui/view-switcher/view-switcher.component';
-import { CategoriesList } from './components/categories-list/categories-list.component';
+
 import { BudgetViewService } from './services/budgetView.service';
+import { CategoriesGridComponent } from './components/budget-plan/categories-grid/categories-grid.component';
+import { BudgetDetailSkeletonComponent } from './components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
+import { VisualResumeComponent } from './components/budget-plan/visual-resume/visual-resume.component';
+import { CategoriesList } from './components/budget-plan/categories-list/categories-list.component';
 
 @Component({
   selector: 'app-budget-detail',

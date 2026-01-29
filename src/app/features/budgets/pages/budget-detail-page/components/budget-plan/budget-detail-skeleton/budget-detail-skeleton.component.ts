@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
-import { SkeletonComponent } from '../../../../../../common/components/ui/skeleton/skeleton.component';
-import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
+import { SkeletonComponent } from '../../../../../../../common/components/ui/skeleton/skeleton.component';
+import { WrapperComponent } from '../../../../../../../common/components/ui/wrapper/wrapper.component';
 
 @Component({
   selector: 'app-budget-detail-skeleton',
@@ -48,23 +47,23 @@ import { WrapperComponent } from '../../../../../../common/components/ui/wrapper
 
       <!-- Categories List Skeleton -->
       <div class="flex flex-col gap-4">
-        @for (i of [1,2,3]; track i) {
-        <app-wrapper>
-          <div class="p-4 flex justify-between items-center">
-            <div class="flex gap-4 items-center">
-              <app-skeleton
-                width="48px"
-                height="48px"
-                borderRadius="100%"
-              ></app-skeleton>
-              <div class="flex flex-col gap-2">
-                <app-skeleton width="150px" height="20px"></app-skeleton>
-                <app-skeleton width="100px" height="14px"></app-skeleton>
+        @for (i of [1, 2, 3]; track i) {
+          <app-wrapper>
+            <div class="p-4 flex justify-between items-center">
+              <div class="flex gap-4 items-center">
+                <app-skeleton
+                  width="48px"
+                  height="48px"
+                  borderRadius="100%"
+                ></app-skeleton>
+                <div class="flex flex-col gap-2">
+                  <app-skeleton width="150px" height="20px"></app-skeleton>
+                  <app-skeleton width="100px" height="14px"></app-skeleton>
+                </div>
               </div>
+              <app-skeleton width="80px" height="24px"></app-skeleton>
             </div>
-            <app-skeleton width="80px" height="24px"></app-skeleton>
-          </div>
-        </app-wrapper>
+          </app-wrapper>
         }
       </div>
     </div>

@@ -1,16 +1,20 @@
 import { CurrencyPipe, I18nPluralPipe } from '@angular/common';
-import { BudgetViewService } from '../../services/budgetView.service';
-import { CircleDollarSign } from 'lucide-angular';
-import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
-import { IconButtonComponent } from '../../../../../../common/components/form/icon-button/icon-button.component';
-import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
-import { ModalComponent } from '../../../../../../common/components/ui/modal/modal.component';
-import { EmptyStateComponent } from '../../../../../../common/components/ui/empty-state/empty-state.component';
 import { Component, computed, inject, signal } from '@angular/core';
-import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
-import { LucideAngularModule, ChevronDown, ChevronRight } from 'lucide-angular';
-import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
-import { TitleComponent } from '../../../../../../common/components/ui/typography/title/title.component';
+import { IconButtonComponent } from '../../../../../../../common/components/form/icon-button/icon-button.component';
+import { EditableFieldComponent } from '../../../../../../../common/components/ui/editable-field/editable-field.component';
+import { ModalComponent } from '../../../../../../../common/components/ui/modal/modal.component';
+import { EmptyStateComponent } from '../../../../../../../common/components/ui/empty-state/empty-state.component';
+import { CreateCategoryValueAndAssignmentComponent } from '../../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
+import {
+  ChevronDown,
+  ChevronRight,
+  CircleDollarSign,
+  LucideAngularModule,
+} from 'lucide-angular';
+import { TitleComponent } from '../../../../../../../common/components/ui/typography/title/title.component';
+import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
+import { BudgetViewService } from '../../../services/budgetView.service';
+import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
 
 @Component({
   selector: 'app-categories-list',
