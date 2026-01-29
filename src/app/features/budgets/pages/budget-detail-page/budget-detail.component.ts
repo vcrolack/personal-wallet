@@ -26,6 +26,7 @@ import { CategoriesList } from './components/budget-plan/categories-list/categor
 import { TabsComponent } from '../../../../common/components/layout/tabs/tabs.component';
 import { TabItem } from '../../../../common/interfaces/tab-item.interface';
 import { BudgetTransactions } from './components/budget-transactions/budget-transactions.component';
+import { TransactionsVisualResume } from './components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
 
 @Component({
   selector: 'app-budget-detail',
@@ -41,6 +42,7 @@ import { BudgetTransactions } from './components/budget-transactions/budget-tran
     CategoriesList,
     TabsComponent,
     BudgetTransactions,
+    TransactionsVisualResume,
   ],
   providers: [BudgetViewService],
   templateUrl: './budget-detail.component.html',

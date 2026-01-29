@@ -41,11 +41,14 @@
         }
       </div>
 
-      @if (activeTabId() === 0) {
-        <div class="xl:col-span-1">
+      <div class="xl:col-span-1">
+        @if (activeTabId() === 0) {
           <app-visual-resume [budget]="budgetValue"></app-visual-resume>
-        </div>
-      }
+        }
+        @if (activeTabId() === 1) {
+          <app-transactions-visual-resume></app-transactions-visual-resume>
+        }
+      </div>
     </div>
   </section>
 
