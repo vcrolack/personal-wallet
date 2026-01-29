@@ -8,6 +8,8 @@ import { PieChartComponent } from '../../../../../../common/components/charts/pi
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { CarouselComponent } from '../../../../../../common/components/ui/carousel/carousel.component';
 import { CarouselSlideDirective } from '../../../../../../common/components/ui/carousel/carousel-slide.directive';
+import { TitleComponent } from '../../../../../../common/components/ui/typography/title/title.component';
+import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-visual-resume',
@@ -20,6 +22,8 @@ import { CarouselSlideDirective } from '../../../../../../common/components/ui/c
     WrapperComponent,
     CarouselComponent,
     CarouselSlideDirective,
+    TitleComponent,
+    TextComponent,
   ],
   templateUrl: './visual-resume.component.html',
   styleUrl: './visual-resume.component.css',
@@ -47,7 +51,7 @@ export class VisualResumeComponent {
     const categories = budget.groups;
     const totalAllocated = categories.reduce(
       (acc, cat) => acc + cat.totalAllocated,
-      0
+      0,
     );
     const unallocated = Math.max(0, budget.budgetAmount - totalAllocated);
 
@@ -78,7 +82,7 @@ export class VisualResumeComponent {
     const budget = this.budget();
     const categories = budget.groups;
     const sortedCategories = [...categories].sort(
-      (a, b) => b.totalAllocated - a.totalAllocated
+      (a, b) => b.totalAllocated - a.totalAllocated,
     );
     return sortedCategories.slice(0, 3);
   });
@@ -87,11 +91,14 @@ export class VisualResumeComponent {
     const budget = this.budget();
     const groups = budget.groups;
 
-    const rulesMap = groups.reduce((acc, group) => {
-      const rule = group.rule;
-      acc[rule] = (acc[rule] || 0) + group.totalAllocated;
-      return acc;
-    }, {} as Record<string, number>);
+    const rulesMap = groups.reduce(
+      (acc, group) => {
+        const rule = group.rule;
+        acc[rule] = (acc[rule] || 0) + group.totalAllocated;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     const series = Object.values(rulesMap);
     const labels = Object.keys(rulesMap);
@@ -114,7 +121,7 @@ export class VisualResumeComponent {
       this.budget().budgetAmount,
       'CLP',
       'symbol-narrow',
-      '1.0-0'
+      '1.0-0',
     )!;
   }
 }

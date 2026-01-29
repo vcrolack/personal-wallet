@@ -13,6 +13,7 @@ export type TextVariant =
 export type TextColor =
   | 'primary'
   | 'secondary'
+  | 'terciary'
   | 'slate'
   | 'indigo'
   | 'danger'
@@ -49,6 +50,7 @@ export class TextComponent {
     'normal',
   );
   public uppercase = input<boolean>(false);
+  public capitalize = input<boolean>(false);
   public className = input<string>('', { alias: 'class' });
 
   private variantClasses: Record<TextVariant, string> = {
@@ -65,6 +67,7 @@ export class TextComponent {
   private colorClasses: Record<TextColor, string> = {
     primary: 'text-indigo-600',
     secondary: 'text-slate-400',
+    terciary: 'text-blue-600',
     slate: 'text-slate-500',
     indigo: 'text-indigo-600',
     danger: 'text-red-500',
@@ -87,6 +90,7 @@ export class TextComponent {
       colorClass,
       this.weightClasses[this.weight()],
       this.uppercase() ? 'uppercase' : '',
+      this.capitalize() ? 'capitalize' : '',
       this.tag() === 'span' ? 'inline-block' : 'block',
       'leading-normal',
       this.className(),
