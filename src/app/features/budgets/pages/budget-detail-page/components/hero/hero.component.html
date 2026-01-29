@@ -55,35 +55,43 @@
             <!-- Fila 2: Gastado y Diferencia -->
             <app-wrapper>
               <div class="p-4 text-center">
-                <p
-                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
+                <app-text
+                  tag="p"
+                  variant="small"
+                  weight="medium"
+                  color="slate"
+                  [uppercase]="true"
                 >
                   Total Gastado
-                </p>
-                <p class="text-2xl font-bold text-blue-600">
+                </app-text>
+                <app-text variant="xl" weight="bold" color="primary">
                   {{
                     budget().totalSpent
                       | currency: "CLP" : "symbol-narrow" : "1.0-0"
                   }}
-                </p>
+                </app-text>
               </div>
             </app-wrapper>
 
             <app-wrapper>
               <div class="p-4 text-center">
-                <p
-                  class="text-sm font-medium text-gray-500 uppercase tracking-wider"
+                <app-text
+                  tag="p"
+                  variant="small"
+                  weight="medium"
+                  color="slate"
+                  [uppercase]="true"
                 >
                   Diferencia
-                </p>
-                <p
-                  [ngClass]="
-                    difference > 0 ? 'text-emerald-600' : 'text-red-600'
-                  "
-                  class="text-2xl font-bold"
+                </app-text>
+                <app-text
+                  variant="xl"
+                  weight="bold"
+                  [color]="null"
+                  [class]="difference > 0 ? 'text-emerald-600' : 'text-red-600'"
                 >
                   {{ difference | currency: "CLP" : "symbol-narrow" : "1.0-0" }}
-                </p>
+                </app-text>
               </div>
             </app-wrapper>
           </div>

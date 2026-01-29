@@ -1,7 +1,15 @@
 import { Component, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
-export type TextVariant = 'body' | 'small' | 'xs' | 'label' | 'value';
+export type TextVariant =
+  | 'body'
+  | 'small'
+  | 'xs'
+  | 'label'
+  | 'value'
+  | 'lg'
+  | 'xl'
+  | '2xl';
 export type TextColor =
   | 'primary'
   | 'secondary'
@@ -36,11 +44,12 @@ export type TextColor =
 export class TextComponent {
   public tag = input<'span' | 'p'>('span');
   public variant = input<TextVariant>('body');
-  public color = input<TextColor>('slate');
+  public color = input<TextColor | null>('slate');
   public weight = input<'normal' | 'medium' | 'semibold' | 'bold' | 'black'>(
     'normal',
   );
   public uppercase = input<boolean>(false);
+  public className = input<string>('', { alias: 'class' });
 
   private variantClasses: Record<TextVariant, string> = {
     body: 'text-sm md:text-base',
@@ -48,6 +57,9 @@ export class TextComponent {
     xs: 'text-[10px] md:text-xs',
     label: 'text-[10px] uppercase tracking-widest leading-none',
     value: 'text-base md:text-lg tracking-tight font-black',
+    lg: 'text-lg md:text-xl tracking-tight font-black',
+    xl: 'text-xl md:text-2xl tracking-tight font-black',
+    '2xl': 'text-2xl md:text-3xl tracking-tight font-black',
   };
 
   private colorClasses: Record<TextColor, string> = {
@@ -68,13 +80,18 @@ export class TextComponent {
   };
 
   get classes(): string {
+    const colorClass = this.color() ? this.colorClasses[this.color()!] : '';
+
     return [
       this.variantClasses[this.variant()],
-      this.colorClasses[this.color()],
+      colorClass,
       this.weightClasses[this.weight()],
       this.uppercase() ? 'uppercase' : '',
       this.tag() === 'span' ? 'inline-block' : 'block',
       'leading-normal',
-    ].join(' ');
+      this.className(),
+    ]
+      .filter(Boolean)
+      .join(' ');
   }
 }

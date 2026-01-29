@@ -10,6 +10,7 @@ import { CircularProgressBarComponent } from '../../../../../../common/component
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { finalize } from 'rxjs';
 import { EditableFieldComponent } from '../../../../../../common/components/ui/editable-field/editable-field.component';
+import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-hero',
@@ -20,6 +21,7 @@ import { EditableFieldComponent } from '../../../../../../common/components/ui/e
     CommonModule,
     CircularProgressBarComponent,
     EditableFieldComponent,
+    TextComponent,
   ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css',
