@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4';
 export type TitleColor = 'primary' | 'secondary' | 'slate' | 'indigo';
@@ -6,20 +7,32 @@ export type TitleColor = 'primary' | 'secondary' | 'slate' | 'indigo';
 @Component({
   selector: 'app-title',
   standalone: true,
-  imports: [],
+  imports: [NgTemplateOutlet],
   template: `
+    <ng-template #content>
+      <ng-content></ng-content>
+    </ng-template>
+
     @switch (level()) {
       @case ('h1') {
-        <h1 [class]="classes"><ng-content></ng-content></h1>
+        <h1 [class]="classes">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </h1>
       }
       @case ('h2') {
-        <h2 [class]="classes"><ng-content></ng-content></h2>
+        <h2 [class]="classes">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </h2>
       }
       @case ('h3') {
-        <h3 [class]="classes"><ng-content></ng-content></h3>
+        <h3 [class]="classes">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </h3>
       }
       @case ('h4') {
-        <h4 [class]="classes"><ng-content></ng-content></h4>
+        <h4 [class]="classes">
+          <ng-container *ngTemplateOutlet="content"></ng-container>
+        </h4>
       }
     }
   `,

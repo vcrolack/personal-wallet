@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 export type TextVariant = 'body' | 'small' | 'xs' | 'label' | 'value';
 export type TextColor =
@@ -12,17 +13,21 @@ export type TextColor =
 @Component({
   selector: 'app-text',
   standalone: true,
-  imports: [],
+  imports: [NgTemplateOutlet],
   template: `
+    <ng-template #content>
+      <ng-content></ng-content>
+    </ng-template>
+
     @switch (tag()) {
       @case ('p') {
         <p [class]="classes">
-          <ng-content></ng-content>
+          <ng-container *ngTemplateOutlet="content"></ng-container>
         </p>
       }
       @default {
         <span [class]="classes">
-          <ng-content></ng-content>
+          <ng-container *ngTemplateOutlet="content"></ng-container>
         </span>
       }
     }
