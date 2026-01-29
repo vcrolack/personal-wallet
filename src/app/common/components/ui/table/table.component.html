@@ -33,6 +33,20 @@
               }
             </tr>
           }
+        } @else if (error()) {
+          <tr>
+            <td [attr.colspan]="colCount()" class="px-4 py-20 text-center">
+              <div class="flex flex-col items-center justify-center gap-2">
+                <span class="text-3xl">⚠️</span>
+                <p class="text-sm font-semibold text-red-500">
+                  Error al cargar los datos
+                </p>
+                <p class="text-xs text-slate-400">
+                  Por favor, intenta refrescar la página
+                </p>
+              </div>
+            </td>
+          </tr>
         } @else {
           <!-- Empty -->
           @if (!data().length) {

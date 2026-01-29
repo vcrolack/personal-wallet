@@ -5,14 +5,12 @@
     (onClick)="toggleModal('create')"
   ></app-button>
 </div>
-@if (budgetsResource.error()) {
-  <p>Error al cargar los presupuestos</p>
-}
 <app-generic-table
   [data]="budgetsData()"
   [pagination]="pagination()"
   [columns]="columns"
   [isLoading]="budgetsResource.isLoading()"
+  [error]="budgetsResource.error()"
   (rowClick)="openDetail($event.id)"
   (pageChange)="onPageChange($event)"
 />

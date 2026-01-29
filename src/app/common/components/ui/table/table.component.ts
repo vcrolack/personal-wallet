@@ -18,6 +18,7 @@ export class GenericTableComponent<T> {
   public data = input<T[]>([]);
   public columns = input<ColumnDef<T>[]>([]);
   public isLoading = input(false);
+  public error = input<any>(null);
   public pagination = input<TablePagination | null>(null);
 
   public readonly ChevronLeft = ChevronLeft;
