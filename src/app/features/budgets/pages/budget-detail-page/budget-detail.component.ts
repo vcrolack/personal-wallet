@@ -16,6 +16,9 @@ import { CategoriesGridComponent } from './components/budget-plan/categories-gri
 import { BudgetDetailSkeletonComponent } from './components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
 import { VisualResumeComponent } from './components/budget-plan/visual-resume/visual-resume.component';
 import { CategoriesList } from './components/budget-plan/categories-list/categories-list.component';
+import { TabsComponent } from '../../../../common/components/layout/tabs/tabs.component';
+import { TabItem } from '../../../../common/interfaces/tab-item.interface';
+import { BudgetTransactions } from './components/budget-transactions/budget-transactions.component';
 
 @Component({
   selector: 'app-budget-detail',
@@ -29,6 +32,8 @@ import { CategoriesList } from './components/budget-plan/categories-list/categor
     VisualResumeComponent,
     ViewSwitcherComponent,
     CategoriesList,
+    TabsComponent,
+    BudgetTransactions,
   ],
   providers: [BudgetViewService],
   templateUrl: './budget-detail.component.html',
@@ -39,6 +44,17 @@ export class BudgetDetailComponent {
 
   public isModalOpen = signal<boolean>(false);
   public viewMode = signal<ViewMode>('grid');
+  public activeTabId = signal<string | number | undefined>(undefined);
+  public tabs = signal<TabItem[]>([
+    {
+      id: 0,
+      label: 'Presupuesto',
+    },
+    {
+      id: 1,
+      label: 'Transacciones',
+    },
+  ]);
 
   public id = input.required<string>();
 
@@ -47,6 +63,12 @@ export class BudgetDetailComponent {
 
   constructor() {
     effect(() => this.budgetService.selectBudget(this.id()));
+    effect(() => {
+      const currentTabs = this.tabs();
+      if (currentTabs.length > 0 && this.activeTabId() === undefined) {
+        this.activeTabId.set(currentTabs[0].id);
+      }
+    });
   }
 
   public toggleModal() {
@@ -55,5 +77,9 @@ export class BudgetDetailComponent {
 
   public setViewMode(mode: ViewMode) {
     this.viewMode.set(mode);
+  }
+
+  public disabledSwitcherView() {
+    return this.activeTabId() !== 0;
   }
 }

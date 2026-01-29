@@ -19,23 +19,33 @@
         label="Agregar categoría"
         (onClick)="toggleModal()"
       ></app-button>
+      <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
+
       <app-view-switcher
         [mode]="viewMode()"
+        [disabled]="disabledSwitcherView()"
         (onModeChange)="viewMode.set($event)"
       ></app-view-switcher>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
       <div class="xl:col-span-3 h-full">
-        @if (viewMode() === "grid") {
-          <app-categories-grid></app-categories-grid>
-        } @else if (viewMode() === "list") {
-          <app-categories-list></app-categories-list>
+        @if (activeTabId() === 0) {
+          @if (viewMode() === "grid") {
+            <app-categories-grid></app-categories-grid>
+          } @else if (viewMode() === "list") {
+            <app-categories-list></app-categories-list>
+          }
+        } @else if (activeTabId() === 1) {
+          <app-budget-transactions></app-budget-transactions>
         }
       </div>
-      <div class="xl:col-span-1">
-        <app-visual-resume [budget]="budgetValue"></app-visual-resume>
-      </div>
+
+      @if (activeTabId() === 0) {
+        <div class="xl:col-span-1">
+          <app-visual-resume [budget]="budgetValue"></app-visual-resume>
+        </div>
+      }
     </div>
   </section>
 

@@ -5,7 +5,7 @@
         type="button"
         (click)="selectTab(item)"
         [class]="
-          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-all duration-200 ' +
+          'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-all duration-200 cursor-pointer ' +
           (activeTabId() === item.id
             ? 'border-primary-500 text-primary-500'
             : 'border-transparent text-content-secondary hover:border-border hover:text-content-primary')

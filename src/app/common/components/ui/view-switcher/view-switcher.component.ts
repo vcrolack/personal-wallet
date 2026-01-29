@@ -13,6 +13,7 @@ export type ViewMode = 'grid' | 'list';
 })
 export class ViewSwitcherComponent {
   public mode = input.required<ViewMode>();
+  public disabled = input<boolean>(false);
   public onModeChange = output<ViewMode>();
 
   public icons = {
