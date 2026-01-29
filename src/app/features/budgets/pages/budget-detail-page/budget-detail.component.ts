@@ -1,4 +1,11 @@
-import { Component, inject, input, effect, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  effect,
+  signal,
+  computed,
+} from '@angular/core';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { HeroComponent } from './components/hero/hero.component';
 
@@ -61,6 +68,14 @@ export class BudgetDetailComponent {
   public budget = this.budgetService.budgetResourceDetail;
   public isLoading = this.budgetService.budgetResourceDetail.isLoading;
 
+  public disabledSwitcherView = computed(() => this.activeTabId() !== 0);
+  public isAddCategory = computed(() => {
+    if (this.activeTabId() === 0) {
+      return 'Agregar categoría';
+    }
+    return 'Registrar transacción';
+  });
+
   constructor() {
     effect(() => this.budgetService.selectBudget(this.id()));
     effect(() => {
@@ -77,9 +92,5 @@ export class BudgetDetailComponent {
 
   public setViewMode(mode: ViewMode) {
     this.viewMode.set(mode);
-  }
-
-  public disabledSwitcherView() {
-    return this.activeTabId() !== 0;
   }
 }

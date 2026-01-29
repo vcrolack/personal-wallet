@@ -16,7 +16,7 @@
       class="px-4 flex flex-row justify-between items-center"
     >
       <app-button
-        label="Agregar categoría"
+        [label]="isAddCategory()"
         (onClick)="toggleModal()"
       ></app-button>
       <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
