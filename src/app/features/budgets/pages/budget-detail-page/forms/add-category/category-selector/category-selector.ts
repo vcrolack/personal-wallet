@@ -9,10 +9,11 @@ import { BudgetService } from '../../../../../../../core/services/budget.service
 import { finalize } from 'rxjs';
 import { BudgetCategoryRules } from '../../../../../../../core/enums/budget-category-rules.enum';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-category-selector',
-  imports: [AutocompleteComponent, ReactiveFormsModule],
+  imports: [AutocompleteComponent, ReactiveFormsModule, TextComponent],
   templateUrl: './category-selector.html',
 })
 export class CategorySelector {

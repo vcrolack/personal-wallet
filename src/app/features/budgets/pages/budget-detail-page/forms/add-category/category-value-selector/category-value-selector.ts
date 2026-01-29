@@ -15,10 +15,11 @@ import {
   AutocompleteOption,
 } from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
 import { finalize, startWith, switchMap } from 'rxjs';
+import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-category-value-selector',
-  imports: [ReactiveFormsModule, AutocompleteComponent],
+  imports: [ReactiveFormsModule, AutocompleteComponent, TextComponent],
   templateUrl: './category-value-selector.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
