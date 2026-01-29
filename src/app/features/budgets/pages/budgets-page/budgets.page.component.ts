@@ -9,6 +9,7 @@ import { CreateOrUpdateBudget } from './forms/create-or-update-budget/create-or-
 import { Budget } from '../../../../core/interfaces/budget.interface';
 import { ToastService } from '../../../../common/components/ui/toast/toast.service';
 import { TitleComponent } from '../../../../common/components/ui/typography/title/title.component';
+import { TextComponent } from '../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-budgets.page',
@@ -18,6 +19,7 @@ import { TitleComponent } from '../../../../common/components/ui/typography/titl
     ModalComponent,
     CreateOrUpdateBudget,
     TitleComponent,
+    TextComponent,
   ],
   templateUrl: './budgets.page.component.html',
   styleUrl: './budgets.page.component.css',

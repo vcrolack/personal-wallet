@@ -38,11 +38,11 @@
     }
     @if (action() === "delete") {
       <div>
-        <p>
+        <app-text tag="p">
           ¿Estás seguro de eliminar el presupuesto
           <strong>{{ budget()?.title }}</strong
           >?
-        </p>
+        </app-text>
         <div class="pt-4 flex justify-end gap-4">
           <app-button label="Cancelar" (onClick)="toggleModal()"></app-button>
           <app-button
