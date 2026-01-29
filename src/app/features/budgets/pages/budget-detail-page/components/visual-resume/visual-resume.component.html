@@ -4,7 +4,9 @@
   <app-carousel>
     <div id="donut-chart" *appCarouselSlide>
       <div class="w-full flex-1 flex items-center justify-center">
-        <app-donut-chart [chartData]="budgetAmountResume()"></app-donut-chart>
+        @if (budgetAmountResume(); as data) {
+          <app-donut-chart [chartData]="data"></app-donut-chart>
+        }
       </div>
 
       <div class="w-full mt-6 grid grid-cols-1 gap-4">
@@ -36,7 +38,9 @@
 
     <div id="pie-chart" *appCarouselSlide>
       <div class="w-full flex-1 flex items-center justify-center">
-        <app-pie-chart [chartData]="categoriesResume()"></app-pie-chart>
+        @if (categoriesResume(); as data) {
+          <app-pie-chart [chartData]="data"></app-pie-chart>
+        }
       </div>
       <div class="mt-3 bg-surface-subtle/50 rounded-xl p-3 border border-border-subtle">
         <app-text
@@ -61,7 +65,9 @@
 
     <div id="rules-chart" *appCarouselSlide>
       <div class="w-full flex-1 flex items-center justify-center">
-        <app-pie-chart [chartData]="purpuses()"></app-pie-chart>
+        @if (purposes(); as data) {
+          <app-pie-chart [chartData]="data"></app-pie-chart>
+        }
       </div>
       <div class="mt-3 bg-surface-subtle/50 rounded-xl p-3 border border-border-subtle">
         <app-title level="h4" variant="lg" class="mb-4">
