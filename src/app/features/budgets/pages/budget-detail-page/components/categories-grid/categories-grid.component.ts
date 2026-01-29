@@ -10,6 +10,8 @@ import { CircleDollarSign } from 'lucide-angular';
 import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
 import { BudgetViewService } from '../../services/budgetView.service';
 import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
+import { TitleComponent } from '../../../../../../common/components/ui/typography/title/title.component';
+import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-categories-grid',
@@ -22,6 +24,8 @@ import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-ca
     IconButtonComponent,
     EmptyStateComponent,
     EditableFieldComponent,
+    TitleComponent,
+    TextComponent,
   ],
   templateUrl: './categories-grid.component.html',
 })

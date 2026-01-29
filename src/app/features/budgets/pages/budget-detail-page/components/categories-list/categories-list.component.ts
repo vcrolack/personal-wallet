@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, I18nPluralPipe } from '@angular/common';
 import { BudgetViewService } from '../../services/budgetView.service';
 import { CircleDollarSign } from 'lucide-angular';
 import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
@@ -9,6 +9,8 @@ import { EmptyStateComponent } from '../../../../../../common/components/ui/empt
 import { Component, computed, inject, signal } from '@angular/core';
 import { CreateCategoryValueAndAssignmentComponent } from '../../forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { LucideAngularModule, ChevronDown, ChevronRight } from 'lucide-angular';
+import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
+import { TitleComponent } from '../../../../../../common/components/ui/typography/title/title.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -20,12 +22,21 @@ import { LucideAngularModule, ChevronDown, ChevronRight } from 'lucide-angular';
     EmptyStateComponent,
     CreateCategoryValueAndAssignmentComponent,
     LucideAngularModule,
+    TitleComponent,
+    TextComponent,
+    I18nPluralPipe,
   ],
   templateUrl: './categories-list.component.html',
 })
 export class CategoriesList {
   private budgetViewService = inject(BudgetViewService);
   public collapsedCategories = signal<Set<number>>(new Set());
+
+  public conceptsMap = signal({
+    '=0': 'sin conceptos',
+    '=1': '1 concepto',
+    other: '# conceptos',
+  });
 
   public chevronDown = ChevronDown;
   public chevronRight = ChevronRight;

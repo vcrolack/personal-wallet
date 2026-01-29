@@ -53,8 +53,8 @@ export class TextComponent {
   private colorClasses: Record<TextColor, string> = {
     primary: 'text-indigo-600',
     secondary: 'text-slate-400',
-    slate: 'text-slate-700',
-    indigo: 'text-indigo-900',
+    slate: 'text-slate-500',
+    indigo: 'text-indigo-600',
     danger: 'text-red-500',
     success: 'text-emerald-500',
   };

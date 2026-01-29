@@ -12,11 +12,12 @@
           class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
         >
           <div class="mb-4">
-            <h2
-              class="text-sm font-bold uppercase tracking-wider text-slate-500"
+            <app-title
+              level="h2"
+              class="text-sm font-bold capitalize tracking-wider text-slate-500"
             >
               {{ group.categoryName }}
-            </h2>
+            </app-title>
             <div class="h-1 w-12 bg-indigo-500 rounded-full mt-1"></div>
           </div>
 
@@ -63,15 +64,25 @@
 
           <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
             <div class="flex justify-between items-baseline">
-              <span class="text-slate-500 text-sm font-medium"
-                >Total presupuestado</span
+              <app-text
+                weight="semibold"
+                variant="small"
+                tag="span"
+                class="text-slate-500 text-sm font-medium"
+                >Total presupuestado</app-text
               >
-              <strong class="text-xl font-extrabold text-indigo-600">
+              <app-text
+                weight="bold"
+                variant="value"
+                tag="p"
+                color="indigo"
+                class="text-lg font-extrabold text-indigo-600"
+              >
                 {{
                   group.totalAllocated
                     | currency: "CLP" : "symbol-narrow" : "1.0-0" : "es-CL"
                 }}
-              </strong>
+              </app-text>
             </div>
           </div>
         </app-wrapper>
