@@ -65,13 +65,13 @@ export class TextComponent {
   };
 
   private colorClasses: Record<TextColor, string> = {
-    primary: 'text-indigo-600',
-    secondary: 'text-slate-400',
-    terciary: 'text-blue-600',
-    slate: 'text-slate-500',
-    indigo: 'text-indigo-600',
-    danger: 'text-red-500',
-    success: 'text-emerald-500',
+    primary: 'text-primary-500',
+    secondary: 'text-content-muted',
+    terciary: 'text-primary-500',
+    slate: 'text-content-secondary',
+    indigo: 'text-primary-500',
+    danger: 'text-danger',
+    success: 'text-success',
   };
 
   private weightClasses: Record<string, string> = {

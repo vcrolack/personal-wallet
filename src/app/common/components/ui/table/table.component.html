@@ -1,12 +1,12 @@
 <!-- table.component.html -->
 <div class="w-full">
-  <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+  <div class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-raised">
     <table class="min-w-full border-separate border-spacing-0">
-      <thead class="bg-slate-50">
+      <thead class="bg-surface-subtle">
         <tr>
           @for (col of columns(); track col) {
             <th
-              class="sticky top-0 z-10 border-b border-slate-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-600"
+              class="sticky top-0 z-10 border-b border-border-subtle px-4 py-3 text-xs font-semibold uppercase tracking-wide text-content-secondary"
               [ngClass]="[
                 col.headerClass ?? '',
                 col.widthClass ?? '',
@@ -25,9 +25,9 @@
           @for (_ of [1, 2, 3, 4, 5]; track _) {
             <tr>
               @for (col of columns(); track col) {
-                <td class="border-b border-slate-100 px-4 py-3">
+                <td class="border-b border-border-subtle px-4 py-3">
                   <div
-                    class="h-4 w-full animate-pulse rounded bg-slate-100"
+                    class="h-4 w-full animate-pulse rounded bg-surface-subtle"
                   ></div>
                 </td>
               }
@@ -38,10 +38,10 @@
             <td [attr.colspan]="colCount()" class="px-4 py-20 text-center">
               <div class="flex flex-col items-center justify-center gap-2">
                 <span class="text-3xl">⚠️</span>
-                <p class="text-sm font-semibold text-red-500">
+                <p class="text-sm font-semibold text-danger">
                   Error al cargar los datos
                 </p>
-                <p class="text-xs text-slate-400">
+                <p class="text-xs text-content-muted">
                   Por favor, intenta refrescar la página
                 </p>
               </div>
@@ -53,7 +53,7 @@
             <tr>
               <td
                 [attr.colspan]="colCount()"
-                class="px-4 py-10 text-center text-sm text-slate-500"
+                class="px-4 py-10 text-center text-sm text-content-secondary"
               >
                 No hay datos para mostrar 🫠
               </td>
@@ -62,12 +62,12 @@
           <!-- Rows -->
           @for (row of data(); track trackBy()($index, row)) {
             <tr
-              class="cursor-pointer hover:bg-slate-50"
+              class="cursor-pointer hover:bg-surface-subtle"
               (click)="rowClick.emit(row)"
             >
               @for (col of columns(); track col) {
                 <td
-                  class="border-b border-slate-100 px-4 py-3 text-sm text-slate-700"
+                  class="border-b border-border-subtle px-4 py-3 text-sm text-content-primary"
                   [ngClass]="[
                     col.cellClass ?? '',
                     col.widthClass ?? '',
@@ -107,7 +107,7 @@
                             class="inline-flex items-center rounded-lg p-1.5 transition-colors z-10 cursor-pointer"
                             [ngClass]="
                               action.class ||
-                              'text-slate-400 hover:bg-slate-100 hover:text-slate-600'
+                              'text-content-muted hover:bg-surface-subtle hover:text-content-secondary'
                             "
                             [title]="action.label"
                           >
@@ -136,27 +136,27 @@
   <!-- Pagination -->
   @if (pagination()) {
     <div
-      class="flex items-center justify-between border-t border-slate-200 bg-white px-4 py-3 sm:px-6 mt-4 rounded-xl shadow-sm"
+      class="flex items-center justify-between border-t border-border-subtle bg-surface-raised px-4 py-3 sm:px-6 mt-4 rounded-xl shadow-sm"
     >
       <div class="flex flex-1 justify-between sm:hidden">
         <button
           (click)="pageChange.emit(pagination()!.currentPage - 1)"
           [disabled]="!canGoPrevious()"
-          class="relative inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="relative inline-flex items-center rounded-md border border-border bg-surface-raised px-4 py-2 text-sm font-medium text-content-primary hover:bg-surface-subtle disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Anterior
         </button>
         <button
           (click)="pageChange.emit(pagination()!.currentPage + 1)"
           [disabled]="!canGoNext()"
-          class="relative ml-3 inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="relative ml-3 inline-flex items-center rounded-md border border-border bg-surface-raised px-4 py-2 text-sm font-medium text-content-primary hover:bg-surface-subtle disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Siguiente
         </button>
       </div>
       <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p class="text-sm text-slate-700">
+          <p class="text-sm text-content-primary">
             Mostrando
             <span class="font-medium">{{ showingFrom() }}</span>
             a
@@ -174,13 +174,13 @@
             <button
               (click)="pageChange.emit(pagination()!.currentPage - 1)"
               [disabled]="!canGoPrevious()"
-              class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              class="relative inline-flex items-center rounded-l-md px-2 py-2 text-content-muted ring-1 ring-inset ring-border hover:bg-surface-subtle focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <span class="sr-only">Anterior</span>
               <lucide-icon [img]="ChevronLeft" class="w-5 h-5"></lucide-icon>
             </button>
             <div
-              class="flex items-center px-4 py-2 text-sm font-semibold text-slate-900 border-t border-b border-slate-300 ring-1 ring-inset ring-slate-300"
+              class="flex items-center px-4 py-2 text-sm font-semibold text-content-primary border-t border-b border-border ring-1 ring-inset ring-border"
             >
               Página {{ pagination()?.currentPage }} de
               {{ pagination()?.totalPages }}
@@ -188,7 +188,7 @@
             <button
               (click)="pageChange.emit(pagination()!.currentPage + 1)"
               [disabled]="!canGoNext()"
-              class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              class="relative inline-flex items-center rounded-r-md px-2 py-2 text-content-muted ring-1 ring-inset ring-border hover:bg-surface-subtle focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <span class="sr-only">Siguiente</span>
               <lucide-icon [img]="ChevronRight" class="w-5 h-5"></lucide-icon>

@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   imports: [],
   template: `
     <div
-      [class]="'animate-pulse bg-gray-200 ' + className()"
+      [class]="'animate-pulse bg-surface-subtle ' + className()"
       [style.width]="width()"
       [style.height]="height()"
       [style.border-radius]="borderRadius()"

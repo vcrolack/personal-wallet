@@ -1,15 +1,15 @@
 <div
-  class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200 shadow-sm w-fit"
+  class="flex items-center gap-1 bg-surface-subtle p-1 rounded-lg border border-border-subtle shadow-sm w-fit"
 >
   <button
     type="button"
     (click)="setMode('grid')"
     class="relative p-2 rounded-md transition-all duration-200 flex items-center justify-center border-none cursor-pointer outline-none active:scale-95"
-    [class.bg-white]="mode() === 'grid'"
-    [class.text-indigo-900]="mode() === 'grid'"
+    [class.bg-surface-raised]="mode() === 'grid'"
+    [class.text-primary-400]="mode() === 'grid'"
     [class.shadow-sm]="mode() === 'grid'"
-    [class.text-slate-500]="mode() !== 'grid'"
-    [class.hover:bg-slate-50]="mode() !== 'grid'"
+    [class.text-content-secondary]="mode() !== 'grid'"
+    [class.hover:bg-surface-subtle]="mode() !== 'grid'"
     aria-label="Grid View"
   >
     <lucide-icon
@@ -23,11 +23,11 @@
     type="button"
     (click)="setMode('list')"
     class="relative p-2 rounded-md transition-all duration-200 flex items-center justify-center border-none cursor-pointer outline-none active:scale-95"
-    [class.bg-white]="mode() === 'list'"
-    [class.text-indigo-900]="mode() === 'list'"
+    [class.bg-surface-raised]="mode() === 'list'"
+    [class.text-primary-400]="mode() === 'list'"
     [class.shadow-sm]="mode() === 'list'"
-    [class.text-slate-500]="mode() !== 'list'"
-    [class.hover:bg-slate-50]="mode() !== 'list'"
+    [class.text-content-secondary]="mode() !== 'list'"
+    [class.hover:bg-surface-subtle]="mode() !== 'list'"
     aria-label="List View"
   >
     <lucide-icon

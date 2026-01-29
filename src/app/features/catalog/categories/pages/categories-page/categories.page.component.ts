@@ -140,7 +140,7 @@ export class CategoriesPageComponent {
             this.toggleModal('edit-category-value');
             this.categoryToEdit.set(row);
           },
-          class: 'text-blue-500 hover:bg-blue-50',
+          class: 'text-primary-500 hover:bg-primary-500/10',
         },
         {
           label: 'Eliminar',
@@ -150,7 +150,7 @@ export class CategoriesPageComponent {
             this.toggleModal('delete-category-value');
             this.categoryToEdit.set(row);
           },
-          class: 'text-red-500 hover:bg-red-50',
+          class: 'text-danger hover:bg-danger/10',
         },
       ],
     },
@@ -175,7 +175,7 @@ export class CategoriesPageComponent {
             this.toggleModal('edit-category');
             this.categoryToEdit.set(row);
           },
-          class: 'text-blue-500 hover:bg-blue-50',
+          class: 'text-primary-500 hover:bg-primary-500/10',
         },
         {
           label: 'Eliminar',
@@ -185,7 +185,7 @@ export class CategoriesPageComponent {
             this.toggleModal('delete-category');
             this.categoryToEdit.set(row);
           },
-          class: 'text-red-500 hover:bg-red-50',
+          class: 'text-danger hover:bg-danger/10',
         },
       ],
     },

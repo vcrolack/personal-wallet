@@ -9,22 +9,22 @@
         class="group w-full transition-transform duration-200 hover:scale-[1.02]"
       >
         <app-wrapper
-          class="flex flex-col h-full shadow-sm hover:shadow-md border border-slate-100 rounded-xl overflow-hidden"
+          class="flex flex-col h-full shadow-sm hover:shadow-md border border-border-subtle rounded-xl overflow-hidden"
         >
           <div class="mb-4">
             <app-title
               level="h2"
-              class="text-sm font-bold capitalize tracking-wider text-slate-500"
+              class="text-sm font-bold capitalize tracking-wider text-content-secondary"
             >
               {{ group.categoryName }}
             </app-title>
-            <div class="h-1 w-12 bg-indigo-500 rounded-full mt-1"></div>
+            <div class="h-1 w-12 bg-primary-500 rounded-full mt-1"></div>
           </div>
 
           <ul class="flex-grow space-y-3">
             @for (item of group.assignments; track item.id) {
               <li
-                class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-slate-50 transition-colors"
+                class="flex justify-between items-center group/item p-2 rounded-lg hover:bg-surface-subtle transition-colors"
               >
                 <div
                   class="w-0 overflow-hidden group-hover/item:w-8 transition-all duration-300 flex items-center"
@@ -37,7 +37,7 @@
                     (onClick)="unassignCategoryValue(item.id)"
                   ></app-icon-button>
                 </div>
-                <span class="flex-grow text-slate-700 font-medium">{{
+                <span class="flex-grow text-content-primary font-medium">{{
                   item.categoryValueName
                 }}</span>
                 <app-editable-field
@@ -62,13 +62,13 @@
             </div>
           </ul>
 
-          <div class="mt-6 pt-4 border-t border-dashed border-slate-200">
+          <div class="mt-6 pt-4 border-t border-dashed border-border-subtle">
             <div class="flex justify-between items-baseline">
               <app-text
                 weight="semibold"
                 variant="small"
                 tag="span"
-                class="text-slate-500 text-sm font-medium"
+                class="text-content-secondary text-sm font-medium"
                 >Total presupuestado</app-text
               >
               <app-text
@@ -76,7 +76,7 @@
                 variant="value"
                 tag="p"
                 color="indigo"
-                class="text-lg font-extrabold text-indigo-600"
+                class="text-lg font-extrabold text-primary-500"
               >
                 {{
                   group.totalAllocated

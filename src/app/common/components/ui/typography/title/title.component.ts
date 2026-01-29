@@ -46,10 +46,10 @@ export class TitleComponent {
   public uppercase = input<boolean>(false);
 
   private colorClasses: Record<TitleColor, string> = {
-    primary: 'text-indigo-600',
-    secondary: 'text-slate-500',
-    slate: 'text-slate-900',
-    indigo: 'text-indigo-900',
+    primary: 'text-primary-500',
+    secondary: 'text-content-secondary',
+    slate: 'text-content-primary',
+    indigo: 'text-primary-400',
   };
 
   private levelClasses: Record<TitleLevel, string> = {

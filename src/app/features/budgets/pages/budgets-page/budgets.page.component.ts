@@ -99,7 +99,7 @@ export class BudgetsPageComponent {
             this.toggleModal('update');
             this.budget.set(row);
           },
-          class: 'text-blue-500 hover:bg-blue-50',
+          class: 'text-primary-500 hover:bg-primary-500/10',
         },
         {
           label: 'Eliminar',
@@ -108,7 +108,7 @@ export class BudgetsPageComponent {
             this.toggleModal('delete');
             this.budget.set(row);
           },
-          class: 'text-red-500 hover:bg-red-50',
+          class: 'text-danger hover:bg-danger/10',
         },
       ],
     },

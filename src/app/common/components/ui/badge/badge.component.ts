@@ -25,12 +25,12 @@ export class BadgeComponent {
       'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors duration-200';
 
     const variantClasses: Record<BadgeVariant, string> = {
-      primary: 'bg-blue-100 text-blue-800 hover:bg-blue-200',
-      success: 'bg-green-100 text-green-800 hover:bg-green-200',
+      primary: 'bg-primary-500/15 text-primary-400 hover:bg-primary-500/25',
+      success: 'bg-success/15 text-success hover:bg-success/25',
       warning: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
-      danger: 'bg-red-100 text-red-800 hover:bg-red-200',
-      info: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
-      neutral: 'bg-gray-100 text-gray-800 hover:bg-gray-200',
+      danger: 'bg-danger/15 text-danger hover:bg-danger/25',
+      info: 'bg-primary-500/15 text-primary-400 hover:bg-primary-500/25',
+      neutral: 'bg-surface-subtle text-content-primary hover:bg-surface-subtle/80',
     };
 
     return `${baseClasses} ${variantClasses[this.variant()]}`;

@@ -1,5 +1,5 @@
 <section class="w-full h-screen flex items-center justify-center">
-  <div class="p-16 bg-gray-50 rounded-lg">
+  <div class="p-16 bg-surface-subtle rounded-lg">
     <h1 class="text-2xl mb-10">Inicia sesión en tu Wallet de confianza 😁</h1>
     <form
       (submit)="onSubmit()"
@@ -8,13 +8,13 @@
       action=""
     >
       <input
-        class="border border-gray-300 rounded-md p-2 focus-visible:border-none focus-visible:ring-0"
+        class="border border-border rounded-md p-2 focus-visible:border-none focus-visible:ring-0"
         type="email"
         placeholder="Correo electrónico"
         formControlName="email"
       />
       <input
-        class="border border-gray-300 rounded-md p-2 focus-visible:border-none focus-visible:ring-0"
+        class="border border-border rounded-md p-2 focus-visible:border-none focus-visible:ring-0"
         type="password"
         placeholder="Contraseña"
         formControlName="password"
@@ -23,7 +23,7 @@
         <button
           type="submit"
           class="w-1/2 h-auto bg-black text-white rounded-lg py-2 px-4 enabled:cursor-pointer disabled:cursor-not-allowed"
-          [class.bg-gray-400]="loginForm.invalid"
+          [class.bg-content-muted]="loginForm.invalid"
           [disabled]="loginForm.invalid || isLoading()"
         >
           {{ isLoading() ? "Cargando..." : "Inicia sesión" }}
@@ -31,7 +31,7 @@
       </div>
     </form>
     @if (errorMessage()) {
-    <div class="p-3 mt-5 bg-red-100 text-red-700 rounded-md mb-4">
+    <div class="p-3 mt-5 bg-danger/15 text-danger rounded-md mb-4">
       {{ errorMessage() }}
     </div>
     }

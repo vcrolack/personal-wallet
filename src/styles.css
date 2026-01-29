@@ -1,4 +1,11 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-surface-base text-content-primary;
+  }
+}
 
 /* Smooth Height Transition Trick */
 .expand-grid {

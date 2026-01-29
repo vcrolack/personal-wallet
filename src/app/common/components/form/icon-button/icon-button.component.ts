@@ -49,11 +49,11 @@ export class IconButtonComponent {
       'inline-flex items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     const variantClasses: Record<IconButtonVariant, string> = {
-      primary: 'text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
-      secondary: 'text-gray-600 hover:bg-gray-100 focus:ring-gray-500',
-      success: 'text-green-600 hover:bg-green-50 focus:ring-green-500',
-      danger: 'text-red-600 hover:bg-red-50 focus:ring-red-500',
-      ghost: 'text-slate-500 hover:bg-slate-100 focus:ring-slate-400',
+      primary: 'text-primary-500 hover:bg-surface-subtle focus:ring-primary-500',
+      secondary: 'text-content-secondary hover:bg-surface-subtle focus:ring-primary-500',
+      success: 'text-success hover:bg-success/10 focus:ring-success',
+      danger: 'text-danger hover:bg-danger/10 focus:ring-danger',
+      ghost: 'text-content-secondary hover:bg-surface-subtle focus:ring-primary-500',
     };
 
     const sizeClasses: Record<IconButtonSize, string> = {

@@ -11,7 +11,7 @@ import { Component, computed, input } from '@angular/core';
 export class ProgressBarComponent {
   public currentValue = input.required<number>();
   public totalValue = input.required<number>();
-  public color = input<string>('bg-blue-600');
+  public color = input<string>('bg-primary-500');
   public showLabel = input<boolean>(true);
 
   public percentage = computed(() => {

@@ -20,7 +20,7 @@ export class CircularProgressBarComponent {
   public totalValue = input.required<number>();
   public size = input<number>(100);
   public strokeWidth = input<number>(8);
-  public color = input<string>('text-blue-600');
+  public color = input<string>('text-primary-500');
 
   private showProgress = signal(false);
   public animatedPercentage = signal(0);

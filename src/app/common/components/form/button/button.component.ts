@@ -23,12 +23,12 @@ export class ButtonComponent {
       'inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     const variantClasses: Record<ButtonVariant, string> = {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+      primary:
+        'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500',
       secondary:
-        'bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500',
-      success:
-        'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500',
-      danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+        'bg-surface-subtle text-content-primary hover:bg-surface-subtle/80 focus:ring-primary-500',
+      success: 'bg-success text-white hover:bg-success/80 focus:ring-success',
+      danger: 'bg-danger text-white hover:bg-danger/80 focus:ring-danger',
     };
 
     const sizeClasses: Record<ButtonSize, string> = {

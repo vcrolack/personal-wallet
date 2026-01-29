@@ -13,12 +13,12 @@ export class ToastComponent {
   public readonly toasts = this.toastService.toasts;
 
   public getStyles(type: NotificationType): string {
-    const base = 'bg-white ';
+    const base = 'bg-surface-raised ';
     const types = {
-      info: 'border-blue-500 text-blue-800 bg-blue-50',
-      success: 'border-green-500 text-green-800 bg-green-50',
-      warning: 'border-yellow-500 text-yellow-800 bg-yellow-50',
-      error: 'border-red-500 text-red-800 bg-red-50',
+      info: 'border-primary-500 text-primary-400 bg-primary-500/10',
+      success: 'border-success text-success bg-success/10',
+      warning: 'border-yellow-500 text-yellow-800 bg-yellow-500/10',
+      error: 'border-danger text-danger bg-danger/10',
     };
     return `${base} ${types[type]}`;
   }
