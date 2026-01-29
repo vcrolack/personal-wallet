@@ -14,12 +14,22 @@ export type TextColor =
   standalone: true,
   imports: [],
   template: `
-    <span [class]="classes">
-      <ng-content></ng-content>
-    </span>
+    @switch (tag()) {
+      @case ('p') {
+        <p [class]="classes">
+          <ng-content></ng-content>
+        </p>
+      }
+      @default {
+        <span [class]="classes">
+          <ng-content></ng-content>
+        </span>
+      }
+    }
   `,
 })
 export class TextComponent {
+  public tag = input<'span' | 'p'>('span');
   public variant = input<TextVariant>('body');
   public color = input<TextColor>('slate');
   public weight = input<'normal' | 'medium' | 'semibold' | 'bold' | 'black'>(
@@ -58,7 +68,8 @@ export class TextComponent {
       this.colorClasses[this.color()],
       this.weightClasses[this.weight()],
       this.uppercase() ? 'uppercase' : '',
-      'inline-block leading-normal',
+      this.tag() === 'span' ? 'inline-block' : 'block',
+      'leading-normal',
     ].join(' ');
   }
 }
