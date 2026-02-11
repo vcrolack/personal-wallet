@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([merakiInterceptor, errorInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor, merakiInterceptor])),
     { provide: LOCALE_ID, useValue: 'es-CL' },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],

@@ -10,17 +10,17 @@ export const merakiInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const token = authService.currentUser()?.token;
 
-  if (!token) return next(req);
-
   if (!req.url.includes(environment.merakiUrl)) return next(req);
 
-  if (req.url.includes('/auth/login')) return next(req);
+  let authReq = req;
 
-  const authReq = req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (token && !req.url.includes('/auth/login')) {
+    authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -29,6 +29,6 @@ export const merakiInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate(['/login']);
       }
       return throwError(() => error);
-    })
+    }),
   );
 };
