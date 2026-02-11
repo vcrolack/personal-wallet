@@ -1,36 +1,36 @@
 @if (isOpen()) {
-<div
-  class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden p-4 outline-none focus:outline-none"
->
-  <!-- Backdrop -->
   <div
-    class="fixed inset-0 bg-black opacity-50 transition-opacity"
-    (click)="close()"
-  ></div>
-
-  <!-- Modal Container -->
-  <div
-    class="relative mx-auto my-6 w-full max-w-lg rounded-lg border-0 bg-surface-raised shadow-xl outline-none focus:outline-none"
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden p-4 outline-none focus:outline-none"
   >
-    <!-- Header -->
+    <!-- Backdrop -->
     <div
-      class="flex items-center justify-between rounded-t border-b border-solid border-border-subtle p-5"
-    >
-      <h3 class="text-2xl font-semibold text-content-primary">{{ title() }}</h3>
-      <button
-        class="ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-content-muted outline-none hover:text-content-secondary focus:outline-none"
-        (click)="close()"
-      >
-        <span class="block h-6 w-6 bg-transparent text-2xl outline-none">
-          ×
-        </span>
-      </button>
-    </div>
+      class="fixed inset-0 bg-black opacity-50 transition-opacity"
+      (click)="close()"
+    ></div>
 
-    <!-- Body -->
-    <div class="relative flex-auto p-6">
-      <ng-content></ng-content>
+    <!-- Modal Container -->
+    <div [class]="containerClasses()">
+      <!-- Header -->
+      <div
+        class="flex items-center justify-between rounded-t border-b border-solid border-border-subtle p-5"
+      >
+        <h3 class="text-2xl font-semibold text-content-primary">
+          {{ title() }}
+        </h3>
+        <button
+          class="ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-content-muted outline-none hover:text-content-secondary focus:outline-none"
+          (click)="close()"
+        >
+          <span class="block h-6 w-6 bg-transparent text-2xl outline-none">
+            ×
+          </span>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="relative flex-auto p-6">
+        <ng-content></ng-content>
+      </div>
     </div>
   </div>
-</div>
 }

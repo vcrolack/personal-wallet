@@ -1,0 +1,78 @@
+<form [formGroup]="form">
+  <div class="w-full flex gap-4">
+    <app-input
+      class="w-1/2"
+      label="Monto total de la transacción"
+      placeholder="1000"
+      type="number"
+      formControlName="amount"
+    ></app-input>
+    <app-date-selector
+      class="w-1/2"
+      label="Fecha"
+      formControlName="transactionDate"
+    ></app-date-selector>
+  </div>
+  <div class="w-full my-4">
+    <app-input
+      label="Descripción"
+      placeholder="¿Qué transacción es esta?"
+      type="text"
+      formControlName="description"
+    ></app-input>
+  </div>
+  <div class="w-full mb-4 flex gap-4">
+    <app-select label="Banco" class="w-1/2"></app-select>
+    <app-select label="Tipo de transacción" class="w-1/2"></app-select>
+  </div>
+
+  <app-wrapper>
+    <div class="w-full" formArrayName="assignments">
+      <div class="flex justify-between items-center">
+        <app-text weight="semibold" color="terciary" variant="xl"
+          >Asignaciones</app-text
+        >
+      </div>
+
+      <div class="flex flex-col max-h-96 overflow-y-auto pr-2">
+        @for (assignment of assignments.controls; track $index) {
+          <div
+            [formGroupName]="$index"
+            class="w-full flex gap-4 items-center py-5"
+          >
+            <app-icon-button
+              name="trash-2"
+              size="small"
+              color="danger"
+              (onClick)="removeAssignment($index)"
+            ></app-icon-button>
+            <app-autocomplete label="Categoría"></app-autocomplete>
+            <app-autocomplete
+              class="w-1/2"
+              label="Valor de categoría"
+              formControlName="categoryValueId"
+            ></app-autocomplete>
+            <app-input
+              class="w-1/2"
+              label="Monto asignado"
+              type="number"
+              formControlName="amount"
+            ></app-input>
+          </div>
+        }
+        <div class="w-full flex justify-center py-5">
+          <app-button-text
+            label="Agregar asignación"
+            size="small"
+            icon="plus"
+            (onClick)="addAssignment()"
+          ></app-button-text>
+        </div>
+      </div>
+    </div>
+  </app-wrapper>
+
+  <div class="w-full flex justify-end mt-5">
+    <app-button label="Agregar transacción"></app-button>
+  </div>
+</form>

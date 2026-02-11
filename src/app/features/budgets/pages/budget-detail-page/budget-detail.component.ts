@@ -10,7 +10,10 @@ import { BudgetService } from '../../../../core/services/budget.service';
 import { HeroComponent } from './components/hero/hero.component';
 
 import { ButtonComponent } from '../../../../common/components/form/button/button.component';
-import { ModalComponent } from '../../../../common/components/ui/modal/modal.component';
+import {
+  ModalComponent,
+  ModalSize,
+} from '../../../../common/components/ui/modal/modal.component';
 import { AddCategoryComponent } from './forms/add-category/add-category.component';
 
 import {
@@ -27,6 +30,7 @@ import { TabsComponent } from '../../../../common/components/layout/tabs/tabs.co
 import { TabItem } from '../../../../common/interfaces/tab-item.interface';
 import { BudgetTransactions } from './components/budget-transactions/budget-transactions.component';
 import { TransactionsVisualResume } from './components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
+import { AddTransactionComponent } from './forms/add-transaction/add-transaction.component';
 
 @Component({
   selector: 'app-budget-detail',
@@ -43,6 +47,7 @@ import { TransactionsVisualResume } from './components/budget-transactions/compo
     TabsComponent,
     BudgetTransactions,
     TransactionsVisualResume,
+    AddTransactionComponent,
   ],
   providers: [BudgetViewService],
   templateUrl: './budget-detail.component.html',
@@ -51,6 +56,7 @@ import { TransactionsVisualResume } from './components/budget-transactions/compo
 export class BudgetDetailComponent {
   private budgetService = inject(BudgetService);
 
+  public modalOption = signal<'add-category' | 'add-transaction' | null>(null);
   public isModalOpen = signal<boolean>(false);
   public viewMode = signal<ViewMode>('grid');
   public activeTabId = signal<string | number | undefined>(undefined);
@@ -78,6 +84,11 @@ export class BudgetDetailComponent {
     return 'Registrar transacción';
   });
 
+  public modalSize = computed<ModalSize>(() => {
+    if (this.modalOption() === 'add-transaction') return 'large';
+    return 'medium';
+  });
+
   constructor() {
     effect(() => this.budgetService.selectBudget(this.id()));
     effect(() => {
@@ -88,7 +99,8 @@ export class BudgetDetailComponent {
     });
   }
 
-  public toggleModal() {
+  public toggleModal(option: 'add-category' | 'add-transaction' | null) {
+    this.modalOption.set(option);
     this.isModalOpen.update((prev) => !prev);
   }
 

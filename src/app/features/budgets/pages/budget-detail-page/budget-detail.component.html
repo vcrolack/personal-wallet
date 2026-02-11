@@ -17,7 +17,9 @@
     >
       <app-button
         [label]="isAddCategory()"
-        (onClick)="toggleModal()"
+        (onClick)="
+          toggleModal(activeTabId() === 0 ? 'add-category' : 'add-transaction')
+        "
       ></app-button>
       <app-tabs [items]="tabs()" [(activeTabId)]="activeTabId"></app-tabs>
 
@@ -53,12 +55,17 @@
   </section>
 
   <app-modal
-    title="Agregar categoría"
+    [title]="isAddCategory()"
     [isOpen]="isModalOpen()"
-    (onClose)="toggleModal()"
+    [size]="modalSize()"
+    (onClose)="toggleModal(null)"
   >
-    @if (isModalOpen()) {
-      <app-add-category (closeModal)="toggleModal()"></app-add-category>
+    @if (isModalOpen() && modalOption() === "add-category") {
+      <app-add-category (closeModal)="toggleModal(null)"></app-add-category>
+    } @else if (isModalOpen() && modalOption() === "add-transaction") {
+      <app-add-transaction
+        (closeModal)="toggleModal(null)"
+      ></app-add-transaction>
     }
   </app-modal>
 }
