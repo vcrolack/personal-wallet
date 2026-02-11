@@ -22,8 +22,18 @@
     ></app-input>
   </div>
   <div class="w-full mb-4 flex gap-4">
-    <app-select label="Banco" class="w-1/2"></app-select>
-    <app-select label="Tipo de transacción" class="w-1/2"></app-select>
+    <app-select
+      label="Banco"
+      class="w-1/2"
+      [options]="banksOptions()"
+      formControlName="bankId"
+    ></app-select>
+    <app-select
+      label="Tipo de transacción"
+      class="w-1/2"
+      [options]="transactionTypesOptions()"
+      formControlName="transactionTypeId"
+    ></app-select>
   </div>
 
   <app-wrapper>

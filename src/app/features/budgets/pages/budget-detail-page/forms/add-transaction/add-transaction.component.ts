@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -13,7 +18,11 @@ import { IconButtonComponent } from '../../../../../../common/components/form/ic
 import { ButtonTextComponent } from '../../../../../../common/components/form/button-text/button-text.component';
 import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
 import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
-import { SelectComponent } from '../../../../../../common/components/form/select/select.component';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../../../../../common/components/form/select/select.component';
+import { AddTransactionService } from '../../services/add-transaction.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -29,18 +38,36 @@ import { SelectComponent } from '../../../../../../common/components/form/select
     TextComponent,
     SelectComponent,
   ],
+  providers: [AddTransactionService],
   templateUrl: './add-transaction.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddTransactionComponent {
   private fb = inject(FormBuilder);
+  private addTransactionService = inject(AddTransactionService);
 
   public form = this.fb.group({
     amount: [0, Validators.required],
     transactionDate: [new Date(), Validators.required],
     description: ['', Validators.required],
+    bankId: [null, Validators.required],
+    transactionTypeId: [null, Validators.required],
     assignments: this.fb.array([]),
   });
+
+  public banksOptions = computed<SelectOption[]>(() =>
+    this.addTransactionService.banks().map((bank) => ({
+      label: bank.name,
+      value: bank.id,
+    })),
+  );
+
+  public transactionTypesOptions = computed<SelectOption[]>(() =>
+    this.addTransactionService.transactionTypes().map((transactionType) => ({
+      label: transactionType.name,
+      value: transactionType.id,
+    })),
+  );
 
   public get assignments() {
     return this.form.get('assignments') as FormArray;
