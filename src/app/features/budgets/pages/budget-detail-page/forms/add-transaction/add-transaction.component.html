@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form (ngSubmit)="submit()" [formGroup]="form">
   <div class="w-full flex gap-4">
     <app-input
       class="w-1/2"
@@ -46,29 +46,10 @@
 
       <div class="flex flex-col max-h-96 overflow-y-auto pr-2">
         @for (assignment of assignments.controls; track $index) {
-          <div
-            [formGroupName]="$index"
-            class="w-full flex gap-4 items-center py-5"
-          >
-            <app-icon-button
-              name="trash-2"
-              size="small"
-              color="danger"
-              (onClick)="removeAssignment($index)"
-            ></app-icon-button>
-            <app-autocomplete label="Categoría"></app-autocomplete>
-            <app-autocomplete
-              class="w-1/2"
-              label="Valor de categoría"
-              formControlName="categoryValueId"
-            ></app-autocomplete>
-            <app-input
-              class="w-1/2"
-              label="Monto asignado"
-              type="number"
-              formControlName="amount"
-            ></app-input>
-          </div>
+          <app-transaction-assignment
+            [formGroup]="asFormGroup(assignment)"
+            (remove)="removeAssignment($index)"
+          ></app-transaction-assignment>
         }
         <div class="w-full flex justify-center py-5">
           <app-button-text

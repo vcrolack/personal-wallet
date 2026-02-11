@@ -45,6 +45,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
 
   public noResultsClick = output<string>();
   public queryChange = output<string>();
+  public selectionChange = output<any>();
 
   public query = signal<string>('');
   public isOpen = signal<boolean>(false);
@@ -111,6 +112,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnDestroy {
     this.query.set(option.label);
     this.isOpen.set(false);
     this.onChange(option.value);
+    this.selectionChange.emit(option.value);
   }
 
   public handleNoResultsClick() {

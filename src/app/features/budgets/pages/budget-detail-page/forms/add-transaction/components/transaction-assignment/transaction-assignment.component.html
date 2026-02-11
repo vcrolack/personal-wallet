@@ -1,0 +1,31 @@
+<div [formGroup]="formGroup()" class="w-full flex gap-4 items-center py-5">
+  <app-icon-button
+    name="trash-2"
+    size="small"
+    color="danger"
+    (onClick)="remove.emit()"
+  ></app-icon-button>
+
+  <app-autocomplete
+    label="Categoría"
+    formControlName="categoryId"
+    [options]="categoryOptions()"
+    (queryChange)="onSearchCategory($event)"
+    (selectionChange)="onSelectCategory($event)"
+  ></app-autocomplete>
+
+  <app-autocomplete
+    class="w-1/2"
+    label="Valor de categoría"
+    formControlName="categoryValueId"
+    [options]="valueOptions()"
+    (queryChange)="onSearchValue($event)"
+  ></app-autocomplete>
+
+  <app-input
+    class="w-1/2"
+    label="Monto asignado"
+    type="number"
+    formControlName="amount"
+  ></app-input>
+</div>

@@ -3,10 +3,14 @@ import {
   Component,
   computed,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -23,6 +27,11 @@ import {
   SelectOption,
 } from '../../../../../../common/components/form/select/select.component';
 import { AddTransactionService } from '../../services/add-transaction.service';
+import { TransactionAssignmentComponent } from './components/transaction-assignment/transaction-assignment.component';
+import {
+  Assignments,
+  CreateTransactionRequest,
+} from '../../../../../../core/requests/transaction/create-transaction.request';
 
 @Component({
   selector: 'app-add-transaction',
@@ -30,13 +39,12 @@ import { AddTransactionService } from '../../services/add-transaction.service';
     ReactiveFormsModule,
     InputComponent,
     DateSelectorComponent,
-    AutocompleteComponent,
     ButtonComponent,
-    IconButtonComponent,
     ButtonTextComponent,
     WrapperComponent,
     TextComponent,
     SelectComponent,
+    TransactionAssignmentComponent,
   ],
   providers: [AddTransactionService],
   templateUrl: './add-transaction.component.html',
@@ -46,14 +54,27 @@ export class AddTransactionComponent {
   private fb = inject(FormBuilder);
   private addTransactionService = inject(AddTransactionService);
 
+  public closeModal = output<void>();
+  public budgetId = input.required<string>();
+
   public form = this.fb.group({
-    amount: [0, Validators.required],
+    amount: [{ value: 0, disabled: true }, Validators.required],
     transactionDate: [new Date(), Validators.required],
     description: ['', Validators.required],
     bankId: [null, Validators.required],
     transactionTypeId: [null, Validators.required],
-    assignments: this.fb.array([]),
+    assignments: this.fb.array<Assignments>([]),
   });
+
+  constructor() {
+    this.assignments.valueChanges.subscribe((assignments) => {
+      const total = assignments.reduce(
+        (acc: number, curr: Partial<Assignments>) => acc + (curr?.amount || 0),
+        0,
+      );
+      this.form.patchValue({ amount: total }, { emitEvent: false });
+    });
+  }
 
   public banksOptions = computed<SelectOption[]>(() =>
     this.addTransactionService.banks().map((bank) => ({
@@ -75,6 +96,7 @@ export class AddTransactionComponent {
 
   public addAssignment() {
     const assignmentGroup = this.fb.group({
+      categoryId: [null],
       categoryValueId: [null, Validators.required],
       amount: [0, Validators.required],
     });
@@ -84,5 +106,38 @@ export class AddTransactionComponent {
 
   public removeAssignment(index: number) {
     this.assignments.removeAt(index);
+  }
+
+  public asFormGroup(control: AbstractControl): FormGroup {
+    return control as FormGroup;
+  }
+
+  public submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.form.getRawValue();
+
+    const createTransactionRequest: CreateTransactionRequest = {
+      amount: formValue.amount!,
+      transactionDate: new Date(formValue.transactionDate!).toISOString(),
+      description: formValue.description!,
+      bankId: formValue.bankId!,
+      transactionTypeId: formValue.transactionTypeId!,
+      budgetId: this.budgetId(),
+      assignments: (formValue.assignments || []).map((a) => ({
+        categoryValueId: +a!.categoryValueId,
+        amount: +a!.amount,
+      })),
+    };
+
+    this.addTransactionService
+      .createTransaction(createTransactionRequest)
+      .subscribe(() => {
+        this.closeModal.emit();
+        this.form.reset();
+      });
   }
 }

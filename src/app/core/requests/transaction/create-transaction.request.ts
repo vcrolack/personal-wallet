@@ -5,4 +5,10 @@ export interface CreateTransactionRequest {
   budgetId: string;
   bankId: number;
   transactionTypeId: number;
+  assignments: Assignments[];
+}
+
+export interface Assignments {
+  categoryValueId: number;
+  amount: number;
 }
