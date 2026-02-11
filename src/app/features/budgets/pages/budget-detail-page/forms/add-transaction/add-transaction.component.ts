@@ -32,6 +32,7 @@ import {
   Assignments,
   CreateTransactionRequest,
 } from '../../../../../../core/requests/transaction/create-transaction.request';
+import { NotificationService } from '../../../../../../core/errors/notification.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -53,6 +54,7 @@ import {
 export class AddTransactionComponent {
   private fb = inject(FormBuilder);
   private addTransactionService = inject(AddTransactionService);
+  private notificationService = inject(NotificationService);
 
   public closeModal = output<void>();
   public budgetId = input.required<string>();
@@ -136,6 +138,10 @@ export class AddTransactionComponent {
     this.addTransactionService
       .createTransaction(createTransactionRequest)
       .subscribe(() => {
+        this.notificationService.showNotification(
+          'Transacción creada',
+          'success',
+        );
         this.closeModal.emit();
         this.form.reset();
       });
