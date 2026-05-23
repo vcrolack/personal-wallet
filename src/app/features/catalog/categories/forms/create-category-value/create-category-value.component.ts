@@ -4,7 +4,6 @@ import {
   SelectComponent,
   SelectOption,
 } from '../../../../../common/components/form/select/select.component';
-import { Category } from '../../../../../core/interfaces/category.interface';
 import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
 import { BudgetCategoryValuesService } from '../../../../../core/services/budget-category-values.service';
 import {

@@ -36,6 +36,16 @@ export class ErrorFormMessage {
           return `Debe tener un valor mínimo de ${errors['min'].min}`;
         case 'max':
           return `Debe tener un valor máximo de ${errors['max'].max}`;
+        case 'invalidDate':
+          return 'La fecha ingresada no es válida';
+        case 'minDate': {
+          const limitDate = new Date(errors['minDate'].required);
+          return `La fecha no puede ser anterior al ${limitDate.toLocaleDateString()}`;
+        }
+        case 'maxDate': {
+          const limitDate = new Date(errors['maxDate'].required);
+          return `La fecha no puede ser posterior al ${limitDate.toLocaleDateString()}`;
+        }
         default:
           return 'Este campo es inválido';
       }
