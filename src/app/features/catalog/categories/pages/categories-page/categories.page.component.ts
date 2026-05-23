@@ -1,14 +1,17 @@
 import { Component, inject, signal, effect, computed } from '@angular/core';
 
 import { ButtonComponent } from '@common/components/form';
-import { HeaderComponent, TabsComponent } from '@common/components/layout';
+import {
+  HeaderComponent,
+  TabsComponent,
+  TabItem,
+} from '@common/components/layout';
 import {
   ModalComponent,
   GenericTableComponent,
   ToastService,
+  ColumnDef,
 } from '@common/components/ui';
-import { TabItem } from '@common/interfaces/tab-item.interface';
-import { ColumnDef } from '@common/interfaces/table.interface';
 import { CategoryValueModel } from '@core/models/categories/category-value.model';
 import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
 import { CategoryService } from '@core/services/category.service';

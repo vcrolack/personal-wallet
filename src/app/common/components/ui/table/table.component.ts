@@ -1,11 +1,9 @@
 import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ColumnAlign,
-  ColumnDef,
-  TablePagination,
-} from '@common/interfaces/table.interface';
+
 import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
+
+import { ColumnAlign, ColumnDef, TablePagination } from '@common/components/ui';
 
 @Component({
   selector: 'app-generic-table',

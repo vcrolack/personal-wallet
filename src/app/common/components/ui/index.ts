@@ -11,6 +11,7 @@ export * from './modal/modal.component';
 export * from './progress-bar/progress-bar.component';
 export * from './skeleton/skeleton.component';
 export * from './table/table.component';
+export * from './table/table.interface';
 export * from './toast/toast.component';
 export * from './toast/toast.service';
 export * from './toast/toast.interface';

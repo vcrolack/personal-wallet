@@ -22,8 +22,7 @@ import { CategoriesGridComponent } from '@features/budgets/pages/budget-detail-p
 import { BudgetDetailSkeletonComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
 import { VisualResumeComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/visual-resume/visual-resume.component';
 import { CategoriesList } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-list/categories-list.component';
-import { TabsComponent } from '@common/components/layout/tabs/tabs.component';
-import { TabItem } from '@common/interfaces/tab-item.interface';
+import { TabsComponent, TabItem } from '@common/components/layout';
 import { BudgetTransactions } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/budget-transactions.component';
 import { TransactionsVisualResume } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
 import { AddTransactionComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/add-transaction.component';
