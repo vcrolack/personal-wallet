@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpInterceptorFn } from '@angular/common/http';
 
-import { merakiInterceptor } from './meraki.interceptor';
+import { merakiInterceptor } from '@core/interceptors/meraki.interceptor';
 
 describe('httpInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) =>

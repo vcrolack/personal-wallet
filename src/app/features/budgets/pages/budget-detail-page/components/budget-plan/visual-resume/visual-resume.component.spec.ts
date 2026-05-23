@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualResumeComponent } from './visual-resume.component';
+import { VisualResumeComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/visual-resume/visual-resume.component';
 
 describe('VisualResumeComponent', () => {
   let component: VisualResumeComponent;

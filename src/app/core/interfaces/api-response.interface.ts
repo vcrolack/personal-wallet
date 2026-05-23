@@ -1,4 +1,4 @@
-import { Metadata } from '../dtos/metadata.dto';
+import { Metadata } from '@core/dtos/metadata.dto';
 
 export interface ApiResponse<T> {
   statusCode: number;

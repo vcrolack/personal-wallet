@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { AmountCounterComponent } from '../../components/amount-counter/amount-counter.component';
+import { AmountCounterComponent } from '@features/dashboard/components/amount-counter/amount-counter.component';
 
 @Component({
   selector: 'app-dashboard.page',

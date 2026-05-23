@@ -1,16 +1,16 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { CategoryService } from '../../../../../../../core/services/category.service';
+import { CategoryService } from '@core/services/category.service';
 import {
   AutocompleteOption,
   AutocompleteComponent,
-} from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
-import { BudgetGroupModel } from '../../../../../../../core/models/budgets/budget-group.model';
-import { BudgetService } from '../../../../../../../core/services/budget.service';
+} from '@common/components/form/autocomplete/autocomplete.component';
+import { BudgetGroupModel } from '@core/models/budgets/budget-group.model';
+import { BudgetService } from '@core/services/budget.service';
 import { finalize } from 'rxjs';
-import { BudgetCategoryRules } from '../../../../../../../core/enums/budget-category-rules.enum';
+import { BudgetCategoryRules } from '@core/enums/budget-category-rules.enum';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
-import { ErrorFormMessage } from '../../../../../../../common/components/ui/error-form-message/error-form-message.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-category-selector',

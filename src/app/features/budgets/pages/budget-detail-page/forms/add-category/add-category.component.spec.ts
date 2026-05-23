@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddCategoryComponent } from './add-category.component';
+import { AddCategoryComponent } from '@features/budgets/pages/budget-detail-page/forms/add-category/add-category.component';
 
 describe('AddCategoryComponent', () => {
   let component: AddCategoryComponent;

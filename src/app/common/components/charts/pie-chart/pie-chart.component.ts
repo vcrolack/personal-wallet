@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { ChartOptions } from '../models/chart-options.model';
-import { PieChartData } from '../models/pie-chart.model';
+import { ChartOptions } from '@common/components/charts/models/chart-options.model';
+import { PieChartData } from '@common/components/charts/models/pie-chart.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({

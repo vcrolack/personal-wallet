@@ -12,17 +12,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { BudgetCategoryValuesService } from '../../../../../core/services/budget-category-values.service';
-import { BudgetCategoryValue } from '../../../../../core/interfaces/budget-category-value.interface';
-import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
+import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
+import { BudgetCategoryValue } from '@core/interfaces/budget-category-value.interface';
+import { ButtonComponent } from '@common/components/form/button/button.component';
 import {
   SelectComponent,
   SelectOption,
-} from '../../../../../common/components/form/select/select.component';
-import { InputComponent } from '../../../../../common/components/form/input/input.component';
-import { CategoryValueModel } from '../../../../../core/models/categories/category-value.model';
-import { CategoryModel } from '../../../../../core/models/categories/category.model';
-import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
+} from '@common/components/form/select/select.component';
+import { InputComponent } from '@common/components/form/input/input.component';
+import { CategoryValueModel } from '@core/models/categories/category-value.model';
+import { CategoryModel } from '@core/models/categories/category.model';
+import { ToastService } from '@common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-edit-category-value',

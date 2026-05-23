@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { TransactionTypeMapperService } from '../mappers/transaction-type-mapper.service';
+import { TransactionTypeMapperService } from '@core/mappers/transaction-type-mapper.service';
 import { map, Observable } from 'rxjs';
-import { TransactionTypeDTO } from '../dtos/transaction/transaction-type/transaction-type.dto';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { TransactionTypeModel } from '../models/transaction/transaction-type/transaction-type.model';
-import { environment } from '../../../environments/environment';
-import { CreateTransactionTypeRequest } from '../requests/transaction/transaction-type/create-transaction-type.request';
-import { UpdateTransactionTypeRequest } from '../requests/transaction/transaction-type/update-transaction-type.request';
+import { TransactionTypeDTO } from '@core/dtos/transaction/transaction-type/transaction-type.dto';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { TransactionTypeModel } from '@core/models/transaction/transaction-type/transaction-type.model';
+import { environment } from '@env/environment';
+import { CreateTransactionTypeRequest } from '@core/requests/transaction/transaction-type/create-transaction-type.request';
+import { UpdateTransactionTypeRequest } from '@core/requests/transaction/transaction-type/update-transaction-type.request';
 
 @Injectable({
   providedIn: 'root',

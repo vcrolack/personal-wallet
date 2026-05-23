@@ -14,24 +14,24 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputComponent } from '../../../../../../common/components/form/input/input.component';
-import { DateSelectorComponent } from '../../../../../../common/components/form/date-selector/date-selector.component';
-import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
-import { ButtonTextComponent } from '../../../../../../common/components/form/button-text/button-text.component';
-import { WrapperComponent } from '../../../../../../common/components/ui/wrapper/wrapper.component';
-import { TextComponent } from '../../../../../../common/components/ui/typography/text/text.component';
+import { InputComponent } from '@common/components/form/input/input.component';
+import { DateSelectorComponent } from '@common/components/form/date-selector/date-selector.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { ButtonTextComponent } from '@common/components/form/button-text/button-text.component';
+import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
 import {
   SelectComponent,
   SelectOption,
-} from '../../../../../../common/components/form/select/select.component';
-import { AddTransactionService } from '../../services/add-transaction.service';
-import { TransactionAssignmentComponent } from './components/transaction-assignment/transaction-assignment.component';
+} from '@common/components/form/select/select.component';
+import { AddTransactionService } from '@features/budgets/pages/budget-detail-page/services/add-transaction.service';
+import { TransactionAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/components/transaction-assignment/transaction-assignment.component';
 import {
   Assignments,
   CreateTransactionRequest,
-} from '../../../../../../core/requests/transaction/create-transaction.request';
-import { NotificationService } from '../../../../../../core/errors/notification.service';
-import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
+} from '@core/requests/transaction/create-transaction.request';
+import { NotificationService } from '@core/errors/notification.service';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-add-transaction',

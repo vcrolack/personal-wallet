@@ -4,7 +4,7 @@ import {
   ColumnAlign,
   ColumnDef,
   TablePagination,
-} from '../../../interfaces/table.interface';
+} from '@common/interfaces/table.interface';
 import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
 
 @Component({

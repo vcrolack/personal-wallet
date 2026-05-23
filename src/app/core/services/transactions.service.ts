@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { TransactionMapperService } from '../mappers/transaction-mapper.service';
+import { TransactionMapperService } from '@core/mappers/transaction-mapper.service';
 import { map, Observable } from 'rxjs';
-import { TransactionModel } from '../models/transaction/transaction.model';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { TransactionDTO } from '../dtos/transaction/transaction.dto';
-import { environment } from '../../../environments/environment';
-import { CreateTransactionRequest } from '../requests/transaction/create-transaction.request';
+import { TransactionModel } from '@core/models/transaction/transaction.model';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { TransactionDTO } from '@core/dtos/transaction/transaction.dto';
+import { environment } from '@env/environment';
+import { CreateTransactionRequest } from '@core/requests/transaction/create-transaction.request';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
-import { BudgetCategoryValue } from './budget-category-value.interface';
+import { BudgetCategoryValue } from '@core/interfaces/budget-category-value.interface';
 
 export interface BudgetCategoryAssignments {
   id: string;

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { TitleComponent } from '../../ui/typography/title/title.component';
+import { TitleComponent } from '@common/components/ui/typography/title/title.component';
 
 @Component({
   selector: 'app-header',

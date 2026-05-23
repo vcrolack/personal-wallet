@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BudgetCategoryDTO } from '../dtos/budgets/base-definitions/budget-category.dto';
+import { BudgetCategoryDTO } from '@core/dtos/budgets/base-definitions/budget-category.dto';
 import {
   CategoryModel,
   CategoryRule,
-} from '../models/categories/category.model';
+} from '@core/models/categories/category.model';
 
 @Injectable({
   providedIn: 'root',

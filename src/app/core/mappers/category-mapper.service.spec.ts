@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CategoryMapperService } from './category-mapper.service';
+import { CategoryMapperService } from '@core/mappers/category-mapper.service';
 
 describe('CategoryMapperService', () => {
   let service: CategoryMapperService;

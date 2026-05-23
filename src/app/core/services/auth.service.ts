@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import { Observable, tap } from 'rxjs';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { AuthData } from '../interfaces/auth.interface';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { AuthData } from '@core/interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',

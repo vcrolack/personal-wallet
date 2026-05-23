@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditCategoryValueComponent } from './edit-category-value.component';
+import { EditCategoryValueComponent } from '@features/catalog/categories/forms/edit-category-value/edit-category-value.component';
 
 describe('EditCategoryValueComponent', () => {
   let component: EditCategoryValueComponent;

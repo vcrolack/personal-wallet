@@ -6,7 +6,7 @@ import {
   afterNextRender,
   effect,
 } from '@angular/core';
-import { TextComponent } from '../typography/text/text.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-circular-progress-bar',

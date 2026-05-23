@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { BankModel } from '../models/banks/bank.model';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { BankDTO } from '../dtos/banks/bank.dto';
-import { BankMapperService } from '../mappers/bank-mapper.service';
-import { environment } from '../../../environments/environment';
-import { CreateBankRequest } from '../requests/banks/create-bank.request';
-import { UpdateBankRequest } from '../requests/banks/update-bank.request';
+import { BankModel } from '@core/models/banks/bank.model';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { BankDTO } from '@core/dtos/banks/bank.dto';
+import { BankMapperService } from '@core/mappers/bank-mapper.service';
+import { environment } from '@env/environment';
+import { CreateBankRequest } from '@core/requests/banks/create-bank.request';
+import { UpdateBankRequest } from '@core/requests/banks/update-bank.request';
 
 @Injectable({
   providedIn: 'root',

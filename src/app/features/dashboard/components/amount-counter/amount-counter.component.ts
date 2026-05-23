@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { MoneyPipe } from '../../../../common/pipes/money.pipe';
+import { MoneyPipe } from '@common/pipes/money.pipe';
 import { NgClass } from '@angular/common';
 
 @Component({

@@ -1,4 +1,4 @@
-import { BaseDTO } from '../base.dto';
+import { BaseDTO } from '@core/dtos/base.dto';
 
 export interface TransactionDTO extends BaseDTO {
   id: string;

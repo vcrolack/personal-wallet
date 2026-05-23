@@ -5,23 +5,23 @@ import {
   input,
   output,
 } from '@angular/core';
-import { DateSelectorComponent } from '../../../../../../common/components/form/date-selector/date-selector.component';
-import { InputComponent } from '../../../../../../common/components/form/input/input.component';
-import { TextAreaComponent } from '../../../../../../common/components/form/text-area/text-area.component';
-import { CheckboxComponent } from '../../../../../../common/components/form/checkbox/checkbox.component';
-import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
-import { BudgetService } from '../../../../../../core/services/budget.service';
+import { DateSelectorComponent } from '@common/components/form/date-selector/date-selector.component';
+import { InputComponent } from '@common/components/form/input/input.component';
+import { TextAreaComponent } from '@common/components/form/text-area/text-area.component';
+import { CheckboxComponent } from '@common/components/form/checkbox/checkbox.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { BudgetService } from '@core/services/budget.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CreateBudgetRequest } from '../../../../../../core/requests/budgets/create-budget.request';
-import { Budget } from '../../../../../../core/interfaces/budget.interface';
-import { UpdateBudgetRequest } from '../../../../../../core/requests/budgets/update-budget.request';
-import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
-import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
+import { CreateBudgetRequest } from '@core/requests/budgets/create-budget.request';
+import { Budget } from '@core/interfaces/budget.interface';
+import { UpdateBudgetRequest } from '@core/requests/budgets/update-budget.request';
+import { ToastService } from '@common/components/ui/toast/toast.service';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-or-update-budget',

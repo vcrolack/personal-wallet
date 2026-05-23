@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BankDTO } from '../dtos/banks/bank.dto';
-import { BankModel } from '../models/banks/bank.model';
+import { BankDTO } from '@core/dtos/banks/bank.dto';
+import { BankModel } from '@core/models/banks/bank.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BudgetsPageComponent } from './budgets.page.component';
+import { BudgetsPageComponent } from '@features/budgets/pages/budgets-page/budgets.page.component';
 
 describe('BudgetsPageComponent', () => {
   let component: BudgetsPageComponent;

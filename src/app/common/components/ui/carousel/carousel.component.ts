@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarouselSlideDirective } from './carousel-slide.directive';
+import { CarouselSlideDirective } from '@common/components/ui/carousel/carousel-slide.directive';
 
 @Component({
   selector: 'app-carousel',

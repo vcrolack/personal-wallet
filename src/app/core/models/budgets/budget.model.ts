@@ -1,4 +1,4 @@
-import { BudgetGroupModel } from './budget-group.model';
+import { BudgetGroupModel } from '@core/models/budgets/budget-group.model';
 
 export interface BudgetModel {
   id: string;

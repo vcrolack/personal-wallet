@@ -1,20 +1,20 @@
 import { Component, computed, inject, input, output } from '@angular/core';
-import { InputComponent } from '../../../../../common/components/form/input/input.component';
+import { InputComponent } from '@common/components/form/input/input.component';
 import {
   SelectComponent,
   SelectOption,
-} from '../../../../../common/components/form/select/select.component';
-import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
-import { BudgetCategoryValuesService } from '../../../../../core/services/budget-category-values.service';
+} from '@common/components/form/select/select.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CategoryModel } from '../../../../../core/models/categories/category.model';
-import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
-import { ErrorFormMessage } from '../../../../../common/components/ui/error-form-message/error-form-message.component';
+import { CategoryModel } from '@core/models/categories/category.model';
+import { ToastService } from '@common/components/ui/toast/toast.service';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-category-value',

@@ -1,5 +1,5 @@
-import { CategoryRule } from '../categories/category.model';
-import { CategoryAssignmentModel } from './category-assignment.model';
+import { CategoryRule } from '@core/models/categories/category.model';
+import { CategoryAssignmentModel } from '@core/models/budgets/category-assignment.model';
 
 export interface BudgetGroupModel {
   id: number;

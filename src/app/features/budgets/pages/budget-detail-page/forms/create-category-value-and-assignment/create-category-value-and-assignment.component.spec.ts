@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateCategoryValueAndAssignmentComponent } from './create-category-value-and-assignment.component';
+import { CreateCategoryValueAndAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 
 describe('CreateCategoryValueAndAssignmentComponent', () => {
   let component: CreateCategoryValueAndAssignmentComponent;

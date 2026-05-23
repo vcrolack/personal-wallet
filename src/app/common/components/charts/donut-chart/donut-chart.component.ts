@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { ChartOptions } from '../models/chart-options.model';
-import { DonutChartData } from '../models/donut-chart.model';
+import { ChartOptions } from '@common/components/charts/models/chart-options.model';
+import { DonutChartData } from '@common/components/charts/models/donut-chart.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({

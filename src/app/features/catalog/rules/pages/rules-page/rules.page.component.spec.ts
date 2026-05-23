@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RulesPageComponent } from './rules.page.component';
+import { RulesPageComponent } from '@features/catalog/rules/pages/rules-page/rules.page.component';
 
 describe('RulesPageComponent', () => {
   let component: RulesPageComponent;

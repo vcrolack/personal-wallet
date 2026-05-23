@@ -10,14 +10,14 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import {
   AutocompleteComponent,
   AutocompleteOption,
-} from '../../../../../../common/components/form/autocomplete/autocomplete.component';
-import { ButtonComponent } from '../../../../../../common/components/form/button/button.component';
-import { InputComponent } from '../../../../../../common/components/form/input/input.component';
-import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
-import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
-import { BudgetCategoryValuesService } from '../../../../../../core/services/budget-category-values.service';
-import { BudgetService } from '../../../../../../core/services/budget.service';
-import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
+} from '@common/components/form/autocomplete/autocomplete.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { InputComponent } from '@common/components/form/input/input.component';
+import { ToastService } from '@common/components/ui/toast/toast.service';
+import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
+import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
+import { BudgetService } from '@core/services/budget.service';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-category-value-and-assignment',

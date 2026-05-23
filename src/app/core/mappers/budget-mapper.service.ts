@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BudgetCategoryAssignment } from '../responses/find-one-budget.response';
+import { BudgetCategoryAssignment } from '@core/responses/find-one-budget.response';
 import {
   BudgetAssignmentWithDetailsDTO,
   FullBudgetDTO,
-} from '../dtos/budgets/compose-definitions/full-budget.dto';
-import { BudgetModel } from '../models/budgets/budget.model';
-import { BudgetGroupModel } from '../models/budgets/budget-group.model';
-import { CategoryAssignmentModel } from '../models/budgets/category-assignment.model';
-import { CategoryRule } from '../models/categories/category.model';
+} from '@core/dtos/budgets/compose-definitions/full-budget.dto';
+import { BudgetModel } from '@core/models/budgets/budget.model';
+import { BudgetGroupModel } from '@core/models/budgets/budget-group.model';
+import { CategoryAssignmentModel } from '@core/models/budgets/category-assignment.model';
+import { CategoryRule } from '@core/models/categories/category.model';
 
 export interface CategoryGroup {
   categoryName: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BudgetCategoryAssignmentDTO } from '../dtos/categories/budget-category-assignments.dto';
-import { CategoryAssignmentModel } from '../models/categories/category-assignment.model';
+import { BudgetCategoryAssignmentDTO } from '@core/dtos/categories/budget-category-assignments.dto';
+import { CategoryAssignmentModel } from '@core/models/categories/category-assignment.model';
 
 @Injectable({
   providedIn: 'root',

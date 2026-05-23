@@ -3,7 +3,7 @@ import type {
   HttpInterceptorFn,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { ErrorMapperService } from './error-mapper.service';
+import { ErrorMapperService } from '@core/errors/error-mapper.service';
 import { catchError, throwError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BankMapperService } from './bank-mapper.service';
+import { BankMapperService } from '@core/mappers/bank-mapper.service';
 
 describe('BankMapperService', () => {
   let service: BankMapperService;

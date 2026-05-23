@@ -1,15 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { environment } from '../../../environments/environment';
-import { CreateBudgetCategoryValue } from '../requests/budget-category-values/create-budget-category-value.request';
-import { UpdateBudgetCategoryValueRequest } from '../requests/budget-category-values/update-budget-category-value.request';
-import { CategoryValueMapperService } from '../mappers/category-value-mapper.service';
-import { CategoryValueModel } from '../models/categories/category-value.model';
-import { BudgetCategoryValueDTO } from '../dtos/budgets/base-definitions/budget-category-value.dto';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { environment } from '@env/environment';
+import { CreateBudgetCategoryValue } from '@core/requests/budget-category-values/create-budget-category-value.request';
+import { UpdateBudgetCategoryValueRequest } from '@core/requests/budget-category-values/update-budget-category-value.request';
+import { CategoryValueMapperService } from '@core/mappers/category-value-mapper.service';
+import { CategoryValueModel } from '@core/models/categories/category-value.model';
+import { BudgetCategoryValueDTO } from '@core/dtos/budgets/base-definitions/budget-category-value.dto';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { Metadata } from '../dtos/metadata.dto';
+import { Metadata } from '@core/dtos/metadata.dto';
 
 @Injectable({
   providedIn: 'root',

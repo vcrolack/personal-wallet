@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CreateBudgetCategoryAssignmentRequest } from '../requests/budget-category-assignments/create-budget-category-assignment.request';
+import { CreateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/create-budget-category-assignment.request';
 import { map, Observable } from 'rxjs';
-import { CategoryAssignmentModel } from '../models/categories/category-assignment.model';
-import { BudgetCategoryAssignmentDTO } from '../dtos/categories/budget-category-assignments.dto';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { environment } from '../../../environments/environment';
-import { CategoryAssignmentMapperService } from '../mappers/category-assignment-mapper.service';
-import { UpdateBudgetCategoryAssignmentRequest } from '../requests/budget-category-assignments/update-budget-category-assignment.request';
+import { CategoryAssignmentModel } from '@core/models/categories/category-assignment.model';
+import { BudgetCategoryAssignmentDTO } from '@core/dtos/categories/budget-category-assignments.dto';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { environment } from '@env/environment';
+import { CategoryAssignmentMapperService } from '@core/mappers/category-assignment-mapper.service';
+import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/update-budget-category-assignment.request';
 
 @Injectable({
   providedIn: 'root',

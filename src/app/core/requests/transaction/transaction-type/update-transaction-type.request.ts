@@ -1,4 +1,4 @@
-import { CreateTransactionTypeRequest } from './create-transaction-type.request';
+import { CreateTransactionTypeRequest } from '@core/requests/transaction/transaction-type/create-transaction-type.request';
 
 export interface UpdateTransactionTypeRequest
   extends Partial<CreateTransactionTypeRequest> {}

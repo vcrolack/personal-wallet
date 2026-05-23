@@ -1,15 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../interfaces/api-response.interface';
-import { environment } from '../../../environments/environment';
-import { CreateCategoryRequest } from '../requests/categories/create-category.request';
-import { CategoryModel } from '../models/categories/category.model';
-import { CategoryMapperService } from '../mappers/category-mapper.service';
-import { BudgetCategoryDTO } from '../dtos/budgets/base-definitions/budget-category.dto';
+import { ApiResponse } from '@core/interfaces/api-response.interface';
+import { environment } from '@env/environment';
+import { CreateCategoryRequest } from '@core/requests/categories/create-category.request';
+import { CategoryModel } from '@core/models/categories/category.model';
+import { CategoryMapperService } from '@core/mappers/category-mapper.service';
+import { BudgetCategoryDTO } from '@core/dtos/budgets/base-definitions/budget-category.dto';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { UpdateCategoryRequest } from '../requests/categories/update-category.request';
-import { Metadata } from '../dtos/metadata.dto';
+import { UpdateCategoryRequest } from '@core/requests/categories/update-category.request';
+import { Metadata } from '@core/dtos/metadata.dto';
 
 @Injectable({
   providedIn: 'root',

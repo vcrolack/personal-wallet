@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { TextComponent } from '../typography/text/text.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-error-form-message',

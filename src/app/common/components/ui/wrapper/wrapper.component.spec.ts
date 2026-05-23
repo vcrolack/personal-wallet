@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WrapperComponent } from './wrapper.component';
+import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
 
 describe('WrapperComponent', () => {
   let component: WrapperComponent;

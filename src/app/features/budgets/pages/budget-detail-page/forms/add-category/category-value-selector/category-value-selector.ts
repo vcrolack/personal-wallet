@@ -9,14 +9,14 @@ import {
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BudgetCategoryValuesService } from '../../../../../../../core/services/budget-category-values.service';
+import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
 import {
   AutocompleteComponent,
   AutocompleteOption,
-} from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
+} from '@common/components/form/autocomplete/autocomplete.component';
 import { finalize, startWith, switchMap } from 'rxjs';
-import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
-import { ErrorFormMessage } from '../../../../../../../common/components/ui/error-form-message/error-form-message.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
+import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-category-value-selector',

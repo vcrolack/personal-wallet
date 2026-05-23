@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TransactionDTO } from '../dtos/transaction/transaction.dto';
-import { TransactionModel } from '../models/transaction/transaction.model';
+import { TransactionDTO } from '@core/dtos/transaction/transaction.dto';
+import { TransactionModel } from '@core/models/transaction/transaction.model';
 
 @Injectable({
   providedIn: 'root',

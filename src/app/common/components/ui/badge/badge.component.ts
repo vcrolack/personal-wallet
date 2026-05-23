@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { TextComponent } from '../typography/text/text.component';
+import { TextComponent } from '@common/components/ui/typography/text/text.component';
 
 export type BadgeVariant =
   | 'primary'

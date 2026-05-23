@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateCategoryValueComponent } from './create-category-value.component';
+import { CreateCategoryValueComponent } from '@features/catalog/categories/forms/create-category-value/create-category-value.component';
 
 describe('CreateCategoryValueComponent', () => {
   let component: CreateCategoryValueComponent;

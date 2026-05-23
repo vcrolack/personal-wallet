@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TransactionTypeMapperService } from './transaction-type-mapper.service';
+import { TransactionTypeMapperService } from '@core/mappers/transaction-type-mapper.service';
 
 describe('TransactionTypeMapperService', () => {
   let service: TransactionTypeMapperService;

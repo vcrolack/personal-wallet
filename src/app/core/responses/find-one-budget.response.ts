@@ -1,4 +1,4 @@
-import { Budget } from '../interfaces/budget.interface';
+import { Budget } from '@core/interfaces/budget.interface';
 
 export interface BudgetDetail extends Budget {
   userId: string;

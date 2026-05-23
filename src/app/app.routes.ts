@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { publicGuard } from './core/guards/public.guard';
-import { MainLayoutComponent } from './common/components/layout/main-layout/main-layout.component';
-import { authGuard } from './core/guards/auth.guard';
+import { publicGuard } from '@core/guards/public.guard';
+import { MainLayoutComponent } from '@common/components/layout/main-layout/main-layout.component';
+import { authGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./features/auth/pages/login-page/login.page.component').then(
+      import('@features/auth/pages/login-page/login.page.component').then(
         (m) => m.LoginPageComponent,
       ),
     canActivate: [publicGuard],
@@ -22,7 +22,7 @@ export const routes: Routes = [
         path: 'dashboard',
         data: { breadcrumb: 'Dashboard' },
         loadComponent: () =>
-          import('./features/dashboard/pages/dashboard-page/dashboard.page.component').then(
+          import('@features/dashboard/pages/dashboard-page/dashboard.page.component').then(
             (m) => m.DashboardPageComponent,
           ),
       },
@@ -30,7 +30,7 @@ export const routes: Routes = [
         path: 'transactions',
         data: { breadcrumb: 'Transacciones' },
         loadComponent: () =>
-          import('./features/transactions/pages/transactions-page/transactions.page.component').then(
+          import('@features/transactions/pages/transactions-page/transactions.page.component').then(
             (m) => m.TransactionsPageComponent,
           ),
       },
@@ -41,7 +41,7 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () =>
-              import('./features/budgets/pages/budgets-page/budgets.page.component').then(
+              import('@features/budgets/pages/budgets-page/budgets.page.component').then(
                 (m) => m.BudgetsPageComponent,
               ),
           },
@@ -49,7 +49,7 @@ export const routes: Routes = [
             path: ':id',
             data: { breadcrumb: 'Detalle' },
             loadComponent: () =>
-              import('./features/budgets/pages/budget-detail-page/budget-detail.component').then(
+              import('@features/budgets/pages/budget-detail-page/budget-detail.component').then(
                 (m) => m.BudgetDetailComponent,
               ),
           },
@@ -59,7 +59,7 @@ export const routes: Routes = [
         path: 'accounts',
         data: { breadcrumb: 'Cuentas' },
         loadComponent: () =>
-          import('./features/accounts/pages/accounts-page/accounts.page.component').then(
+          import('@features/accounts/pages/accounts-page/accounts.page.component').then(
             (m) => m.AccountsPageComponent,
           ),
       },
@@ -72,7 +72,7 @@ export const routes: Routes = [
             path: 'categories',
             data: { breadcrumb: 'Categorías' },
             loadComponent: () =>
-              import('./features/catalog/categories/pages/categories-page/categories.page.component').then(
+              import('@features/catalog/categories/pages/categories-page/categories.page.component').then(
                 (m) => m.CategoriesPageComponent,
               ),
           },
@@ -80,7 +80,7 @@ export const routes: Routes = [
             path: 'rules',
             data: { breadcrumb: 'Reglas' },
             loadComponent: () =>
-              import('./features/catalog/rules/pages/rules-page/rules.page.component').then(
+              import('@features/catalog/rules/pages/rules-page/rules.page.component').then(
                 (m) => m.RulesPageComponent,
               ),
           },
@@ -90,7 +90,7 @@ export const routes: Routes = [
         path: 'settings',
         data: { breadcrumb: 'Ajustes' },
         loadComponent: () =>
-          import('./features/settings/pages/settings-page/settings.page.component').then(
+          import('@features/settings/pages/settings-page/settings.page.component').then(
             (m) => m.SettingsPageComponent,
           ),
       },

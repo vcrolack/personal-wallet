@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BudgetCategoryAssignmentsService } from './budget-category-assignments.service';
+import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
 
 describe('BudgetCategoryAssignmentsService', () => {
   let service: BudgetCategoryAssignmentsService;

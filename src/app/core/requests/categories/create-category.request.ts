@@ -1,4 +1,4 @@
-import { BudgetCategoryRules } from '../../enums/budget-category-rules.enum';
+import { BudgetCategoryRules } from '@core/enums/budget-category-rules.enum';
 
 export interface CreateCategoryRequest {
   name: string;

@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { BudgetService } from '../../../../../core/services/budget.service';
-import { BudgetCategoryAssignmentsService } from '../../../../../core/services/budget-category-assignments.service';
+import { BudgetService } from '@core/services/budget.service';
+import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
 import { CircleDollarSign } from 'lucide-angular';
-import { UpdateBudgetCategoryAssignmentRequest } from '../../../../../core/requests/budget-category-assignments/update-budget-category-assignment.request';
+import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/update-budget-category-assignment.request';
 
 @Injectable()
 export class BudgetViewService {

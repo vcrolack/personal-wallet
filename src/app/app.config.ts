@@ -12,9 +12,9 @@ registerLocaleData(localeEsCl);
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { merakiInterceptor } from './core/interceptors/meraki.interceptor';
-import { errorInterceptor } from './core/errors/error.interceptor';
-import { GlobalErrorHandler } from './core/errors/global-error-handler.service';
+import { merakiInterceptor } from '@core/interceptors/meraki.interceptor';
+import { errorInterceptor } from '@core/errors/error.interceptor';
+import { GlobalErrorHandler } from '@core/errors/global-error-handler.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

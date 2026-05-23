@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AmountCounterComponent } from './amount-counter.component';
+import { AmountCounterComponent } from '@features/dashboard/components/amount-counter/amount-counter.component';
 
 describe('AmountCounterComponent', () => {
   let component: AmountCounterComponent;

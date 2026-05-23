@@ -6,31 +6,31 @@ import {
   signal,
   computed,
 } from '@angular/core';
-import { BudgetService } from '../../../../core/services/budget.service';
-import { HeroComponent } from './components/hero/hero.component';
+import { BudgetService } from '@core/services/budget.service';
+import { HeroComponent } from '@features/budgets/pages/budget-detail-page/components/hero/hero.component';
 
-import { ButtonComponent } from '../../../../common/components/form/button/button.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
 import {
   ModalComponent,
   ModalSize,
-} from '../../../../common/components/ui/modal/modal.component';
-import { AddCategoryComponent } from './forms/add-category/add-category.component';
+} from '@common/components/ui/modal/modal.component';
+import { AddCategoryComponent } from '@features/budgets/pages/budget-detail-page/forms/add-category/add-category.component';
 
 import {
   ViewSwitcherComponent,
   ViewMode,
-} from '../../../../common/components/ui/view-switcher/view-switcher.component';
+} from '@common/components/ui/view-switcher/view-switcher.component';
 
-import { BudgetViewService } from './services/budgetView.service';
-import { CategoriesGridComponent } from './components/budget-plan/categories-grid/categories-grid.component';
-import { BudgetDetailSkeletonComponent } from './components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
-import { VisualResumeComponent } from './components/budget-plan/visual-resume/visual-resume.component';
-import { CategoriesList } from './components/budget-plan/categories-list/categories-list.component';
-import { TabsComponent } from '../../../../common/components/layout/tabs/tabs.component';
-import { TabItem } from '../../../../common/interfaces/tab-item.interface';
-import { BudgetTransactions } from './components/budget-transactions/budget-transactions.component';
-import { TransactionsVisualResume } from './components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
-import { AddTransactionComponent } from './forms/add-transaction/add-transaction.component';
+import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
+import { CategoriesGridComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-grid/categories-grid.component';
+import { BudgetDetailSkeletonComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
+import { VisualResumeComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/visual-resume/visual-resume.component';
+import { CategoriesList } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-list/categories-list.component';
+import { TabsComponent } from '@common/components/layout/tabs/tabs.component';
+import { TabItem } from '@common/interfaces/tab-item.interface';
+import { BudgetTransactions } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/budget-transactions.component';
+import { TransactionsVisualResume } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
+import { AddTransactionComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/add-transaction.component';
 
 @Component({
   selector: 'app-budget-detail',

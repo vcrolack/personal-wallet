@@ -1,20 +1,20 @@
 import { Component, inject, signal, effect, computed } from '@angular/core';
-import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
-import { HeaderComponent } from '../../../../../common/components/layout/header/header.component';
-import { TabsComponent } from '../../../../../common/components/layout/tabs/tabs.component';
-import { ModalComponent } from '../../../../../common/components/ui/modal/modal.component';
-import { GenericTableComponent } from '../../../../../common/components/ui/table/table.component';
-import { TabItem } from '../../../../../common/interfaces/tab-item.interface';
-import { ColumnDef } from '../../../../../common/interfaces/table.interface';
-import { CategoryValueModel } from '../../../../../core/models/categories/category-value.model';
-import { BudgetCategoryValuesService } from '../../../../../core/services/budget-category-values.service';
-import { CategoryService } from '../../../../../core/services/category.service';
-import { CreateCategoryValueComponent } from '../../forms/create-category-value/create-category-value.component';
-import { CreateCategoryComponent } from '../../forms/create-category/create-category.component';
-import { EditCategoryValueComponent } from '../../forms/edit-category-value/edit-category-value.component';
-import { EditCategory } from '../../forms/edit-category/edit-category';
-import { CategoryModel } from '../../../../../core/models/categories/category.model';
-import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { HeaderComponent } from '@common/components/layout/header/header.component';
+import { TabsComponent } from '@common/components/layout/tabs/tabs.component';
+import { ModalComponent } from '@common/components/ui/modal/modal.component';
+import { GenericTableComponent } from '@common/components/ui/table/table.component';
+import { TabItem } from '@common/interfaces/tab-item.interface';
+import { ColumnDef } from '@common/interfaces/table.interface';
+import { CategoryValueModel } from '@core/models/categories/category-value.model';
+import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
+import { CategoryService } from '@core/services/category.service';
+import { CreateCategoryValueComponent } from '@features/catalog/categories/forms/create-category-value/create-category-value.component';
+import { CreateCategoryComponent } from '@features/catalog/categories/forms/create-category/create-category.component';
+import { EditCategoryValueComponent } from '@features/catalog/categories/forms/edit-category-value/edit-category-value.component';
+import { EditCategory } from '@features/catalog/categories/forms/edit-category/edit-category';
+import { CategoryModel } from '@core/models/categories/category.model';
+import { ToastService } from '@common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-categories.page',

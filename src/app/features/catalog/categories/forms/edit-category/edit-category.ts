@@ -6,20 +6,20 @@ import {
   input,
   output,
 } from '@angular/core';
-import { CategoryService } from '../../../../../core/services/category.service';
+import { CategoryService } from '@core/services/category.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CategoryModel } from '../../../../../core/models/categories/category.model';
-import { BudgetCategoryRules } from '../../../../../core/enums/budget-category-rules.enum';
+import { CategoryModel } from '@core/models/categories/category.model';
+import { BudgetCategoryRules } from '@core/enums/budget-category-rules.enum';
 
-import { InputComponent } from '../../../../../common/components/form/input/input.component';
-import { ButtonComponent } from '../../../../../common/components/form/button/button.component';
-import { SelectComponent } from '../../../../../common/components/form/select/select.component';
-import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
+import { InputComponent } from '@common/components/form/input/input.component';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { SelectComponent } from '@common/components/form/select/select.component';
+import { ToastService } from '@common/components/ui/toast/toast.service';
 
 @Component({
   selector: 'app-edit-category',

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth.service';
-import { ButtonComponent } from '../../form/button/button.component';
-import { BreadcrumbComponent } from '../../ui/breadcrumb/breadcrumb.component';
+import { AuthService } from '@core/services/auth.service';
+import { ButtonComponent } from '@common/components/form/button/button.component';
+import { BreadcrumbComponent } from '@common/components/ui/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-sidebar',

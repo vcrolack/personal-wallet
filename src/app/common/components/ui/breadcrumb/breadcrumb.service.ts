@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from 'rxjs';
-import { BreadcrumbItem } from './breadcrumb.component';
+import { BreadcrumbItem } from '@common/components/ui/breadcrumb/breadcrumb.component';
 
 @Injectable({
   providedIn: 'root',
