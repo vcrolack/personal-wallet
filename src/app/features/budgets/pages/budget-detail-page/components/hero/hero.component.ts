@@ -1,16 +1,18 @@
 import { Component, inject, input, signal } from '@angular/core';
+import { CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
+
+import { finalize } from 'rxjs';
+
 import {
   BadgeComponent,
   BadgeVariant,
-} from '@common/components/ui/badge/badge.component';
-import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
-import { CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
+  WrapperComponent,
+  CircularProgressBarComponent,
+  EditableFieldComponent,
+  TextComponent,
+} from '@common/components/ui';
 import { BudgetModel } from '@core/models/budgets/budget.model';
-import { CircularProgressBarComponent } from '@common/components/ui/circular-progress-bar/circular-progress-bar.component';
 import { BudgetService } from '@core/services/budget.service';
-import { finalize } from 'rxjs';
-import { EditableFieldComponent } from '@common/components/ui/editable-field/editable-field.component';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-hero',

@@ -1,18 +1,23 @@
 import { CurrencyPipe, I18nPluralPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { IconButtonComponent } from '@common/components/form/icon-button/icon-button.component';
-import { EditableFieldComponent } from '@common/components/ui/editable-field/editable-field.component';
-import { ModalComponent } from '@common/components/ui/modal/modal.component';
-import { EmptyStateComponent } from '@common/components/ui/empty-state/empty-state.component';
-import { CreateCategoryValueAndAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
+
 import {
   ChevronDown,
   ChevronRight,
   CircleDollarSign,
   LucideAngularModule,
 } from 'lucide-angular';
-import { TitleComponent } from '@common/components/ui/typography/title/title.component';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
+
+import { IconButtonComponent } from '@common/components/form';
+import {
+  EditableFieldComponent,
+  ModalComponent,
+  EmptyStateComponent,
+  TitleComponent,
+  TextComponent,
+} from '@common/components/ui';
+
+import { CreateCategoryValueAndAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
 import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/update-budget-category-assignment.request';
 

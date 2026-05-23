@@ -1,15 +1,19 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { GenericTableComponent } from '@common/components/ui/table/table.component';
+
+import {
+  GenericTableComponent,
+  ModalComponent,
+  ToastService,
+  TitleComponent,
+  TextComponent,
+} from '@common/components/ui';
+
 import { ColumnDef } from '@common/interfaces/table.interface';
 import { BudgetService } from '@core/services/budget.service';
-import { ButtonComponent } from '@common/components/form/button/button.component';
-import { ModalComponent } from '@common/components/ui/modal/modal.component';
+import { ButtonComponent } from '@common/components/form';
 import { CreateOrUpdateBudget } from '@features/budgets/pages/budgets-page/forms/create-or-update-budget/create-or-update-budget';
 import { Budget } from '@core/interfaces/budget.interface';
-import { ToastService } from '@common/components/ui/toast/toast.service';
-import { TitleComponent } from '@common/components/ui/typography/title/title.component';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
 
 @Component({
   selector: 'app-budgets.page',

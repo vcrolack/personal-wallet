@@ -7,14 +7,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
+import { finalize } from 'rxjs';
+
 import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
 import { CreateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/create-budget-category-assignment.request';
 import { BudgetService } from '@core/services/budget.service';
-import { finalize } from 'rxjs';
-
 import { CategorySelector } from '@features/budgets/pages/budget-detail-page/forms/add-category/category-selector/category-selector';
 import { AmountInput } from '@features/budgets/pages/budget-detail-page/forms/add-category/amount-input/amount-input';
-import { ToastService } from '@common/components/ui/toast/toast.service';
+import { ToastService } from '@common/components/ui';
 import { CategoryValueSelector } from '@features/budgets/pages/budget-detail-page/forms/add-category/category-value-selector/category-value-selector';
 
 @Component({

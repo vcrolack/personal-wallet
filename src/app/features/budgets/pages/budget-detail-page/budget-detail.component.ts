@@ -6,21 +6,17 @@ import {
   signal,
   computed,
 } from '@angular/core';
+
 import { BudgetService } from '@core/services/budget.service';
 import { HeroComponent } from '@features/budgets/pages/budget-detail-page/components/hero/hero.component';
-
-import { ButtonComponent } from '@common/components/form/button/button.component';
-import {
-  ModalComponent,
-  ModalSize,
-} from '@common/components/ui/modal/modal.component';
+import { ButtonComponent } from '@common/components/form';
 import { AddCategoryComponent } from '@features/budgets/pages/budget-detail-page/forms/add-category/add-category.component';
-
 import {
   ViewSwitcherComponent,
   ViewMode,
-} from '@common/components/ui/view-switcher/view-switcher.component';
-
+  ModalComponent,
+  ModalSize,
+} from '@common/components/ui';
 import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
 import { CategoriesGridComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-grid/categories-grid.component';
 import { BudgetDetailSkeletonComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';

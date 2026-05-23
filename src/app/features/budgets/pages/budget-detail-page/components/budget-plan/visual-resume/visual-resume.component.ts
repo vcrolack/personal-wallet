@@ -1,13 +1,18 @@
 import { CurrencyPipe, CommonModule } from '@angular/common';
 import { inject, input, effect, computed, Component } from '@angular/core';
-import { DonutChartComponent } from '@common/components/charts/donut-chart/donut-chart.component';
-import { DonutChartData } from '@common/components/charts/models/donut-chart.model';
-import { PieChartComponent } from '@common/components/charts/pie-chart/pie-chart.component';
-import { CarouselSlideDirective } from '@common/components/ui/carousel/carousel-slide.directive';
-import { CarouselComponent } from '@common/components/ui/carousel/carousel.component';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
-import { TitleComponent } from '@common/components/ui/typography/title/title.component';
-import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
+
+import {
+  DonutChartComponent,
+  DonutChartData,
+  PieChartComponent,
+} from '@common/components/charts';
+import {
+  CarouselSlideDirective,
+  CarouselComponent,
+  TextComponent,
+  TitleComponent,
+  WrapperComponent,
+} from '@common/components/ui';
 import { BudgetModel } from '@core/models/budgets/budget.model';
 import { BudgetChartDataService } from '@features/budgets/pages/budget-detail-page/services/budget-chart-data.service';
 

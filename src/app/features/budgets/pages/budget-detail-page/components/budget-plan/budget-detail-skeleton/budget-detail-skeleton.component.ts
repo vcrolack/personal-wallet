@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { SkeletonComponent } from '@common/components/ui/skeleton/skeleton.component';
-import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
+import { SkeletonComponent, WrapperComponent } from '@common/components/ui';
 
 @Component({
   selector: 'app-budget-detail-skeleton',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
+import { WrapperComponent } from '@common/components/ui';
 
 @Component({
   selector: 'app-transactions-visual-resume',

@@ -1,16 +1,17 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+import { finalize } from 'rxjs';
+
 import { CategoryService } from '@core/services/category.service';
 import {
   AutocompleteOption,
   AutocompleteComponent,
-} from '@common/components/form/autocomplete/autocomplete.component';
+} from '@common/components/form';
+import { TextComponent, ErrorFormMessage } from '@common/components/ui';
 import { BudgetGroupModel } from '@core/models/budgets/budget-group.model';
 import { BudgetService } from '@core/services/budget.service';
-import { finalize } from 'rxjs';
 import { BudgetCategoryRules } from '@core/enums/budget-category-rules.enum';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
-import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-category-selector',

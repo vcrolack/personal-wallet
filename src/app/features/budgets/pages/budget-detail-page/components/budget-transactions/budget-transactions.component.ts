@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { WrapperComponent } from '@common/components/ui/wrapper/wrapper.component';
 import { TransactionsList } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-list/transactions-list.component';
 import { TransactionsResume } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-resume/transactions-resume.component';

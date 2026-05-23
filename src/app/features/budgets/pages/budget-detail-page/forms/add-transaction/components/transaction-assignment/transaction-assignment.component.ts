@@ -8,15 +8,16 @@ import {
   output,
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import {
   AutocompleteComponent,
   AutocompleteOption,
-} from '@common/components/form/autocomplete/autocomplete.component';
-import { IconButtonComponent } from '@common/components/form/icon-button/icon-button.component';
-import { InputComponent } from '@common/components/form/input/input.component';
+  IconButtonComponent,
+  InputComponent,
+} from '@common/components/form';
+import { ErrorFormMessage } from '@common/components/ui';
 import { CategoryService } from '@core/services/category.service';
 import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
-import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-transaction-assignment',

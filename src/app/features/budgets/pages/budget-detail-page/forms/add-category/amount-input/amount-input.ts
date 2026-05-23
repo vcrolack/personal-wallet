@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { InputComponent } from '@common/components/form/input/input.component';
-import { TextComponent } from '@common/components/ui/typography/text/text.component';
-import { ErrorFormMessage } from '@common/components/ui/error-form-message/error-form-message.component';
+
+import { InputComponent } from '@common/components/form';
+import { TextComponent, ErrorFormMessage } from '@common/components/ui';
 
 @Component({
   selector: 'app-amount-input',
