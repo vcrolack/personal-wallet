@@ -33,6 +33,7 @@ import {
   CreateTransactionRequest,
 } from '../../../../../../core/requests/transaction/create-transaction.request';
 import { NotificationService } from '../../../../../../core/errors/notification.service';
+import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-add-transaction',
@@ -46,6 +47,7 @@ import { NotificationService } from '../../../../../../core/errors/notification.
     TextComponent,
     SelectComponent,
     TransactionAssignmentComponent,
+    ErrorFormMessage,
   ],
   providers: [AddTransactionService],
   templateUrl: './add-transaction.component.html',
@@ -60,9 +62,15 @@ export class AddTransactionComponent {
   public budgetId = input.required<string>();
 
   public form = this.fb.group({
-    amount: [{ value: 0, disabled: true }, Validators.required],
+    amount: [
+      { value: 0, disabled: true },
+      [Validators.required, Validators.min(1)],
+    ],
     transactionDate: [new Date(), Validators.required],
-    description: ['', Validators.required],
+    description: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(55)],
+    ],
     bankId: [null, Validators.required],
     transactionTypeId: [null, Validators.required],
     assignments: this.fb.array<Assignments>([]),

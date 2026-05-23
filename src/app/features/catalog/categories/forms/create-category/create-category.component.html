@@ -9,12 +9,18 @@
     placeholder="Facturas"
     formControlName="name"
   ></app-input>
+  <app-error-form-message
+    [control]="form.controls['name']"
+  ></app-error-form-message>
 
   <app-select
     label="Propósito"
     formControlName="rule"
     [options]="rulesSelect"
   ></app-select>
+  <app-error-form-message
+    [control]="form.controls['rule']"
+  ></app-error-form-message>
 
   <app-button [disabled]="form.invalid" label="Crear"></app-button>
 </form>

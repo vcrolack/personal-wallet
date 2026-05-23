@@ -16,6 +16,7 @@ import { IconButtonComponent } from '../../../../../../../../common/components/f
 import { InputComponent } from '../../../../../../../../common/components/form/input/input.component';
 import { CategoryService } from '../../../../../../../../core/services/category.service';
 import { BudgetCategoryValuesService } from '../../../../../../../../core/services/budget-category-values.service';
+import { ErrorFormMessage } from '../../../../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-transaction-assignment',
@@ -25,6 +26,7 @@ import { BudgetCategoryValuesService } from '../../../../../../../../core/servic
     AutocompleteComponent,
     IconButtonComponent,
     InputComponent,
+    ErrorFormMessage,
   ],
   providers: [CategoryService, BudgetCategoryValuesService],
   templateUrl: './transaction-assignment.component.html',

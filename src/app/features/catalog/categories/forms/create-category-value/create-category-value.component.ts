@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { CategoryModel } from '../../../../../core/models/categories/category.model';
 import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
+import { ErrorFormMessage } from '../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-category-value',
@@ -23,6 +24,7 @@ import { ToastService } from '../../../../../common/components/ui/toast/toast.se
     SelectComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    ErrorFormMessage,
   ],
   templateUrl: './create-category-value.component.html',
   styleUrl: './create-category-value.component.css',
@@ -33,7 +35,10 @@ export class CreateCategoryValueComponent {
   private fb = inject(FormBuilder);
 
   public form: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.maxLength(30)]],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+    ],
     budgetCategoryId: ['', Validators.required],
   });
 

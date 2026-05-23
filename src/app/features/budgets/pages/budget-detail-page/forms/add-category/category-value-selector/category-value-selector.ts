@@ -16,10 +16,16 @@ import {
 } from '../../../../../../../common/components/form/autocomplete/autocomplete.component';
 import { finalize, startWith, switchMap } from 'rxjs';
 import { TextComponent } from '../../../../../../../common/components/ui/typography/text/text.component';
+import { ErrorFormMessage } from '../../../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-category-value-selector',
-  imports: [ReactiveFormsModule, AutocompleteComponent, TextComponent],
+  imports: [
+    ReactiveFormsModule,
+    AutocompleteComponent,
+    TextComponent,
+    ErrorFormMessage,
+  ],
   templateUrl: './category-value-selector.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

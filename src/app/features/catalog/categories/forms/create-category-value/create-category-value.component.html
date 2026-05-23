@@ -9,11 +9,17 @@
     placeholder="Netflix"
     formControlName="name"
   ></app-input>
+  <app-error-form-message
+    [control]="form.controls['name']"
+  ></app-error-form-message>
   <app-select
     label="Categoría a la que pertenece el valor"
     placeholder="Seleccione una categoría"
     [options]="categoriesForSelect()"
     formControlName="budgetCategoryId"
   ></app-select>
+  <app-error-form-message
+    [control]="form.controls['budgetCategoryId']"
+  ></app-error-form-message>
   <app-button [disabled]="form.invalid" label="Crear"></app-button>
 </form>

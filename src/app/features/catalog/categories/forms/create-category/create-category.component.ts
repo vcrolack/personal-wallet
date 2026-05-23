@@ -10,6 +10,7 @@ import { ButtonComponent } from '../../../../../common/components/form/button/bu
 import { CategoryService } from '../../../../../core/services/category.service';
 import { SelectComponent } from '../../../../../common/components/form/select/select.component';
 import { ToastService } from '../../../../../common/components/ui/toast/toast.service';
+import { ErrorFormMessage } from '../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-category',
@@ -18,6 +19,7 @@ import { ToastService } from '../../../../../common/components/ui/toast/toast.se
     InputComponent,
     ButtonComponent,
     SelectComponent,
+    ErrorFormMessage,
   ],
   templateUrl: './create-category.component.html',
   styleUrl: './create-category.component.css',
@@ -36,8 +38,14 @@ export class CreateCategoryComponent {
   ];
 
   public form: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    rule: ['', [Validators.required]],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+    ],
+    rule: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+    ],
   });
 
   public createCategory() {

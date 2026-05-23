@@ -18,6 +18,9 @@
         (noResultsClick)="createCategoryValue($event)"
         (queryChange)="searchCategoryValue($event)"
       ></app-autocomplete>
+      <app-error-form-message
+        [control]="form().controls['categoryValue']"
+      ></app-error-form-message>
     </section>
   </div>
 </div>

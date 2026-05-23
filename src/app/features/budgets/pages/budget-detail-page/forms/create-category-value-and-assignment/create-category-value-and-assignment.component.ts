@@ -17,6 +17,7 @@ import { ToastService } from '../../../../../../common/components/ui/toast/toast
 import { BudgetCategoryAssignmentsService } from '../../../../../../core/services/budget-category-assignments.service';
 import { BudgetCategoryValuesService } from '../../../../../../core/services/budget-category-values.service';
 import { BudgetService } from '../../../../../../core/services/budget.service';
+import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-category-value-and-assignment',
@@ -25,6 +26,7 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
     ButtonComponent,
     ReactiveFormsModule,
     AutocompleteComponent,
+    ErrorFormMessage,
   ],
   templateUrl: './create-category-value-and-assignment.component.html',
   styleUrl: './create-category-value-and-assignment.component.css',

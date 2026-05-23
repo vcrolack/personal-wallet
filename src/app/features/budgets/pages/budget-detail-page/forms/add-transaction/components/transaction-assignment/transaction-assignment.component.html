@@ -13,6 +13,9 @@
     (queryChange)="onSearchCategory($event)"
     (selectionChange)="onSelectCategory($event)"
   ></app-autocomplete>
+  <app-error-form-message
+    [control]="formGroup().controls['categoryId']"
+  ></app-error-form-message>
 
   <app-autocomplete
     class="w-1/2"
@@ -21,6 +24,9 @@
     [options]="valueOptions()"
     (queryChange)="onSearchValue($event)"
   ></app-autocomplete>
+  <app-error-form-message
+    [control]="formGroup().controls['categoryValueId']"
+  ></app-error-form-message>
 
   <app-input
     class="w-1/2"
@@ -28,4 +34,7 @@
     type="number"
     formControlName="amount"
   ></app-input>
+  <app-error-form-message
+    [control]="formGroup().controls['amount']"
+  ></app-error-form-message>
 </div>

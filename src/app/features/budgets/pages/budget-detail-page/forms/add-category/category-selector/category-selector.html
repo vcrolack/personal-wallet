@@ -16,4 +16,7 @@
     (noResultsClick)="createCategory($event)"
     (queryChange)="searchCategory($event)"
   ></app-autocomplete>
+  <app-error-form-message
+    [control]="form().controls['category']"
+  ></app-error-form-message>
 </section>

@@ -7,11 +7,17 @@
       type="number"
       formControlName="amount"
     ></app-input>
+    <app-error-form-message
+      [control]="form.controls['amount']"
+    ></app-error-form-message>
     <app-date-selector
       class="w-1/2"
       label="Fecha"
       formControlName="transactionDate"
     ></app-date-selector>
+    <app-error-form-message
+      [control]="form.controls['transactionDate']"
+    ></app-error-form-message>
   </div>
   <div class="w-full my-4">
     <app-input
