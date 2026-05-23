@@ -21,6 +21,7 @@ import { CreateBudgetRequest } from '../../../../../../core/requests/budgets/cre
 import { Budget } from '../../../../../../core/interfaces/budget.interface';
 import { UpdateBudgetRequest } from '../../../../../../core/requests/budgets/update-budget.request';
 import { ToastService } from '../../../../../../common/components/ui/toast/toast.service';
+import { ErrorFormMessage } from '../../../../../../common/components/ui/error-form-message/error-form-message.component';
 
 @Component({
   selector: 'app-create-or-update-budget',
@@ -31,6 +32,7 @@ import { ToastService } from '../../../../../../common/components/ui/toast/toast
     CheckboxComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    ErrorFormMessage,
   ],
   templateUrl: './create-or-update-budget.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,11 +48,14 @@ export class CreateOrUpdateBudget {
   public refresh = output<void>();
 
   public form: FormGroup = this.fb.group({
-    title: [null, Validators.required],
+    title: [
+      null,
+      [Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+    ],
     budgetAmount: [null, [Validators.required, Validators.min(1)]],
     startDate: [null, Validators.required],
     endDate: [null, Validators.required],
-    description: [null, Validators.required],
+    description: [null, Validators.required, Validators.minLength(55)],
     isShared: [false],
   });
 

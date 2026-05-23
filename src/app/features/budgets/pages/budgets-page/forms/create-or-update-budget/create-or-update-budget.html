@@ -5,27 +5,51 @@
   action=""
 >
   <app-input label="Nombre" type="text" formControlName="title"></app-input>
+  <app-error-form-message
+    [control]="form.controls['title']"
+  ></app-error-form-message>
+
   <app-input
     label="Monto presupuestado"
     type="number"
     formControlName="budgetAmount"
   ></app-input>
+  <app-error-form-message
+    [control]="form.controls['budgetAmount']"
+  ></app-error-form-message>
+
   <app-text-area
     label="Descripción"
     formControlName="description"
   ></app-text-area>
+  <app-error-form-message
+    [control]="form.controls['description']"
+  ></app-error-form-message>
+
   <app-date-selector
     label="Fecha de inicio"
     formControlName="startDate"
   ></app-date-selector>
+  <app-error-form-message
+    [control]="form.controls['startDate']"
+  ></app-error-form-message>
+
   <app-date-selector
     label="Fecha de término"
     formControlName="endDate"
   ></app-date-selector>
+  <app-error-form-message
+    [control]="form.controls['endDate']"
+  ></app-error-form-message>
+
   <app-checkbox
     label="¿Es compartido?"
     formControlName="isShared"
   ></app-checkbox>
+  <app-error-form-message
+    [control]="form.controls['isShared']"
+  ></app-error-form-message>
+
   <div class="w-full flex justify-end">
     <app-button [disabled]="form.invalid" [label]="isCreation"></app-button>
   </div>

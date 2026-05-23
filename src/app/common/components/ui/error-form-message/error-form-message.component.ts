@@ -1,31 +1,25 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-} from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { Component, input } from '@angular/core';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { TextComponent } from '../typography/text/text.component';
 
 @Component({
   selector: 'app-error-form-message',
   imports: [TextComponent],
   templateUrl: './error-form-message.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorFormMessage {
   public control = input.required<AbstractControl>();
 
-  public isValidField = computed(() => {
+  public get isValidField(): boolean {
     const ctrl = this.control();
-    return ctrl.invalid && (ctrl.touched || ctrl.dirty);
-  });
+    return ctrl.invalid && ctrl.touched;
+  }
 
-  public errorText = computed(() => {
+  public get errorText(): string | null {
     const ctrl = this.control();
     if (!ctrl.errors) return null;
     return this.getErrorMessage(ctrl.errors);
-  });
+  }
 
   private getErrorMessage(errors: ValidationErrors): string | null {
     for (const key of Object.keys(errors)) {

@@ -1,5 +1,5 @@
-@if (isValidField() && errorText()) {
+@if (isValidField && errorText) {
   <div class="mt-1">
-    <app-text color="terciary" variant="small">{{ errorText() }}</app-text>
+    <app-text color="danger" variant="small">{{ errorText }}</app-text>
   </div>
 }
