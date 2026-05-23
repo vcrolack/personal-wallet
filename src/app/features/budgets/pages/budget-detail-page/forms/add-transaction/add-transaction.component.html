@@ -64,6 +64,9 @@
   </app-wrapper>
 
   <div class="w-full flex justify-end mt-5">
-    <app-button label="Agregar transacción"></app-button>
+    <app-button
+      [disabled]="form.invalid"
+      label="Agregar transacción"
+    ></app-button>
   </div>
 </form>
