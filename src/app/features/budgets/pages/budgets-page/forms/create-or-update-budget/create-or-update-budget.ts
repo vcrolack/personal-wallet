@@ -26,6 +26,7 @@ import {
   UpdateBudgetRequest,
 } from '@core/requests/budgets';
 import { Budget } from '@core/interfaces';
+import { DateValidator } from '@core/errors';
 
 @Component({
   selector: 'app-create-or-update-budget',
@@ -58,8 +59,14 @@ export class CreateOrUpdateBudget {
     ],
     budgetAmount: [null, [Validators.required, Validators.min(1)]],
     startDate: [null, Validators.required],
-    endDate: [null, Validators.required],
-    description: [null, Validators.required, Validators.minLength(55)],
+    endDate: [
+      null,
+      [
+        Validators.required,
+        DateValidator.minDate(() => this.form?.get('startDate')?.value),
+      ],
+    ],
+    description: [null, [Validators.required, Validators.maxLength(55)]],
     isShared: [false],
   });
 
@@ -72,6 +79,10 @@ export class CreateOrUpdateBudget {
         endDate: this.formatDate(budget.endDate),
       });
     }
+
+    this.form.get('startDate')?.valueChanges.subscribe(() => {
+      this.form.get('endDate')?.updateValueAndValidity();
+    });
   }
 
   private formatDate(date: any): string {

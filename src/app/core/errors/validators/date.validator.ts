@@ -1,12 +1,22 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class DateValidator {
-  public static minDate(minDate: Date): ValidatorFn {
+  public static minDate(
+    minDateOrFn: Date | string | null | undefined | (() => Date | string | null | undefined)
+  ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if (!value) return null;
 
+      const minDate = typeof minDateOrFn === 'function' ? minDateOrFn() : minDateOrFn;
+      if (!minDate) return null;
+
       const inputDate = new Date(value);
+      const min = new Date(minDate);
+
+      if (isNaN(inputDate.getTime()) || isNaN(min.getTime())) {
+        return { invalidDate: true };
+      }
 
       const normalizedInput = new Date(
         inputDate.getFullYear(),
@@ -14,14 +24,10 @@ export class DateValidator {
         inputDate.getDate(),
       );
       const normalizedMin = new Date(
-        minDate.getFullYear(),
-        minDate.getMonth(),
-        minDate.getDate(),
+        min.getFullYear(),
+        min.getMonth(),
+        min.getDate(),
       );
-
-      if (isNaN(normalizedInput.getTime())) {
-        return { invalidDate: true };
-      }
 
       return normalizedInput < normalizedMin
         ? { minDate: { required: normalizedMin, actual: normalizedInput } }
@@ -29,29 +35,36 @@ export class DateValidator {
     };
   }
 
-  public static maxDate(maxDate: Date): ValidatorFn {
+  public static maxDate(
+    maxDateOrFn: Date | string | null | undefined | (() => Date | string | null | undefined)
+  ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if (!value) return null;
 
+      const maxDate = typeof maxDateOrFn === 'function' ? maxDateOrFn() : maxDateOrFn;
+      if (!maxDate) return null;
+
       const inputDate = new Date(value);
+      const max = new Date(maxDate);
+
+      if (isNaN(inputDate.getTime()) || isNaN(max.getTime())) {
+        return { invalidDate: true };
+      }
+
       const normalizedInput = new Date(
         inputDate.getFullYear(),
         inputDate.getMonth(),
         inputDate.getDate(),
       );
       const normalizedMax = new Date(
-        maxDate.getFullYear(),
-        maxDate.getMonth(),
-        maxDate.getDate(),
+        max.getFullYear(),
+        max.getMonth(),
+        max.getDate(),
       );
 
-      if (isNaN(normalizedInput.getTime())) {
-        return { invalidDate: true };
-      }
-
       return normalizedInput > normalizedMax
-        ? { maxDate: { required: maxDate, actual: normalizedInput } }
+        ? { maxDate: { required: normalizedMax, actual: normalizedInput } }
         : null;
     };
   }
