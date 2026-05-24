@@ -22,7 +22,7 @@ export class TransactionsService {
   // UI DATA MANAGEMENT //
 
   private refreshListTrigger = signal<number>(0);
-  public paginationParams = signal({ limit: 10, page: 1 });
+  public paginationParams = signal({ limit: 1000, page: 1 });
   public budgetIdParam = signal<string | null>(null);
 
   public transactionsResourceList = rxResource({
@@ -45,11 +45,11 @@ export class TransactionsService {
       limit: pageSize,
       page,
     });
-  }
+  };
 
   public reloadList = () => {
     this.refreshListTrigger.update((value) => value + 1);
-  }
+  };
 
   // HTTP METHODS
 

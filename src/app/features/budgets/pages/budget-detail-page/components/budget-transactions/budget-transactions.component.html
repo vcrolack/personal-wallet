@@ -6,8 +6,6 @@
     <app-wrapper class="md:col-span-2">
       <app-transactions-list
         [transactionsData]="transactions() ?? { data: [] }"
-        [pagination]="pagination()"
-        [goToPage]="goToPage"
         [isLoading]="isLoading()"
       ></app-transactions-list>
     </app-wrapper>

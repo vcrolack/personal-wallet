@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   input,
+  signal,
 } from '@angular/core';
 
 import { ColumnDef, GenericTableComponent } from '@common/components/ui';
@@ -24,17 +26,24 @@ export class TransactionsList {
     data: TransactionModel[];
     meta?: Metadata;
   }>();
-  public goToPage = input.required<(page: number, pageSize: number) => void>();
   public isLoading = input.required<boolean>();
-  public pagination = input.required<{
-    limit: number;
-    page: number;
-  }>();
+
+  public currentPage = signal<number>(1);
+  public readonly pageSize = 10;
+
+  constructor() {
+    effect(() => {
+      this.transactionsData();
+      this.currentPage.set(1);
+    });
+  }
 
   public transactionCategoryAssignments = computed(() => {
-    return this.transactionsData().data.flatMap(
+    const allAssignments = this.transactionsData().data.flatMap(
       (transaction) => transaction.transactionCategoryAssignments || [],
     );
+    const startIndex = (this.currentPage() - 1) * this.pageSize;
+    return allAssignments.slice(startIndex, startIndex + this.pageSize);
   });
 
   public columns: ColumnDef<TransactionCategoryAssignmentModel>[] = [
@@ -64,19 +73,19 @@ export class TransactionsList {
   ];
 
   public transactionCategoryAssignmentsPagination = computed(() => {
-    const meta = this.transactionsData().meta;
-    if (!meta) {
-      return { currentPage: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
-    }
+    const allAssignments = this.transactionsData().data.flatMap(
+      (transaction) => transaction.transactionCategoryAssignments || [],
+    );
+
     return {
-      currentPage: meta.currentPage,
-      pageSize: meta.itemsPerPage,
-      totalItems: meta.totalItems,
-      totalPages: meta.totalPages,
+      currentPage: this.currentPage(),
+      pageSize: this.pageSize,
+      totalItems: allAssignments.length,
+      totalPages: Math.ceil(allAssignments.length / this.pageSize),
     };
   });
 
   public onPageChange(page: number) {
-    this.goToPage()(page, this.pagination().limit);
+    this.currentPage.set(page);
   }
 }

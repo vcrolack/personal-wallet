@@ -9,8 +9,6 @@ export class BudgetTransactionsViewService {
   public transactions = this.transactionsService.transactionsResourceList.value;
   public isLoading =
     this.transactionsService.transactionsResourceList.isLoading;
-  public pagination = this.transactionsService.paginationParams.asReadonly();
-  public goToPage = this.transactionsService.setPagination;
   public reloadList = this.transactionsService.reloadList;
 
   public getTransactionsByBudgetId(budgetId: string | null) {

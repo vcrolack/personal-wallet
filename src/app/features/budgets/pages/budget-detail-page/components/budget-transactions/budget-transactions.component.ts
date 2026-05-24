@@ -31,8 +31,6 @@ export class BudgetTransactions {
 
   public transactions = this.budgetTransactionsViewService.transactions;
   public isLoading = this.budgetTransactionsViewService.isLoading;
-  public pagination = this.budgetTransactionsViewService.pagination;
-  public goToPage = this.budgetTransactionsViewService.goToPage;
   public reloadList = this.budgetTransactionsViewService.reloadList;
 
   constructor() {
