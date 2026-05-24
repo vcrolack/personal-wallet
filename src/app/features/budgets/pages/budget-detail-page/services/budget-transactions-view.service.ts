@@ -10,13 +10,9 @@ export class BudgetTransactionsViewService {
   public isLoading =
     this.transactionsService.transactionsResourceList.isLoading;
   public pagination = this.transactionsService.paginationParams.asReadonly();
+  public goToPage = this.transactionsService.setPagination;
 
   public getTransactionsByBudgetId(budgetId: string | null) {
     this.transactionsService.budgetIdParam.set(budgetId);
-  }
-
-  public goToPage(page: number) {
-    if (page < 1) return;
-    this.transactionsService.paginationParams.update((p) => ({ ...p, page }));
   }
 }

@@ -40,6 +40,17 @@ export class TransactionsService {
     },
   });
 
+  public setPagination(page: number, pageSize: number) {
+    this.paginationParams.set({
+      limit: pageSize,
+      page,
+    });
+  }
+
+  public reloadList() {
+    this.refreshListTrigger.update((value) => value + 1);
+  }
+
   // HTTP METHODS
 
   public create(body: CreateTransactionRequest): Observable<TransactionModel> {

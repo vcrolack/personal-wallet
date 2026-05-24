@@ -24,7 +24,7 @@ export class TransactionsList {
     data: TransactionModel[];
     meta?: Metadata;
   }>();
-  public goToPage = input.required<(page: number) => void>();
+  public goToPage = input.required<(page: number, pageSize: number) => void>();
   public isLoading = input.required<boolean>();
   public pagination = input.required<{
     limit: number;
@@ -75,4 +75,8 @@ export class TransactionsList {
       totalPages: meta.totalPages,
     };
   });
+
+  public onPageChange(page: number) {
+    this.goToPage()(page, this.pagination().limit);
+  }
 }
