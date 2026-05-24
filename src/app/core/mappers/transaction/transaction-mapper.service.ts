@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TransactionDTO } from '@core/dtos/transaction/transaction.dto';
-import { TransactionModel } from '@core/models/transaction/transaction.model';
+import { TransactionDTO } from '@core/dtos';
+import { TransactionModel } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +24,7 @@ export class TransactionMapperService {
           id: assignment.id,
           amount: assignment.amount,
           budgetCategoryValueId: assignment.budgetCategoryValueId,
+          createdAt: new Date(assignment.createdAt),
           budgetCategoryValue: {
             id: assignment.budgetCategoryValue.id,
             name: assignment.budgetCategoryValue.name,

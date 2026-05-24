@@ -19,17 +19,20 @@ export interface TransactionModel {
     id: number;
     name: string;
   };
-  transactionCategoryAssignments: {
+  transactionCategoryAssignments: TransactionCategoryAssignmentModel[];
+}
+
+export interface TransactionCategoryAssignmentModel {
+  id: string;
+  amount: number;
+  budgetCategoryValueId: string;
+  createdAt: Date;
+  budgetCategoryValue: {
     id: string;
-    amount: number;
-    budgetCategoryValueId: string;
-    budgetCategoryValue: {
+    name: string;
+    budgetCategory: {
       id: string;
       name: string;
-      budgetCategory: {
-        id: string;
-        name: string;
-      };
     };
-  }[];
+  };
 }

@@ -17,7 +17,7 @@ import {
   TextComponent,
 } from '@common/components/ui';
 import { CreateCategoryValueAndAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
-import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
+import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budget-view.service';
 import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests';
 
 @Component({

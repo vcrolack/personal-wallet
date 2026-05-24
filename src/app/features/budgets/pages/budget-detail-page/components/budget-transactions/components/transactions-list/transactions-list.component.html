@@ -1,3 +1,7 @@
 <section id="transactions-list">
-  <app-generic-table></app-generic-table>
+  <app-generic-table
+    [data]="transactionCategoryAssignments()"
+    [columns]="columns"
+    [isLoading]="isLoading()"
+  ></app-generic-table>
 </section>

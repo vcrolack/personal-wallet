@@ -17,7 +17,7 @@ import {
   ModalComponent,
   ModalSize,
 } from '@common/components/ui';
-import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
+import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budget-view.service';
 import { CategoriesGridComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-grid/categories-grid.component';
 import { BudgetDetailSkeletonComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/budget-detail-skeleton/budget-detail-skeleton.component';
 import { VisualResumeComponent } from '@features/budgets/pages/budget-detail-page/components/budget-plan/visual-resume/visual-resume.component';
