@@ -24,7 +24,6 @@ import { VisualResumeComponent } from '@features/budgets/pages/budget-detail-pag
 import { CategoriesList } from '@features/budgets/pages/budget-detail-page/components/budget-plan/categories-list/categories-list.component';
 import { TabsComponent, TabItem } from '@common/components/layout';
 import { BudgetTransactions } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/budget-transactions.component';
-import { TransactionsVisualResume } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-visual-resume/transactions-visual-resume.component';
 import { AddTransactionComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/add-transaction.component';
 
 @Component({
@@ -41,7 +40,6 @@ import { AddTransactionComponent } from '@features/budgets/pages/budget-detail-p
     CategoriesList,
     TabsComponent,
     BudgetTransactions,
-    TransactionsVisualResume,
     AddTransactionComponent,
   ],
   providers: [BudgetViewService],

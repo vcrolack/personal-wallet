@@ -30,28 +30,22 @@
       ></app-view-switcher>
     </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
-      <div class="xl:col-span-3 h-full">
-        @if (activeTabId() === 0) {
+    @if (activeTabId() === 0) {
+      <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
+        <div class="xl:col-span-3 h-full">
           @if (viewMode() === "grid") {
             <app-categories-grid></app-categories-grid>
           } @else if (viewMode() === "list") {
             <app-categories-list></app-categories-list>
           }
-        } @else if (activeTabId() === 1) {
-          <app-budget-transactions [budgetId]="id()"></app-budget-transactions>
-        }
-      </div>
-
-      <div class="xl:col-span-1">
-        @if (activeTabId() === 0) {
+        </div>
+        <div class="xl:col-span-1">
           <app-visual-resume [budget]="budgetValue"></app-visual-resume>
-        }
-        @if (activeTabId() === 1) {
-          <app-transactions-visual-resume></app-transactions-visual-resume>
-        }
+        </div>
       </div>
-    </div>
+    } @else if (activeTabId() === 1) {
+      <app-budget-transactions [budgetId]="id()"></app-budget-transactions>
+    }
   </section>
 
   <app-modal

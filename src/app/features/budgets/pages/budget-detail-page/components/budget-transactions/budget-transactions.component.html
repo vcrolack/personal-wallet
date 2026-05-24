@@ -1,8 +1,13 @@
-<div class="grid grid-cols-3 gap-6">
-  <app-wrapper class="col-span-1">
-    <app-transactions-resume></app-transactions-resume>
-  </app-wrapper>
-  <app-wrapper class="col-span-2">
-    <app-transactions-list></app-transactions-list>
-  </app-wrapper>
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-6 items-start">
+  <div class="xl:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+    <app-wrapper class="md:col-span-1">
+      <app-transactions-resume></app-transactions-resume>
+    </app-wrapper>
+    <app-wrapper class="md:col-span-2">
+      <app-transactions-list></app-transactions-list>
+    </app-wrapper>
+  </div>
+  <div class="xl:col-span-1">
+    <app-transactions-visual-resume></app-transactions-visual-resume>
+  </div>
 </div>
