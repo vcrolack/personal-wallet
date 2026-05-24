@@ -10,6 +10,7 @@ import {
   TransactionCategoryAssignmentModel,
   TransactionModel,
 } from '@core/models';
+import { Metadata } from '@core/dtos';
 
 @Component({
   selector: 'app-transactions-list',
@@ -18,7 +19,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionsList {
-  public transactionsData = input.required<TransactionModel[]>();
+  public transactionsData = input.required<{
+    data: TransactionModel[];
+    meta?: Metadata;
+  }>();
   public goToPage = input.required<(page: number) => void>();
   public isLoading = input.required<boolean>();
   public pagination = input.required<{
@@ -27,7 +31,7 @@ export class TransactionsList {
   }>();
 
   public transactionCategoryAssignments = computed(() => {
-    return this.transactionsData().flatMap(
+    return this.transactionsData().data.flatMap(
       (transaction) => transaction.transactionCategoryAssignments || [],
     );
   });
@@ -57,4 +61,17 @@ export class TransactionsList {
       pipe: 'currency',
     },
   ];
+
+  public transactionCategoryAssignmentsPagination = computed(() => {
+    const meta = this.transactionsData().meta;
+    if (!meta) {
+      return { currentPage: 1, pageSize: 10, totalItems: 0, totalPages: 0 };
+    }
+    return {
+      currentPage: meta.currentPage,
+      pageSize: meta.itemsPerPage,
+      totalItems: meta.totalItems,
+      totalPages: meta.totalPages,
+    };
+  });
 }

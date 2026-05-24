@@ -8,7 +8,7 @@ import { CreateTransactionRequest } from '@core/requests';
 import { TransactionMapperService } from '@core/mappers';
 import { TransactionModel } from '@core/models';
 import { ApiResponse } from '@core/interfaces';
-import { TransactionDTO } from '@core/dtos';
+import { Metadata, TransactionDTO } from '@core/dtos';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -58,7 +58,7 @@ export class TransactionsService {
     limit: number = 10,
     page: number = 1,
     budgetId?: string,
-  ): Observable<TransactionModel[]> {
+  ): Observable<{ data: TransactionModel[]; meta?: Metadata }> {
     let params = new HttpParams().set('limit', limit).set('page', page);
     if (budgetId) {
       params = params.set('budgetId', budgetId);
@@ -68,9 +68,10 @@ export class TransactionsService {
         ApiResponse<TransactionDTO[]>
       >(`${environment.merakiUrl}/${this.endpoint}/find-all`, { params })
       .pipe(
-        map((response: ApiResponse<TransactionDTO[]>) =>
-          response.data.map((transaction) => this.mapper.toModel(transaction)),
-        ),
+        map((response: ApiResponse<TransactionDTO[]>) => ({
+          data: response.data.map((t) => this.mapper.toModel(t)),
+          meta: response.meta,
+        })),
       );
   }
 

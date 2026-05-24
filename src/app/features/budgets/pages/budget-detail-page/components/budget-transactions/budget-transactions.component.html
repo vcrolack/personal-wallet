@@ -5,7 +5,7 @@
     </app-wrapper>
     <app-wrapper class="md:col-span-2">
       <app-transactions-list
-        [transactionsData]="transactions() ?? []"
+        [transactionsData]="transactions() ?? { data: [] }"
         [pagination]="pagination()"
         [goToPage]="goToPage"
         [isLoading]="isLoading()"

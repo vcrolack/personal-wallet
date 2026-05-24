@@ -3,5 +3,7 @@
     [data]="transactionCategoryAssignments()"
     [columns]="columns"
     [isLoading]="isLoading()"
+    [pagination]="transactionCategoryAssignmentsPagination()"
+    (pageChange)="goToPage()($event)"
   ></app-generic-table>
 </section>
