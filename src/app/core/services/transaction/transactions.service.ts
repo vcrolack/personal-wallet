@@ -40,14 +40,14 @@ export class TransactionsService {
     },
   });
 
-  public setPagination(page: number, pageSize: number) {
+  public setPagination = (page: number, pageSize: number) => {
     this.paginationParams.set({
       limit: pageSize,
       page,
     });
   }
 
-  public reloadList() {
+  public reloadList = () => {
     this.refreshListTrigger.update((value) => value + 1);
   }
 

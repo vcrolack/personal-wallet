@@ -9,15 +9,15 @@ export interface TransactionDTO extends BaseDTO {
   bankId: number;
   transactionTypeId: number;
   userId: string;
-  budget: {
+  budget?: {
     id: string;
     title: string;
   };
-  bank: {
+  bank?: {
     id: number;
     name: string;
   };
-  transactionType: {
+  transactionType?: {
     id: number;
     name: string;
   };
@@ -26,10 +26,10 @@ export interface TransactionDTO extends BaseDTO {
     amount: number;
     budgetCategoryValueId: string;
     createdAt: string;
-    budgetCategoryValue: {
+    budgetCategoryValue?: {
       id: string;
       name: string;
-      budgetCategory: {
+      budgetCategory?: {
         id: string;
         name: string;
       };

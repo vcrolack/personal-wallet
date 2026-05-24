@@ -42,12 +42,12 @@ export class TransactionsList {
       key: 'category',
       header: 'Categoría',
       accessor: (row) =>
-        row.budgetCategoryValue.budgetCategory.name ?? 'Sin categoría',
+        row.budgetCategoryValue?.budgetCategory?.name ?? 'Sin categoría',
     },
     {
       key: 'category-value',
       header: 'Valor de categoría',
-      accessor: (row) => row.budgetCategoryValue.name ?? 'Sin valor',
+      accessor: (row) => row.budgetCategoryValue?.name ?? 'Sin valor',
     },
     {
       key: 'created-at',

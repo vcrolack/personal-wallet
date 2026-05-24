@@ -166,6 +166,7 @@ export class AddTransactionComponent implements OnInit {
         );
         this.closeModal.emit();
         this.form.reset();
+        this.addTransactionService.reloadTransactionsList();
       });
   }
 }

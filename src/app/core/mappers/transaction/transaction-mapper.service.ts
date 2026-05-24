@@ -16,25 +16,44 @@ export class TransactionMapperService {
       bankId: dto.bankId,
       transactionTypeId: dto.transactionTypeId,
       userId: dto.userId,
-      budget: dto.budget,
-      bank: dto.bank,
-      transactionType: dto.transactionType,
-      transactionCategoryAssignments: dto.transactionCategoryAssignments.map(
+      budget: dto.budget
+        ? {
+            id: dto.budget.id,
+            title: dto.budget.title,
+          }
+        : undefined,
+      bank: dto.bank
+        ? {
+            id: dto.bank.id,
+            name: dto.bank.name,
+          }
+        : undefined,
+      transactionType: dto.transactionType
+        ? {
+            id: dto.transactionType.id,
+            name: dto.transactionType.name,
+          }
+        : undefined,
+      transactionCategoryAssignments: dto.transactionCategoryAssignments?.map(
         (assignment) => ({
           id: assignment.id,
           amount: assignment.amount,
           budgetCategoryValueId: assignment.budgetCategoryValueId,
           createdAt: new Date(assignment.createdAt),
-          budgetCategoryValue: {
-            id: assignment.budgetCategoryValue.id,
-            name: assignment.budgetCategoryValue.name,
-            budgetCategory: {
-              id: assignment.budgetCategoryValue.budgetCategory.id,
-              name: assignment.budgetCategoryValue.budgetCategory.name,
-            },
-          },
+          budgetCategoryValue: assignment.budgetCategoryValue
+            ? {
+                id: assignment.budgetCategoryValue.id,
+                name: assignment.budgetCategoryValue.name,
+                budgetCategory: assignment.budgetCategoryValue.budgetCategory
+                  ? {
+                      id: assignment.budgetCategoryValue.budgetCategory.id,
+                      name: assignment.budgetCategoryValue.budgetCategory.name,
+                    }
+                  : undefined,
+              }
+            : undefined,
         }),
-      ),
+      ) ?? [],
     };
   }
 }

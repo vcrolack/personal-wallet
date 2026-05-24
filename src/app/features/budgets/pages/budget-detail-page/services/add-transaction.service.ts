@@ -14,6 +14,7 @@ export class AddTransactionService {
   private transactionTypeService = inject(TransactionTypeService);
   private transactionService = inject(TransactionsService);
 
+  public reloadTransactionsList = this.transactionService.reloadList;
   public banks = toSignal(this.bankService.findAll(100, 1), {
     initialValue: [],
   });

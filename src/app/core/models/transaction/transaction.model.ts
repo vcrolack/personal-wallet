@@ -7,15 +7,15 @@ export interface TransactionModel {
   bankId: number;
   transactionTypeId: number;
   userId: string;
-  budget: {
+  budget?: {
     id: string;
     title: string;
   };
-  bank: {
+  bank?: {
     id: number;
     name: string;
   };
-  transactionType: {
+  transactionType?: {
     id: number;
     name: string;
   };
@@ -27,10 +27,10 @@ export interface TransactionCategoryAssignmentModel {
   amount: number;
   budgetCategoryValueId: string;
   createdAt: Date;
-  budgetCategoryValue: {
+  budgetCategoryValue?: {
     id: string;
     name: string;
-    budgetCategory: {
+    budgetCategory?: {
       id: string;
       name: string;
     };
