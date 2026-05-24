@@ -11,10 +11,11 @@ import {
   TransactionModel,
 } from '@core/models';
 import { Metadata } from '@core/dtos';
+import { HeaderComponent } from '@common/components/layout';
 
 @Component({
   selector: 'app-transactions-list',
-  imports: [GenericTableComponent],
+  imports: [GenericTableComponent, HeaderComponent],
   templateUrl: './transactions-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
