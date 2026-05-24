@@ -7,7 +7,7 @@ import {
   computed,
 } from '@angular/core';
 
-import { BudgetService } from '@core/services/budget.service';
+import { BudgetService } from '@core/services';
 import { HeroComponent } from '@features/budgets/pages/budget-detail-page/components/hero/hero.component';
 import { ButtonComponent } from '@common/components/form';
 import { AddCategoryComponent } from '@features/budgets/pages/budget-detail-page/forms/add-category/add-category.component';

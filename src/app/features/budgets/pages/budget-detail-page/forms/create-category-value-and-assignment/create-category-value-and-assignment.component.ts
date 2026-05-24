@@ -15,9 +15,11 @@ import {
   InputComponent,
 } from '@common/components/form';
 import { ToastService, ErrorFormMessage } from '@common/components/ui';
-import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
-import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
-import { BudgetService } from '@core/services/budget.service';
+import {
+  BudgetCategoryAssignmentsService,
+  BudgetService,
+  BudgetCategoryValuesService,
+} from '@core/services';
 
 @Component({
   selector: 'app-create-category-value-and-assignment',

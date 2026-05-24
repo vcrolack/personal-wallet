@@ -12,14 +12,12 @@ import {
   ToastService,
   ColumnDef,
 } from '@common/components/ui';
-import { CategoryValueModel } from '@core/models/categories/category-value.model';
-import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
-import { CategoryService } from '@core/services/category.service';
+import { CategoryValueModel, CategoryModel } from '@core/models';
+import { BudgetCategoryValuesService, CategoryService } from '@core/services';
 import { CreateCategoryValueComponent } from '@features/catalog/categories/forms/create-category-value/create-category-value.component';
 import { CreateCategoryComponent } from '@features/catalog/categories/forms/create-category/create-category.component';
 import { EditCategoryValueComponent } from '@features/catalog/categories/forms/edit-category-value/edit-category-value.component';
-import { EditCategory } from '@features/catalog/categories/forms/edit-category/edit-category';
-import { CategoryModel } from '@core/models/categories/category.model';
+import { EditCategoryComponent } from '@features/catalog/categories/forms/edit-category/edit-category.component';
 
 @Component({
   selector: 'app-categories.page',
@@ -32,7 +30,7 @@ import { CategoryModel } from '@core/models/categories/category.model';
     CreateCategoryComponent,
     CreateCategoryValueComponent,
     EditCategoryValueComponent,
-    EditCategory,
+    EditCategoryComponent,
   ],
   templateUrl: './categories.page.component.html',
   styleUrl: './categories.page.component.css',

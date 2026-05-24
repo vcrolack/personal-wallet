@@ -3,14 +3,13 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { finalize } from 'rxjs';
 
-import { CategoryService } from '@core/services/category.service';
+import { CategoryService, BudgetService } from '@core/services';
 import {
   AutocompleteOption,
   AutocompleteComponent,
 } from '@common/components/form';
 import { TextComponent, ErrorFormMessage } from '@common/components/ui';
-import { BudgetGroupModel } from '@core/models/budgets/budget-group.model';
-import { BudgetService } from '@core/services/budget.service';
+import { BudgetGroupModel } from '@core/models';
 import { BudgetCategoryRules } from '@core/enums/budget-category-rules.enum';
 
 @Component({

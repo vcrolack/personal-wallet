@@ -17,7 +17,7 @@ import {
   AutocompleteOption,
 } from '@common/components/form';
 import { TextComponent, ErrorFormMessage } from '@common/components/ui';
-import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
+import { BudgetCategoryValuesService } from '@core/services';
 
 @Component({
   selector: 'app-category-value-selector',

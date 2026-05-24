@@ -10,12 +10,14 @@ import {
 
 import { finalize } from 'rxjs';
 
-import { BudgetCategoryAssignmentsService } from '@core/services/budget-category-assignments.service';
-import { CreateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/create-budget-category-assignment.request';
-import { BudgetService } from '@core/services/budget.service';
+import {
+  BudgetCategoryAssignmentsService,
+  BudgetService,
+} from '@core/services';
+import { CreateBudgetCategoryAssignmentRequest } from '@core/requests';
+import { ToastService } from '@common/components/ui';
 import { CategorySelector } from '@features/budgets/pages/budget-detail-page/forms/add-category/category-selector/category-selector';
 import { AmountInput } from '@features/budgets/pages/budget-detail-page/forms/add-category/amount-input/amount-input';
-import { ToastService } from '@common/components/ui';
 import { CategoryValueSelector } from '@features/budgets/pages/budget-detail-page/forms/add-category/category-value-selector/category-value-selector';
 
 @Component({

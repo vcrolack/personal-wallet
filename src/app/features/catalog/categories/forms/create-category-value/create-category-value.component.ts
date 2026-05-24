@@ -6,15 +6,15 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { InputComponent } from '@common/components/form/input/input.component';
 import {
   SelectComponent,
   SelectOption,
   ButtonComponent,
+  InputComponent,
 } from '@common/components/form';
 import { ToastService, ErrorFormMessage } from '@common/components/ui';
-import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
-import { CategoryModel } from '@core/models/categories/category.model';
+import { BudgetCategoryValuesService } from '@core/services';
+import { CategoryModel } from '@core/models';
 
 @Component({
   selector: 'app-create-category-value',

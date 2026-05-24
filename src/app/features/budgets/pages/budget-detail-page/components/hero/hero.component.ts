@@ -11,8 +11,8 @@ import {
   EditableFieldComponent,
   TextComponent,
 } from '@common/components/ui';
-import { BudgetModel } from '@core/models/budgets/budget.model';
-import { BudgetService } from '@core/services/budget.service';
+import { BudgetModel } from '@core/models';
+import { BudgetService } from '@core/services';
 
 @Component({
   selector: 'app-hero',

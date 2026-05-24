@@ -1,11 +1,12 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { BudgetModel } from '@core/models/budgets/budget.model';
-import { DonutChartData } from '@common/components/charts/models/donut-chart.model';
-import { PieChartData } from '@common/components/charts/models/pie-chart.model';
+
+import { BudgetModel } from '@core/models';
 import {
+  PieChartData,
+  DonutChartData,
   CHART_COLORS,
   CHART_SERIES_PALETTE,
-} from '@common/components/charts/chart-colors.constants';
+} from '@common/components/charts';
 
 @Injectable()
 export class BudgetChartDataService {

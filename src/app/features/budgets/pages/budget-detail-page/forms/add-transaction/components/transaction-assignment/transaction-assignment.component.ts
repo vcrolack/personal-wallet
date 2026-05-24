@@ -16,8 +16,8 @@ import {
   InputComponent,
 } from '@common/components/form';
 import { ErrorFormMessage } from '@common/components/ui';
-import { CategoryService } from '@core/services/category.service';
-import { BudgetCategoryValuesService } from '@core/services/budget-category-values.service';
+import { CategoryService } from '@core/services/category/category.service';
+import { BudgetCategoryValuesService } from '@core/services/budget/budget-category-values.service';
 
 @Component({
   selector: 'app-transaction-assignment',

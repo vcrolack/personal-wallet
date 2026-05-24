@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ButtonComponent } from '@common/components/form';
 import {
   GenericTableComponent,
   ModalComponent,
@@ -9,10 +10,9 @@ import {
   TextComponent,
   ColumnDef,
 } from '@common/components/ui';
-import { ButtonComponent } from '@common/components/form';
-import { BudgetService } from '@core/services/budget.service';
+import { BudgetService } from '@core/services';
+import { Budget } from '@core/interfaces';
 import { CreateOrUpdateBudget } from '@features/budgets/pages/budgets-page/forms/create-or-update-budget/create-or-update-budget';
-import { Budget } from '@core/interfaces/budget.interface';
 
 @Component({
   selector: 'app-budgets.page',

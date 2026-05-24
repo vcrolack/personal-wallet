@@ -11,8 +11,8 @@ import {
   ButtonComponent,
   SelectComponent,
 } from '@common/components/form';
-import { CategoryService } from '@core/services/category.service';
 import { ToastService, ErrorFormMessage } from '@common/components/ui';
+import { CategoryService } from '@core/services';
 
 @Component({
   selector: 'app-create-category',

@@ -14,6 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import {
   InputComponent,
   DateSelectorComponent,
@@ -30,11 +31,8 @@ import {
 } from '@common/components/ui';
 import { AddTransactionService } from '@features/budgets/pages/budget-detail-page/services/add-transaction.service';
 import { TransactionAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/components/transaction-assignment/transaction-assignment.component';
-import {
-  Assignments,
-  CreateTransactionRequest,
-} from '@core/requests/transaction/create-transaction.request';
-import { NotificationService } from '@core/errors/notification.service';
+import { Assignments, CreateTransactionRequest } from '@core/requests';
+import { NotificationService } from '@core/errors';
 
 @Component({
   selector: 'app-add-transaction',

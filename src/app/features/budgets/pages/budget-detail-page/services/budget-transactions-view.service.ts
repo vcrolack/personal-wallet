@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { TransactionsService } from '@core/services/transactions.service';
+
+import { TransactionsService } from '@core/services';
 
 @Injectable({
   providedIn: 'root',

@@ -1,9 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { BankService } from '@core/services/bank.service';
-import { TransactionTypeService } from '@core/services/transaction-type.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TransactionsService } from '@core/services/transactions.service';
-import { CreateTransactionRequest } from '@core/requests/transaction/create-transaction.request';
+
+import {
+  BankService,
+  TransactionTypeService,
+  TransactionsService,
+} from '@core/services';
+import { CreateTransactionRequest } from '@core/requests';
 
 @Injectable()
 export class AddTransactionService {

@@ -20,10 +20,12 @@ import {
   ButtonComponent,
 } from '@common/components/form';
 import { ToastService, ErrorFormMessage } from '@common/components/ui';
-import { BudgetService } from '@core/services/budget.service';
-import { CreateBudgetRequest } from '@core/requests/budgets/create-budget.request';
-import { Budget } from '@core/interfaces/budget.interface';
-import { UpdateBudgetRequest } from '@core/requests/budgets/update-budget.request';
+import { BudgetService } from '@core/services';
+import {
+  CreateBudgetRequest,
+  UpdateBudgetRequest,
+} from '@core/requests/budgets';
+import { Budget } from '@core/interfaces';
 
 @Component({
   selector: 'app-create-or-update-budget',

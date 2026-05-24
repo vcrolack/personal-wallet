@@ -16,10 +16,9 @@ import {
   TitleComponent,
   TextComponent,
 } from '@common/components/ui';
-
 import { CreateCategoryValueAndAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/create-category-value-and-assignment/create-category-value-and-assignment.component';
 import { BudgetViewService } from '@features/budgets/pages/budget-detail-page/services/budgetView.service';
-import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests/budget-category-assignments/update-budget-category-assignment.request';
+import { UpdateBudgetCategoryAssignmentRequest } from '@core/requests';
 
 @Component({
   selector: 'app-categories-list',

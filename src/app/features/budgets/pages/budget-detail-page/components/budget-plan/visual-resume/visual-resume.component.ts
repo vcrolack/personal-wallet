@@ -13,7 +13,7 @@ import {
   TitleComponent,
   WrapperComponent,
 } from '@common/components/ui';
-import { BudgetModel } from '@core/models/budgets/budget.model';
+import { BudgetModel } from '@core/models';
 import { BudgetChartDataService } from '@features/budgets/pages/budget-detail-page/services/budget-chart-data.service';
 
 @Component({
