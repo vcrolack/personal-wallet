@@ -47,7 +47,7 @@ export class AddCategoryComponent implements OnDestroy {
   public form: FormGroup = this.fb.group({
     category: [null, Validators.required],
     categoryValue: [null, Validators.required],
-    amount: [null, Validators.required, Validators.min(1)],
+    amount: [null, [Validators.required, Validators.min(1)]],
   });
 
   public categoryValueId = toSignal(

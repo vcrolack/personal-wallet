@@ -6,35 +6,39 @@
     (onClick)="remove.emit()"
   ></app-icon-button>
 
-  <app-autocomplete
-    label="Categoría"
-    formControlName="categoryId"
-    [options]="categoryOptions()"
-    (queryChange)="onSearchCategory($event)"
-    (selectionChange)="onSelectCategory($event)"
-  ></app-autocomplete>
-  <app-error-form-message
-    [control]="formGroup().controls['categoryId']"
-  ></app-error-form-message>
+  <div class="w-full flex flex-col">
+    <app-autocomplete
+      label="Categoría"
+      formControlName="categoryId"
+      [options]="categoryOptions()"
+      (queryChange)="onSearchCategory($event)"
+      (selectionChange)="onSelectCategory($event)"
+    ></app-autocomplete>
+    <app-error-form-message
+      [control]="formGroup().controls['categoryId']"
+    ></app-error-form-message>
+  </div>
 
-  <app-autocomplete
-    class="w-1/2"
-    label="Valor de categoría"
-    formControlName="categoryValueId"
-    [options]="valueOptions()"
-    (queryChange)="onSearchValue($event)"
-  ></app-autocomplete>
-  <app-error-form-message
-    [control]="formGroup().controls['categoryValueId']"
-  ></app-error-form-message>
+  <div class="w-full flex flex-col">
+    <app-autocomplete
+      label="Valor de categoría"
+      formControlName="categoryValueId"
+      [options]="valueOptions()"
+      (queryChange)="onSearchValue($event)"
+    ></app-autocomplete>
+    <app-error-form-message
+      [control]="formGroup().controls['categoryValueId']"
+    ></app-error-form-message>
+  </div>
 
-  <app-input
-    class="w-1/2"
-    label="Monto asignado"
-    type="number"
-    formControlName="amount"
-  ></app-input>
-  <app-error-form-message
-    [control]="formGroup().controls['amount']"
-  ></app-error-form-message>
+  <div class="w-full flex flex-col">
+    <app-input
+      label="Monto asignado"
+      type="number"
+      formControlName="amount"
+    ></app-input>
+    <app-error-form-message
+      [control]="formGroup().controls['amount']"
+    ></app-error-form-message>
+  </div>
 </div>

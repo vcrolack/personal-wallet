@@ -80,11 +80,15 @@ export class AddTransactionComponent implements OnInit {
       ],
       description: [
         '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(55)],
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(55),
+        ],
       ],
       bankId: [null, Validators.required],
       transactionTypeId: [null, Validators.required],
-      assignments: this.fb.array<Assignments>([]),
+      assignments: this.fb.array<Assignments>([], [Validators.required]),
     });
 
     this.assignments.valueChanges.subscribe((assignments) => {
@@ -116,9 +120,9 @@ export class AddTransactionComponent implements OnInit {
 
   public addAssignment() {
     const assignmentGroup = this.fb.group({
-      categoryId: [null],
+      categoryId: [null, Validators.required],
       categoryValueId: [null, Validators.required],
-      amount: [0, Validators.required],
+      amount: [null, [Validators.required, Validators.min(1)]],
     });
 
     this.assignments.push(assignmentGroup);

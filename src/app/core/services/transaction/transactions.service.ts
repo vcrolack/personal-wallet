@@ -1,5 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 import { map, Observable } from 'rxjs';
 
@@ -18,6 +19,29 @@ export class TransactionsService {
   private mapper = inject(TransactionMapperService);
   private endpoint = 'transactions';
 
+  // UI DATA MANAGEMENT //
+
+  private refreshListTrigger = signal<number>(0);
+  public paginationParams = signal({ limit: 10, page: 1 });
+  public budgetIdParam = signal<string | null>(null);
+
+  public transactionsResourceList = rxResource({
+    params: () => ({
+      ...this.paginationParams(),
+      budgetId: this.budgetIdParam(),
+      version: this.refreshListTrigger(),
+    }),
+    stream: ({ params }) => {
+      return this.findAll(
+        params.limit,
+        params.page,
+        params.budgetId ?? undefined,
+      );
+    },
+  });
+
+  // HTTP METHODS
+
   public create(body: CreateTransactionRequest): Observable<TransactionModel> {
     return this.http
       .post<
@@ -33,8 +57,12 @@ export class TransactionsService {
   public findAll(
     limit: number = 10,
     page: number = 1,
+    budgetId?: string,
   ): Observable<TransactionModel[]> {
-    const params = new HttpParams().set('limit', limit).set('page', page);
+    let params = new HttpParams().set('limit', limit).set('page', page);
+    if (budgetId) {
+      params = params.set('budgetId', budgetId);
+    }
     return this.http
       .get<
         ApiResponse<TransactionDTO[]>

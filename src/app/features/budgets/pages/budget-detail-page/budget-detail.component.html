@@ -39,7 +39,7 @@
             <app-categories-list></app-categories-list>
           }
         } @else if (activeTabId() === 1) {
-          <app-budget-transactions></app-budget-transactions>
+          <app-budget-transactions [budgetId]="id()"></app-budget-transactions>
         }
       </div>
 

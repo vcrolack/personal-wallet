@@ -83,6 +83,9 @@
             (onClick)="addAssignment()"
           ></app-button-text>
         </div>
+        <app-error-form-message
+          [control]="form.controls['assignments']"
+        ></app-error-form-message>
       </div>
     </div>
   </app-wrapper>

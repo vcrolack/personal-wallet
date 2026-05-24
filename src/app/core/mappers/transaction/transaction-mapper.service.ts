@@ -19,6 +19,21 @@ export class TransactionMapperService {
       budget: dto.budget,
       bank: dto.bank,
       transactionType: dto.transactionType,
+      transactionCategoryAssignments: dto.transactionCategoryAssignments.map(
+        (assignment) => ({
+          id: assignment.id,
+          amount: assignment.amount,
+          budgetCategoryValueId: assignment.budgetCategoryValueId,
+          budgetCategoryValue: {
+            id: assignment.budgetCategoryValue.id,
+            name: assignment.budgetCategoryValue.name,
+            budgetCategory: {
+              id: assignment.budgetCategoryValue.budgetCategory.id,
+              name: assignment.budgetCategoryValue.budgetCategory.name,
+            },
+          },
+        }),
+      ),
     };
   }
 }

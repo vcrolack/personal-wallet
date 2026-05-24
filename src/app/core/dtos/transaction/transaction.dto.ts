@@ -21,4 +21,17 @@ export interface TransactionDTO extends BaseDTO {
     id: number;
     name: string;
   };
+  transactionCategoryAssignments: {
+    id: string;
+    amount: number;
+    budgetCategoryValueId: string;
+    budgetCategoryValue: {
+      id: string;
+      name: string;
+      budgetCategory: {
+        id: string;
+        name: string;
+      };
+    };
+  }[];
 }
