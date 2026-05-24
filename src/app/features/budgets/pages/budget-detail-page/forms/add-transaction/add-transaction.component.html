@@ -10,15 +10,19 @@
     <app-error-form-message
       [control]="form.controls['amount']"
     ></app-error-form-message>
-    <app-date-selector
-      class="w-1/2"
-      label="Fecha"
-      formControlName="transactionDate"
-    ></app-date-selector>
-    <app-error-form-message
-      [control]="form.controls['transactionDate']"
-    ></app-error-form-message>
+
+    <div class="w-full flex flex-col">
+      <app-date-selector
+        class="w-full"
+        label="Fecha"
+        formControlName="transactionDate"
+      ></app-date-selector>
+      <app-error-form-message
+        [control]="form.controls['transactionDate']"
+      ></app-error-form-message>
+    </div>
   </div>
+
   <div class="w-full my-4">
     <app-input
       label="Descripción"
@@ -26,20 +30,34 @@
       type="text"
       formControlName="description"
     ></app-input>
+    <app-error-form-message
+      [control]="form.controls['description']"
+    ></app-error-form-message>
   </div>
   <div class="w-full mb-4 flex gap-4">
-    <app-select
-      label="Banco"
-      class="w-1/2"
-      [options]="banksOptions()"
-      formControlName="bankId"
-    ></app-select>
-    <app-select
-      label="Tipo de transacción"
-      class="w-1/2"
-      [options]="transactionTypesOptions()"
-      formControlName="transactionTypeId"
-    ></app-select>
+    <div class="w-full flex flex-col">
+      <app-select
+        label="Banco"
+        class="w-full"
+        [options]="banksOptions()"
+        formControlName="bankId"
+      ></app-select>
+      <app-error-form-message
+        [control]="form.controls['bankId']"
+      ></app-error-form-message>
+    </div>
+
+    <div class="w-full flex flex-col">
+      <app-select
+        label="Tipo de transacción"
+        class="w-full"
+        [options]="transactionTypesOptions()"
+        formControlName="transactionTypeId"
+      ></app-select>
+      <app-error-form-message
+        [control]="form.controls['transactionTypeId']"
+      ></app-error-form-message>
+    </div>
   </div>
 
   <app-wrapper>

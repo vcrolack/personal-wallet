@@ -30,20 +30,37 @@ export class BudgetMapperService {
       budgetAmount: dto.budgetAmount,
       totalSpent,
       percentageSpent: (totalSpent / dto.budgetAmount) * 100,
-      startDate: new Date(dto.startDate),
-      endDate: new Date(dto.endDate),
+      startDate: this.parseLocalDate(dto.startDate),
+      endDate: this.parseLocalDate(dto.endDate),
       isShared: dto.isShared,
       groups,
     };
   }
 
+  private parseLocalDate(dateStr: string): Date {
+    if (!dateStr) return new Date();
+
+    const isoDateRegex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/;
+    const match = dateStr.trim().match(isoDateRegex);
+
+    if (match) {
+      const year = parseInt(match[1], 10);
+      const month = parseInt(match[2], 10) - 1; // 0-based index
+      const day = parseInt(match[3], 10);
+      return new Date(year, month, day, 12, 0, 0); // DST buffer
+    }
+
+    console.warn(`[DateParseWarning]: El string "${dateStr}" no cumple con el formato YYYY-MM-DD esperable.`);
+    return new Date(NaN);
+  }
+
   transformToGroups(
-    assignments: BudgetAssignmentWithDetailsDTO[]
+    assignments: BudgetAssignmentWithDetailsDTO[],
   ): BudgetGroupModel[] {
     const groups = assignments.reduce(
       (
         acc: Record<string, BudgetGroupModel>,
-        curr: BudgetAssignmentWithDetailsDTO
+        curr: BudgetAssignmentWithDetailsDTO,
       ) => {
         const catName = curr.budgetCategoryValue.budgetCategory.name;
 
@@ -69,7 +86,7 @@ export class BudgetMapperService {
 
         return acc;
       },
-      {} as Record<string, BudgetGroupModel>
+      {} as Record<string, BudgetGroupModel>,
     );
 
     return Object.values(groups);

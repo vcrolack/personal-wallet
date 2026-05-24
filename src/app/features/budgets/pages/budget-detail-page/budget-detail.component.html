@@ -64,7 +64,7 @@
       <app-add-category (closeModal)="toggleModal(null)"></app-add-category>
     } @else if (isModalOpen() && modalOption() === "add-transaction") {
       <app-add-transaction
-        [budgetId]="budget.value().id"
+        [budget]="budget.value()"
         (closeModal)="toggleModal(null)"
       ></app-add-transaction>
     }
