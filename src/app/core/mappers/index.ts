@@ -12,3 +12,4 @@ export * from './category/category-value-mapper.service';
 //transaction
 export * from './transaction/transaction-mapper.service';
 export * from './transaction/transaction-type-mapper.service';
+export * from './transaction/transactions-summary-mapper.service';

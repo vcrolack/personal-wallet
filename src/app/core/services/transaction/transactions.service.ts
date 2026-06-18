@@ -5,10 +5,17 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { map, Observable } from 'rxjs';
 
 import { CreateTransactionRequest } from '@core/requests';
-import { TransactionMapperService } from '@core/mappers';
+import {
+  TransactionMapperService,
+  TransactionsSummaryMapper,
+} from '@core/mappers';
 import { TransactionModel } from '@core/models';
 import { ApiResponse } from '@core/interfaces';
-import { Metadata, TransactionDTO } from '@core/dtos';
+import {
+  BudgetTransactionsSummaryDTO,
+  Metadata,
+  TransactionDTO,
+} from '@core/dtos';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -17,7 +24,9 @@ import { environment } from '@env/environment';
 export class TransactionsService {
   private http = inject(HttpClient);
   private mapper = inject(TransactionMapperService);
+  private transactionsSummaryMapper = inject(TransactionsSummaryMapper);
   private endpoint = 'transactions';
+  private bffEndpoint = 'transactions-summary';
 
   // UI DATA MANAGEMENT //
 
@@ -102,5 +111,18 @@ export class TransactionsService {
     return this.http.delete<ApiResponse<{ message: string }>>(
       `${environment.merakiUrl}/${this.endpoint}/delete/${id}`,
     );
+  }
+
+  // BFF METHODS
+  public getBudgetTransactionsSummary(budgetId: string) {
+    return this.http
+      .get<
+        ApiResponse<BudgetTransactionsSummaryDTO>
+      >(`${environment.merakiBffUrl}/${this.bffEndpoint}/get-budget-transactions-summary/${budgetId}`)
+      .pipe(
+        map((response: ApiResponse<BudgetTransactionsSummaryDTO>) =>
+          this.transactionsSummaryMapper.toModel(response.data),
+        ),
+      );
   }
 }

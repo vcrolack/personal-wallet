@@ -10,7 +10,11 @@ export const merakiInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const token = authService.currentUser()?.token;
 
-  if (!req.url.includes(environment.merakiUrl)) return next(req);
+  if (
+    !req.url.includes(environment.merakiUrl) &&
+    !req.url.includes(environment.merakiBffUrl)
+  )
+    return next(req);
 
   let authReq = req;
 

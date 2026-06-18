@@ -1,4 +1,4 @@
-import { inject, Injectable, OnInit } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { TransactionsService } from '@core/services';
 
@@ -13,5 +13,9 @@ export class BudgetTransactionsViewService {
 
   public getTransactionsByBudgetId(budgetId: string | null) {
     this.transactionsService.budgetIdParam.set(budgetId);
+  }
+
+  public getBudgetTransactionsSummary(budgetId: string) {
+    return this.transactionsService.getBudgetTransactionsSummary(budgetId);
   }
 }
