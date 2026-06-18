@@ -12,6 +12,7 @@ export * from './categories/category.model';
 // transaction
 export * from './transaction/transaction.model';
 export * from './transaction/transaction-type/transaction-type.model';
+export * from './transaction/transactions-summary/budget-transactions-summary.model';
 
 // Explicit exports to resolve collisions
 export type { CategoryAssignmentModel } from './categories/category-assignment.model';
