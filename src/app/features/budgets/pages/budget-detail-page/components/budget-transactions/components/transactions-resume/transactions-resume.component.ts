@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,7 +12,7 @@ import { BudgetTransactionsViewService } from '@features/budgets/pages/budget-de
 
 @Component({
   selector: 'app-transactions-resume',
-  imports: [],
+  imports: [CurrencyPipe],
   providers: [BudgetTransactionsViewService],
   templateUrl: './transactions-resume.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,14 +21,14 @@ export class TransactionsResume {
   private budgetTransactionsViewService = inject(BudgetTransactionsViewService);
 
   public budgetId = input.required<string>();
-  public budgetTransactionsSummary =
-    signal<BudgetTransactionsSummaryModel | null>(null);
+  public summary = signal<BudgetTransactionsSummaryModel | null>(null);
+  public activeTab = signal<'resume' | 'activity'>('resume');
 
   ngOnChanges(): void {
     this.budgetTransactionsViewService
       .getBudgetTransactionsSummary(this.budgetId())
       .subscribe((response) => {
-        this.budgetTransactionsSummary.set(response);
+        this.summary.set(response);
       });
   }
 }

@@ -1,1 +1,207 @@
-<p>RESUMEN</p>
+<div class="flex flex-col gap-6 p-6 h-full text-slate-200">
+  @if (summary()) {
+    <!-- Selector de Pestañas Premium -->
+    <div class="flex bg-slate-900/40 p-1 rounded-xl border border-slate-800">
+      <button
+        (click)="activeTab.set('resume')"
+        [class.bg-slate-800]="activeTab() === 'resume'"
+        [class.text-emerald-400]="activeTab() === 'resume'"
+        [class.shadow-md]="activeTab() === 'resume'"
+        class="flex-1 text-center py-2 text-xs rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200 font-semibold"
+      >
+        Resumen
+      </button>
+      <button
+        (click)="activeTab.set('activity')"
+        [class.bg-slate-800]="activeTab() === 'activity'"
+        [class.text-emerald-400]="activeTab() === 'activity'"
+        [class.shadow-md]="activeTab() === 'activity'"
+        class="flex-1 text-center py-2 text-xs rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200 font-semibold"
+      >
+        Actividad
+      </button>
+    </div>
+
+    <!-- Pestaña 1: Resumen General -->
+    @if (activeTab() === 'resume') {
+      <div class="flex flex-col gap-6">
+        <!-- Resumen Presupuestario -->
+        <div>
+          <h2 class="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+            Resumen Presupuestario
+          </h2>
+
+          <div
+            class="mt-4 flex flex-col items-center justify-center p-4 bg-slate-900/50 rounded-xl border border-slate-800"
+          >
+            <span class="text-3xl font-bold text-emerald-400"
+              >{{ summary()!.budget.monthlyBudgetBurnPercentage }}%</span
+            >
+            <span class="text-xs text-slate-500 mt-1">Presupuesto Consumido</span>
+
+            <div class="w-full bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+              <div
+                class="bg-emerald-500 h-full rounded-full transition-all duration-500"
+                [style.width.%]="summary()!.budget.monthlyBudgetBurnPercentage"
+              ></div>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-slate-400">Restante Disponible:</span>
+              <span class="text-lg font-bold text-slate-100">{{
+                summary()!.budget.remainingAmount | currency: "CLP" : "$" : "1.0-0"
+              }}</span>
+            </div>
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span>Total Asignado:</span>
+              <span>{{
+                summary()!.budget.totalAllocated | currency: "CLP" : "$" : "1.0-0"
+              }}</span>
+            </div>
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span>Dinero gastado</span>
+              <span>{{
+                summary()!.budget.spentAmount | currency: "CLP" : "$" : "1.0-0"
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-800" />
+
+        <!-- Tiempos e Indicadores -->
+        <div class="space-y-3">
+          <div
+            class="flex items-center gap-3 bg-slate-900/30 p-3 rounded-lg border border-slate-800/60"
+          >
+            <span class="text-xl">📅</span>
+            <div class="flex flex-col">
+              <span class="text-xs text-slate-500">Tiempo restante</span>
+              <span class="text-sm font-medium text-slate-200"
+                >{{ summary()!.budget.daysRemaining }} días del periodo</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-3 bg-slate-900/30 p-3 rounded-lg border border-slate-800/60"
+          >
+            <span class="text-xl">💡</span>
+            <div class="flex flex-col">
+              <span class="text-xs text-slate-500">Gasto Diario Permitido</span>
+              <span class="text-sm font-semibold text-sky-400"
+                >{{
+                  summary()!.budget.dailySpendsAllowance
+                    | currency: "CLP" : "$" : "1.0-0"
+                }}
+                / día</span
+              >
+            </div>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-slate-900/30 p-3 rounded-lg border border-slate-800/60"
+          >
+            <span class="text-xl">💸</span>
+            <div class="flex flex-col">
+              <span class="text-xs text-slate-500">Total de transacciones</span>
+              <span class="text-sm font-semibold text-slate-200"
+                >{{ summary()!.totalTransactionsCount }} transacciones</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-800" />
+
+        <!-- Fugas del Plan -->
+        <div class="bg-amber-950/10 border border-amber-500/20 rounded-xl p-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3
+                class="text-xs font-semibold text-amber-500 uppercase tracking-wide"
+              >
+                Fugas del Plan
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">
+                {{ summary()!.unbudgetedExpenses.transactionCount }} transacciones por
+                fuera
+              </p>
+            </div>
+            <span class="text-sm font-bold text-amber-400">
+              {{
+                summary()!.unbudgetedExpenses.totalAmount
+                  | currency: "CLP" : "$" : "1.0-0"
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Pestaña 2: Actividad (Detalles, Categorías y Movimientos) -->
+    @else {
+      <div class="flex flex-col gap-6">
+        <!-- Top Categorías Gastadas -->
+        <div>
+          <h3 class="text-xs font-semibold tracking-wider text-slate-500 uppercase mb-3">
+            Categorías más Gastadas
+          </h3>
+          <div class="space-y-3">
+            @for (category of summary()!.topCategoriesSpent; track category.categoryName) {
+              <div class="flex flex-col gap-1.5">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-medium text-slate-300 capitalize">{{ category.categoryName }}</span>
+                  <span class="font-semibold text-slate-100">{{ category.totalAmount | currency: 'CLP' : '$' : '1.0-0' }}</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div 
+                    class="bg-indigo-500 h-full rounded-full transition-all duration-500"
+                    [style.width.%]="summary()!.budget.spentAmount > 0 ? (category.totalAmount / summary()!.budget.spentAmount) * 100 : 0"
+                  ></div>
+                </div>
+              </div>
+            } @empty {
+              <p class="text-xs text-slate-500 italic">No hay categorías registradas.</p>
+            }
+          </div>
+        </div>
+
+        <hr class="border-slate-800" />
+
+        <!-- Últimos Movimientos -->
+        <div>
+          <h3 class="text-xs font-semibold tracking-wider text-slate-500 uppercase mb-3">
+            Últimos Movimientos
+          </h3>
+          <div class="space-y-2">
+            @for (tx of summary()!.recentTransactions; track tx.description) {
+              <div class="flex justify-between items-center p-2.5 bg-slate-900/30 rounded-lg border border-slate-800/40 hover:bg-slate-900/50 transition-colors duration-200">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="flex items-center justify-center w-7 h-7 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/10 text-xs shrink-0 font-bold">
+                    ↓
+                  </div>
+                  <span class="text-xs font-medium text-slate-300 truncate" [title]="tx.description">
+                    {{ tx.description }}
+                  </span>
+                </div>
+                <span class="text-xs font-bold text-rose-400 shrink-0 ml-2">
+                  -{{ tx.amount | currency: 'CLP' : '$' : '1.0-0' }}
+                </span>
+              </div>
+            } @empty {
+              <p class="text-xs text-slate-500 italic">No hay transacciones recientes.</p>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <!-- Estado de carga -->
+    <div class="flex flex-col items-center justify-center py-12 gap-3 text-slate-500">
+      <span class="animate-spin text-2xl">⏳</span>
+      <span class="text-xs font-medium">Cargando resumen...</span>
+    </div>
+  }
+</div>
