@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 
 import { CreateTransactionRequest } from '@core/requests';
 import {
@@ -46,6 +46,17 @@ export class TransactionsService {
         params.page,
         params.budgetId ?? undefined,
       );
+    },
+  });
+
+  public transactionsSummaryResource = rxResource({
+    params: () => ({
+      budgetId: this.budgetIdParam(),
+      version: this.refreshListTrigger(),
+    }),
+    stream: ({ params }) => {
+      if (!params.budgetId) return of(null);
+      return this.getBudgetTransactionsSummary(params.budgetId);
     },
   });
 

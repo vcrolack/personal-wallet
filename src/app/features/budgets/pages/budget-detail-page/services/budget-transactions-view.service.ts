@@ -9,13 +9,12 @@ export class BudgetTransactionsViewService {
   public transactions = this.transactionsService.transactionsResourceList.value;
   public isLoading =
     this.transactionsService.transactionsResourceList.isLoading;
+  public summary = this.transactionsService.transactionsSummaryResource.value;
+  public isLoadingSummary =
+    this.transactionsService.transactionsSummaryResource.isLoading;
   public reloadList = this.transactionsService.reloadList;
 
   public getTransactionsByBudgetId(budgetId: string | null) {
     this.transactionsService.budgetIdParam.set(budgetId);
-  }
-
-  public getBudgetTransactionsSummary(budgetId: string) {
-    return this.transactionsService.getBudgetTransactionsSummary(budgetId);
   }
 }

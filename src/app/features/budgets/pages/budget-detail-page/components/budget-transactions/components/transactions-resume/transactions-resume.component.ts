@@ -21,14 +21,6 @@ export class TransactionsResume {
   private budgetTransactionsViewService = inject(BudgetTransactionsViewService);
 
   public budgetId = input.required<string>();
-  public summary = signal<BudgetTransactionsSummaryModel | null>(null);
+  public summary = this.budgetTransactionsViewService.summary;
   public activeTab = signal<'resume' | 'activity'>('resume');
-
-  ngOnChanges(): void {
-    this.budgetTransactionsViewService
-      .getBudgetTransactionsSummary(this.budgetId())
-      .subscribe((response) => {
-        this.summary.set(response);
-      });
-  }
 }
