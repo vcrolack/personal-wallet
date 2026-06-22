@@ -6,5 +6,83 @@
     [isLoading]="isLoading()"
     [pagination]="transactionCategoryAssignmentsPagination()"
     (pageChange)="onPageChange($event)"
+    (rowClick)="onRowClick($event)"
   ></app-generic-table>
 </section>
+
+<app-modal
+  [title]="isEditMode() ? 'Editar Transacción' : 'Detalle de Transacción'"
+  [isOpen]="isDetailModalOpen()"
+  [size]="isEditMode() ? 'large' : 'medium'"
+  (onClose)="isDetailModalOpen.set(false)"
+>
+  @if (selectedTransaction(); as tx) {
+    @if (!isEditMode()) {
+      <!-- Vista de Detalle -->
+      <div class="p-6 space-y-4 text-slate-200">
+        <div
+          class="flex justify-between items-center border-b border-slate-800 pb-3"
+        >
+          <span class="text-lg font-bold">{{ tx.description }}</span>
+          <span class="text-xl font-bold text-rose-400"
+            >-{{ tx.amount | currency: "CLP" : "$" : "1.0-0" }}</span
+          >
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <span class="text-slate-500">Fecha:</span>
+            {{ tx.transactionDate | date: "dd/MM/yyyy" }}
+          </div>
+          <div>
+            <span class="text-slate-500">Banco:</span> {{ tx.bank?.name }}
+          </div>
+          <div>
+            <span class="text-slate-500">Tipo:</span>
+            {{ tx.transactionType?.name }}
+          </div>
+        </div>
+        <!-- Desglose de Categorías -->
+        <div class="border-t border-slate-800 pt-3">
+          <p class="text-xs font-semibold text-slate-400 mb-2">
+            Desglose de Categorías
+          </p>
+          <div class="space-y-1">
+            @for (asg of tx.transactionCategoryAssignments; track asg.id) {
+              <div class="flex justify-between text-xs py-1">
+                <span
+                  >{{ asg.budgetCategoryValue?.budgetCategory?.name }} >
+                  {{ asg.budgetCategoryValue?.name }}</span
+                >
+                <span class="font-semibold">{{
+                  asg.amount | currency: "CLP" : "$" : "1.0-0"
+                }}</span>
+              </div>
+            }
+          </div>
+        </div>
+        <!-- Botones de Acción -->
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <app-button
+            label="Eliminar"
+            variant="danger"
+            (onClick)="deleteTransaction(tx.id)"
+          ></app-button>
+          <app-button
+            label="Editar"
+            variant="primary"
+            (onClick)="isEditMode.set(true)"
+          ></app-button>
+        </div>
+      </div>
+    } @else {
+      <!-- Vista de Edición (Reutilizando el formulario existente) -->
+      @if (budget(); as budgetVal) {
+        <app-add-transaction
+          [budget]="budgetVal"
+          [transactionToEdit]="tx"
+          (closeModal)="isDetailModalOpen.set(false)"
+        ></app-add-transaction>
+      }
+    }
+  }
+</app-modal>

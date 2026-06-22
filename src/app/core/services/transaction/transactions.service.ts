@@ -138,6 +138,21 @@ export class TransactionsService {
     );
   }
 
+  public update(
+    id: string,
+    body: CreateTransactionRequest,
+  ): Observable<TransactionModel> {
+    return this.http
+      .patch<
+        ApiResponse<TransactionDTO>
+      >(`${environment.merakiUrl}/${this.endpoint}/update/${id}`, body)
+      .pipe(
+        map((response: ApiResponse<TransactionDTO>) =>
+          this.mapper.toModel(response.data),
+        ),
+      );
+  }
+
   // BFF METHODS
   public getBudgetTransactionsSummary(budgetId: string) {
     return this.http

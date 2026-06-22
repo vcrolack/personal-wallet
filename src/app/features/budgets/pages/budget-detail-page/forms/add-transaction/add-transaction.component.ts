@@ -34,7 +34,7 @@ import { AddTransactionService } from '@features/budgets/pages/budget-detail-pag
 import { TransactionAssignmentComponent } from '@features/budgets/pages/budget-detail-page/forms/add-transaction/components/transaction-assignment/transaction-assignment.component';
 import { Assignments, CreateTransactionRequest } from '@core/requests';
 import { DateValidator, NotificationService } from '@core/errors';
-import { BudgetModel } from '@core/models';
+import { BudgetModel, TransactionModel } from '@core/models';
 
 @Component({
   selector: 'app-add-transaction',
@@ -61,17 +61,20 @@ export class AddTransactionComponent implements OnInit {
 
   public closeModal = output<void>();
   public budget = input.required<BudgetModel>();
+  public transactionToEdit = input<TransactionModel | null>(null);
 
   public form!: FormGroup;
 
   public ngOnInit() {
+    const editTx = this.transactionToEdit();
+
     this.form = this.fb.group({
       amount: [
-        { value: 0, disabled: true },
+        { value: editTx ? editTx.amount : 0, disabled: true },
         [Validators.required, Validators.min(1)],
       ],
       transactionDate: [
-        new Date(),
+        editTx ? new Date(editTx.transactionDate) : new Date(),
         [
           Validators.required,
           DateValidator.maxDate(() => this.budget()?.endDate),
@@ -79,17 +82,31 @@ export class AddTransactionComponent implements OnInit {
         ],
       ],
       description: [
-        '',
+        editTx ? editTx.description : '',
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(55),
         ],
       ],
-      bankId: [null, Validators.required],
-      transactionTypeId: [null, Validators.required],
+      bankId: [editTx ? editTx.bankId : null, Validators.required],
+      transactionTypeId: [editTx ? editTx.transactionTypeId : null, Validators.required],
       assignments: this.fb.array<Assignments>([], [Validators.required]),
     });
+
+    if (editTx && editTx.transactionCategoryAssignments) {
+      for (const assignment of editTx.transactionCategoryAssignments) {
+        const categoryId = assignment.budgetCategoryValue?.budgetCategory?.id;
+        const categoryValueId = assignment.budgetCategoryValue?.id;
+        
+        const assignmentGroup = this.fb.group({
+          categoryId: [categoryId, Validators.required],
+          categoryValueId: [categoryValueId, Validators.required],
+          amount: [assignment.amount, [Validators.required, Validators.min(1)]],
+        });
+        this.assignments.push(assignmentGroup);
+      }
+    }
 
     this.assignments.valueChanges.subscribe((assignments) => {
       const total = assignments.reduce(
@@ -143,8 +160,9 @@ export class AddTransactionComponent implements OnInit {
     }
 
     const formValue = this.form.getRawValue();
+    const editTx = this.transactionToEdit();
 
-    const createTransactionRequest: CreateTransactionRequest = {
+    const requestBody: CreateTransactionRequest = {
       amount: formValue.amount!,
       transactionDate: new Date(formValue.transactionDate!).toISOString(),
       description: formValue.description!,
@@ -157,16 +175,30 @@ export class AddTransactionComponent implements OnInit {
       })),
     };
 
-    this.addTransactionService
-      .createTransaction(createTransactionRequest)
-      .subscribe(() => {
-        this.notificationService.showNotification(
-          'Transacción creada',
-          'success',
-        );
-        this.closeModal.emit();
-        this.form.reset();
-        this.addTransactionService.reloadTransactionsList();
-      });
+    if (editTx) {
+      this.addTransactionService
+        .updateTransaction(editTx.id, requestBody)
+        .subscribe(() => {
+          this.notificationService.showNotification(
+            'Transacción actualizada',
+            'success',
+          );
+          this.closeModal.emit();
+          this.form.reset();
+          this.addTransactionService.reloadTransactionsList();
+        });
+    } else {
+      this.addTransactionService
+        .createTransaction(requestBody)
+        .subscribe(() => {
+          this.notificationService.showNotification(
+            'Transacción creada',
+            'success',
+          );
+          this.closeModal.emit();
+          this.form.reset();
+          this.addTransactionService.reloadTransactionsList();
+        });
+    }
   }
 }

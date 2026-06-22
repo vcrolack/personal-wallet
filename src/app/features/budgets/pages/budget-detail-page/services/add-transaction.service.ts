@@ -26,4 +26,8 @@ export class AddTransactionService {
   public createTransaction(createTransactionRequest: CreateTransactionRequest) {
     return this.transactionService.create(createTransactionRequest);
   }
+
+  public updateTransaction(id: string, updateTransactionRequest: CreateTransactionRequest) {
+    return this.transactionService.update(id, updateTransactionRequest);
+  }
 }
