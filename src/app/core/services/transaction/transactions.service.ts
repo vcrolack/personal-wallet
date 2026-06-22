@@ -9,14 +9,16 @@ import {
   TransactionMapperService,
   TransactionsSummaryMapper,
 } from '@core/mappers';
-import { TransactionModel } from '@core/models';
+import { ExpensesByCategoryModel, TransactionModel } from '@core/models';
 import { ApiResponse } from '@core/interfaces';
 import {
   BudgetTransactionsSummaryDTO,
+  GetExpensesByCategoryDTO,
   Metadata,
   TransactionDTO,
 } from '@core/dtos';
 import { environment } from '@env/environment';
+import { ExpensesByCategoryMapperService } from '../../mappers/transaction/expenses-by-category-mapper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +27,7 @@ export class TransactionsService {
   private http = inject(HttpClient);
   private mapper = inject(TransactionMapperService);
   private transactionsSummaryMapper = inject(TransactionsSummaryMapper);
+  private expensesByCategoryMapper = inject(ExpensesByCategoryMapperService);
   private endpoint = 'transactions';
   private bffEndpoint = 'transactions-summary';
 
@@ -133,6 +136,18 @@ export class TransactionsService {
       .pipe(
         map((response: ApiResponse<BudgetTransactionsSummaryDTO>) =>
           this.transactionsSummaryMapper.toModel(response.data),
+        ),
+      );
+  }
+
+  public getExpensesByCategory(budgetId: string) {
+    return this.http
+      .get<
+        ApiResponse<GetExpensesByCategoryDTO>
+      >(`${environment.merakiBffUrl}/${this.bffEndpoint}/get-expenses-by-category/${budgetId}`)
+      .pipe(
+        map((response: ApiResponse<GetExpensesByCategoryDTO>) =>
+          this.expensesByCategoryMapper.toModel(response.data),
         ),
       );
   }
