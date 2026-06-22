@@ -11,6 +11,7 @@ import { TransactionsList } from '@features/budgets/pages/budget-detail-page/com
 import { TransactionsResume } from '@features/budgets/pages/budget-detail-page/components/budget-transactions/components/transactions-resume/transactions-resume.component';
 import { BudgetTransactionsViewService } from '../../services/budget-transactions-view.service';
 import { TransactionsVisualResume } from './components/transactions-visual-resume/transactions-visual-resume.component';
+import { ExpensesByCategory } from './components/expenses-by-category/expenses-by-category.component';
 
 @Component({
   selector: 'app-budget-transactions',
@@ -19,6 +20,7 @@ import { TransactionsVisualResume } from './components/transactions-visual-resum
     TransactionsList,
     TransactionsResume,
     TransactionsVisualResume,
+    ExpensesByCategory,
   ],
   providers: [BudgetTransactionsViewService],
   templateUrl: './budget-transactions.component.html',

@@ -5,11 +5,12 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { map, Observable, of } from 'rxjs';
 
 import { CreateTransactionRequest } from '@core/requests';
+import { ExpensesByCategoryMapperService } from '@core/mappers/transaction/expenses-by-category-mapper.service';
 import {
   TransactionMapperService,
   TransactionsSummaryMapper,
 } from '@core/mappers';
-import { ExpensesByCategoryModel, TransactionModel } from '@core/models';
+import { TransactionModel } from '@core/models';
 import { ApiResponse } from '@core/interfaces';
 import {
   BudgetTransactionsSummaryDTO,
@@ -18,7 +19,6 @@ import {
   TransactionDTO,
 } from '@core/dtos';
 import { environment } from '@env/environment';
-import { ExpensesByCategoryMapperService } from '../../mappers/transaction/expenses-by-category-mapper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +60,17 @@ export class TransactionsService {
     stream: ({ params }) => {
       if (!params.budgetId) return of(null);
       return this.getBudgetTransactionsSummary(params.budgetId);
+    },
+  });
+
+  public expensesByCategoryResource = rxResource({
+    params: () => ({
+      budgetId: this.budgetIdParam(),
+      version: this.refreshListTrigger(),
+    }),
+    stream: ({ params }) => {
+      if (!params.budgetId) return of(null);
+      return this.getExpensesByCategory(params.budgetId);
     },
   });
 
@@ -144,7 +155,7 @@ export class TransactionsService {
     return this.http
       .get<
         ApiResponse<GetExpensesByCategoryDTO>
-      >(`${environment.merakiBffUrl}/${this.bffEndpoint}/get-expenses-by-category/${budgetId}`)
+      >(`${environment.merakiBffUrl}/${this.bffEndpoint}/expenses-by-category/${budgetId}`)
       .pipe(
         map((response: ApiResponse<GetExpensesByCategoryDTO>) =>
           this.expensesByCategoryMapper.toModel(response.data),

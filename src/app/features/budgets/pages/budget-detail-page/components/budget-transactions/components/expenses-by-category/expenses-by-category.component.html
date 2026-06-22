@@ -1,0 +1,173 @@
+<div class="text-slate-200">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div>
+      <h2 class="text-lg font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+        Análisis de Gastos por Categoría
+      </h2>
+      <p class="text-xxs text-slate-400 mt-0.5">
+        Visualiza tus gastos planificados frente a tus límites y descubre fugas de dinero por imprevistos.
+      </p>
+    </div>
+  </div>
+
+  @if (isLoadingExpenses()) {
+    <div class="flex flex-col items-center justify-center py-16 gap-3 text-slate-500">
+      <span class="animate-spin text-2xl">⏳</span>
+      <span class="text-xs font-medium">Cargando desglose de gastos...</span>
+    </div>
+  } @else if (expensesByCategory()) {
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      
+      <!-- COLUMNA 1: GASTOS PRESUPUESTADOS -->
+      <div class="flex flex-col gap-5 bg-slate-900/40 p-5 rounded-2xl border border-slate-800 backdrop-blur-md">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/10 text-base">
+            📊
+          </span>
+          <div>
+            <h3 class="text-sm font-bold text-slate-100">Gastos Presupuestados</h3>
+            <p class="text-xxs text-slate-500">Gastado vs Límite establecido por categoría</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          @for (category of expensesByCategory()!.categories; track category.id) {
+            <!-- Tarjeta de Categoría Principal -->
+            <div class="group bg-slate-900/60 p-4 rounded-xl border border-slate-800/80 hover:border-slate-700/60 transition-all duration-300 shadow-sm">
+              <div class="flex justify-between items-center mb-2.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-slate-200 group-hover:text-white transition-colors duration-200">
+                    {{ category.categoryName }}
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-xxs font-semibold tracking-wide uppercase"
+                        [ngClass]="{
+                          'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20': category.rule === 'NEED',
+                          'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20': category.rule === 'WANT',
+                          'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20': category.rule === 'SAVING'
+                        }">
+                    {{ category.rule }}
+                  </span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs font-bold" 
+                        [class.text-rose-400]="category.totalSpent > category.totalAllocated"
+                        [class.text-slate-200]="category.totalSpent <= category.totalAllocated">
+                    {{ category.totalSpent | currency: 'CLP' : '$' : '1.0-0' }}
+                  </span>
+                  <span class="text-xxs text-slate-500"> / {{ category.totalAllocated | currency: 'CLP' : '$' : '1.0-0' }}</span>
+                </div>
+              </div>
+
+              <!-- Progress Bar -->
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-3 relative">
+                <div class="h-full rounded-full transition-all duration-500"
+                     [ngClass]="{
+                       'bg-rose-500': category.totalSpent > category.totalAllocated,
+                       'bg-emerald-500': category.totalSpent <= category.totalAllocated && category.totalSpent / category.totalAllocated > 0.8,
+                       'bg-indigo-500': category.totalSpent <= category.totalAllocated && category.totalSpent / category.totalAllocated <= 0.8
+                     }"
+                     [style.width.%]="category.totalAllocated > 0 ? mathMin((category.totalSpent / category.totalAllocated) * 100, 100) : 0">
+                </div>
+              </div>
+
+              <!-- Alerta sobregiro -->
+              @if (category.totalSpent > category.totalAllocated) {
+                <div class="flex items-center gap-1.5 p-2 mb-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-xxs font-medium animate-pulse">
+                  <span>⚠️</span>
+                  <span>Superado por {{ (category.totalSpent - category.totalAllocated) | currency: 'CLP' : '$' : '1.0-0' }}</span>
+                </div>
+              }
+
+              <!-- Subcategorías (Desglose Interno) -->
+              <div class="border-t border-slate-800/80 pt-2.5 mt-0.5 space-y-2">
+                @for (sub of category.assignments; track sub.id) {
+                  <div class="flex flex-col gap-1 pl-1">
+                    <div class="flex justify-between items-center text-xxs">
+                      <span class="text-slate-400 font-medium">{{ sub.categoryValueName }}</span>
+                      <div class="flex items-center gap-1">
+                        <span class="font-semibold text-slate-300" [class.text-rose-400]="sub.spentAmount > sub.allocatedAmount">
+                          {{ sub.spentAmount | currency: 'CLP' : '$' : '1.0-0' }}
+                        </span>
+                        <span class="text-slate-600">/</span>
+                        <span class="text-slate-500">{{ sub.allocatedAmount | currency: 'CLP' : '$' : '1.0-0' }}</span>
+                      </div>
+                    </div>
+                    <!-- Mini progress bar -->
+                    <div class="w-full bg-slate-800/60 h-1 rounded-full overflow-hidden">
+                      <div class="h-full rounded-full transition-all duration-500"
+                           [ngClass]="{
+                             'bg-rose-500': sub.spentAmount > sub.allocatedAmount,
+                             'bg-emerald-400': sub.spentAmount <= sub.allocatedAmount && sub.spentAmount / sub.allocatedAmount > 0.8,
+                             'bg-slate-500': sub.spentAmount <= sub.allocatedAmount && sub.spentAmount / sub.allocatedAmount <= 0.8
+                           }"
+                           [style.width.%]="sub.allocatedAmount > 0 ? mathMin((sub.spentAmount / sub.allocatedAmount) * 100, 100) : 0">
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          } @empty {
+            <div class="flex flex-col items-center justify-center p-8 bg-slate-900/20 border border-dashed border-slate-800 rounded-xl text-slate-500">
+              <span class="text-2xl mb-1.5">📋</span>
+              <p class="text-xs">No hay categorías presupuestadas configuradas.</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- COLUMNA 2: GASTOS IMPREVISTOS -->
+      <div class="flex flex-col gap-5 bg-slate-900/40 p-5 rounded-2xl border border-slate-800 backdrop-blur-md">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/10 text-base">
+              🔥
+            </span>
+            <div>
+              <h3 class="text-sm font-bold text-slate-100">Gastos Imprevistos</h3>
+              <p class="text-xxs text-slate-500">Transacciones fuera del presupuesto</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            Total: {{ totalUnbudgeted() | currency: 'CLP' : '$' : '1.0-0' }}
+          </span>
+        </div>
+
+        <div class="space-y-3.5">
+          @for (uCat of expensesByCategory()!.unbudgetedExpenses; track uCat.id) {
+            <!-- Tarjeta de Categoría con Imprevisto -->
+            <div class="bg-amber-950/5 p-4 rounded-xl border border-amber-500/10 hover:border-amber-500/20 transition-all duration-300">
+              <div class="flex justify-between items-center mb-2.5">
+                <span class="text-xs font-bold text-slate-200">
+                  {{ uCat.categoryName }}
+                </span>
+                <span class="text-xs font-bold text-amber-400">
+                  {{ uCat.totalSpent | currency: 'CLP' : '$' : '1.0-0' }}
+                </span>
+              </div>
+
+              <!-- Listado de Subcategorías Imprevistas -->
+              <div class="space-y-2 mt-1.5 pl-2 border-l border-amber-500/20">
+                @for (sub of uCat.subcategories; track sub.categoryValueId) {
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-400 font-medium">{{ sub.categoryValueName }}</span>
+                    <span class="font-bold text-amber-500/90">
+                      {{ sub.spentAmount | currency: 'CLP' : '$' : '1.0-0' }}
+                    </span>
+                  </div>
+                }
+              </div>
+            </div>
+          } @empty {
+            <div class="flex flex-col items-center justify-center p-12 bg-slate-900/20 border border-dashed border-slate-800 rounded-xl text-slate-500">
+              <span class="text-2xl mb-1.5">🎉</span>
+              <p class="text-xs font-medium text-emerald-400">¡Excelente control!</p>
+              <p class="text-xxs text-slate-500 mt-0.5 text-center">No se han registrado gastos fuera de tu presupuesto asignado.</p>
+            </div>
+          }
+        </div>
+      </div>
+      
+    </div>
+  }
+</div>
