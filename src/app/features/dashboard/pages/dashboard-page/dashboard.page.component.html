@@ -1,57 +1,174 @@
 <section class="space-y-6">
   <!-- Filtros -->
   <div class="flex items-center gap-3">
-    <!-- Month/year picker -->
-    <!-- Select account -->
-    <!-- Search -->
-    <div>
-      <p>{{ currentDate | date }}</p>
-    </div>
-    <div class="ml-auto flex gap-2">
-      <button class="px-3 py-2 rounded bg-black text-white">+ Nueva</button>
-      <button class="px-3 py-2 rounded border">Configurar presupuesto</button>
-    </div>
-  </div>
-
-  <!-- KPIs -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-    <app-amount-counter
-      label="Gastos del mes"
-      [amount]="100"
-      color="text-danger"
-    ></app-amount-counter>
-    <app-amount-counter
-      label="Ingresos del mes"
-      [amount]="1000"
-      color="text-success"
-    ></app-amount-counter>
-    <app-amount-counter
-      label="Balance del mes"
-      [amount]="1000 - 100"
-    ></app-amount-counter>
-    <app-amount-counter
-      label="Balance total"
-      [amount]="10000"
-    ></app-amount-counter>
-  </div>
-
-  <!-- Gasto vs Presupuesto + Top merchants -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-    <div class="lg:col-span-2 rounded border p-4">
-      <div class="font-medium mb-3">Gasto por categoría</div>
-      <!-- barras horizontales -->
-      <!-- *ngFor="let row of categories" -->
-      <!-- label + progress + spent/budget -->
-    </div>
-    <div class="rounded border p-4">
-      <div class="font-medium mb-3">Top merchants</div>
-      <!-- lista -->
+    <div class="font-medium text-lg">
+      <select
+        class="bg-transparent border-none outline-none font-bold cursor-pointer"
+        [value]="selectedBudgetId()"
+        (change)="onSelectChange($event)"
+      >
+        @for (budget of budgetsResource.value()?.data; track budget.id) {
+          <option [value]="budget.id">
+            {{ budget.title }} ({{ budget.startDate | date: "MMM yyyy" }})
+          </option>
+        }
+      </select>
     </div>
   </div>
 
-  <!-- Últimas transacciones -->
-  <div class="rounded border p-4">
-    <div class="font-medium mb-3">Últimos movimientos</div>
-    <!-- tabla simple -->
-  </div>
+  @if (dashboardResource.isLoading()) {
+    <div class="flex justify-center items-center h-48">
+      <p class="text-content-secondary">Cargando dashboard...</p>
+    </div>
+  } @else if (dashboardResource.value(); as dashboard) {
+    <!-- KPIs -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <app-amount-counter
+        label="Total Asignado"
+        [amount]="dashboard.activeBudgetSummary.totalAllocated"
+      ></app-amount-counter>
+      <app-amount-counter
+        label="Gastado"
+        [amount]="dashboard.activeBudgetSummary.spentAmount"
+        color="text-danger"
+      ></app-amount-counter>
+      <app-amount-counter
+        label="Restante"
+        [amount]="dashboard.activeBudgetSummary.remainingAmount"
+        [color]="
+          dashboard.activeBudgetSummary.remainingAmount > 0
+            ? 'text-success'
+            : 'text-danger'
+        "
+      ></app-amount-counter>
+      <app-amount-counter
+        label="Gastos no presupuestados"
+        [amount]="dashboard.kpiSummary.unbudgetedExpenses.totalAmount"
+        color="text-danger"
+      ></app-amount-counter>
+    </div>
+
+    <!-- Layout principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Gasto vs Presupuesto + Categorías -->
+      <div class="lg:col-span-2 flex flex-col gap-6">
+        <!-- Reglas financieras -->
+        <div
+          class="rounded-xl border border-border-subtle bg-surface-raised p-5 shadow-sm"
+        >
+          <div class="font-bold text-lg mb-4">Reglas Financieras</div>
+          <div class="flex flex-col gap-4">
+            @for (rule of dashboard.financialRuleBreakdown; track rule.rule) {
+              <app-progress-bar
+                [currentValue]="rule.percentageOfTotalSpent"
+                [totalValue]="100"
+                color="bg-primary-500"
+              >
+                <div
+                  label
+                  class="font-medium text-sm flex justify-between w-full pr-2"
+                >
+                  <span
+                    >{{ rule.name }} (Meta: {{ rule.targetPercentage }}%)</span
+                  >
+                  <span class="text-content-secondary">{{
+                    rule.totalSpent | money
+                  }}</span>
+                </div>
+              </app-progress-bar>
+            }
+          </div>
+        </div>
+
+        <!-- Top Categories -->
+        <div
+          class="rounded-xl border border-border-subtle bg-surface-raised p-5 shadow-sm"
+        >
+          <div class="font-bold text-lg mb-4">Top Categorías de Gasto</div>
+          <div class="flex flex-col gap-4">
+            @for (cat of dashboard.topCategoriesSpent; track cat.categoryId) {
+              <app-progress-bar
+                [currentValue]="cat.percentageOfTotalSpent"
+                [totalValue]="100"
+                color="bg-danger"
+              >
+                <div
+                  label
+                  class="font-medium text-sm flex justify-between w-full pr-2"
+                >
+                  <span class="capitalize">{{ cat.categoryName }}</span>
+                  <span class="text-content-secondary">{{
+                    cat.totalSpent | money
+                  }}</span>
+                </div>
+              </app-progress-bar>
+            }
+          </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <div
+          class="rounded-xl border border-border-subtle bg-surface-raised p-5 shadow-sm"
+        >
+          <div class="font-bold text-lg mb-4">Tendencias Mensuales</div>
+          @if (monthlyTrendsBarData(); as barData) {
+            <app-bar-chart [chartData]="barData" [height]="300"></app-bar-chart>
+          } @else {
+            <p class="text-sm text-content-secondary">
+              No hay datos de tendencias.
+            </p>
+          }
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="flex flex-col gap-6">
+        <!-- Distribución Bancaria -->
+        <div
+          class="rounded-xl border border-border-subtle bg-surface-raised p-5 shadow-sm"
+        >
+          <div class="font-bold text-lg mb-4">Distribución por Banco</div>
+          @if (bankDonutData(); as donutData) {
+            <app-donut-chart
+              [chartData]="donutData"
+              [height]="280"
+            ></app-donut-chart>
+          } @else {
+            <p class="text-sm text-content-secondary">
+              No hay datos de bancos.
+            </p>
+          }
+        </div>
+
+        <!-- Últimas transacciones -->
+        <div
+          class="rounded-xl border border-border-subtle bg-surface-raised p-5 shadow-sm overflow-hidden"
+        >
+          <div class="font-bold text-lg mb-4">Últimos Movimientos</div>
+          <div class="flex flex-col gap-3">
+            @for (trx of dashboard.recentTransactions; track trx.id) {
+              <div
+                class="flex items-center justify-between pb-3 border-b last:border-0 last:pb-0"
+              >
+                <div class="flex flex-col">
+                  <span class="font-medium text-sm">{{ trx.description }}</span>
+                  <span class="text-xs text-content-secondary capitalize"
+                    >{{ trx.categoryName }} • {{ trx.bankName }}</span
+                  >
+                </div>
+                <div class="flex flex-col items-end">
+                  <span class="font-semibold text-sm">{{
+                    trx.amount | money
+                  }}</span>
+                  <span class="text-xs text-content-secondary">{{
+                    trx.transactionDate | date: "dd MMM"
+                  }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </section>

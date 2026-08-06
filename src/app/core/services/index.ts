@@ -6,3 +6,4 @@ export * from './budget/budget.service';
 export * from './category/category.service';
 export * from './transaction/transaction-type.service';
 export * from './transaction/transactions.service';
+export * from './dashboard/dashboard.service';

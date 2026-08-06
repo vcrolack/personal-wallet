@@ -1,5 +1,6 @@
 import {
   ApexNonAxisChartSeries,
+  ApexAxisChartSeries,
   ApexChart,
   ApexResponsive,
   ApexDataLabels,
@@ -7,11 +8,14 @@ import {
   ApexStroke,
   ApexFill,
   ApexTooltip,
-  ApexPlotOptions
+  ApexPlotOptions,
+  ApexXAxis,
+  ApexYAxis,
+  ApexGrid
 } from 'ng-apexcharts';
 
 export interface ChartOptions {
-  series: ApexNonAxisChartSeries;
+  series: ApexNonAxisChartSeries | ApexAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
   labels: any;
@@ -22,4 +26,7 @@ export interface ChartOptions {
   tooltip: ApexTooltip;
   plotOptions: ApexPlotOptions;
   colors: string[];
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
 };

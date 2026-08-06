@@ -53,7 +53,7 @@ export class DonutChartComponent {
                 fontSize: '24px',
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 700,
-                color: '#1e293b',
+                color: '#f8fafc',
                 offsetY: 10,
                 formatter: formatter,
               },
@@ -63,6 +63,7 @@ export class DonutChartComponent {
                 fontSize: '20px',
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 600,
+                color: '#f8fafc',
                 formatter: () =>
                   data.totalValue ? formatter(data.totalValue) : '',
               },
@@ -92,6 +93,7 @@ export class DonutChartComponent {
         y: {
           formatter: formatter,
         },
+        theme: 'dark',
       },
     };
   });

@@ -1,0 +1,16 @@
+@if (chartOptions(); as options) {
+<apx-chart
+  [series]="options.series!"
+  [chart]="options.chart!"
+  [plotOptions]="options.plotOptions!"
+  [xaxis]="options.xaxis!"
+  [yaxis]="options.yaxis!"
+  [dataLabels]="options.dataLabels!"
+  [grid]="options.grid!"
+  [stroke]="options.stroke!"
+  [tooltip]="options.tooltip!"
+  [fill]="options.fill!"
+  [legend]="options.legend!"
+  [colors]="options.colors!"
+></apx-chart>
+}
