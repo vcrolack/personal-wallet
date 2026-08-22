@@ -78,7 +78,7 @@ describe('GenericTableComponent', () => {
     let emittedSort: any = null;
     let emittedSearch: any = null;
 
-    component.sortChange.subscribe((val) => (emittedSort = val));
+    component.sort.subscribe((val) => (emittedSort = val));
     component.searchChange.subscribe((val) => (emittedSearch = val));
 
     component.toggleSort(mockColumns[1]);

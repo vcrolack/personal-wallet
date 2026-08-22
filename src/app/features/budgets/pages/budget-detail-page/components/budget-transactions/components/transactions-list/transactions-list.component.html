@@ -3,6 +3,8 @@
   <app-generic-table
     [data]="transactionCategoryAssignments()"
     [columns]="columns"
+    [searchable]="true"
+    searchPlaceholder="Buscar transacción..."
     [isLoading]="isLoading()"
     [pagination]="transactionCategoryAssignmentsPagination()"
     (pageChange)="onPageChange($event)"

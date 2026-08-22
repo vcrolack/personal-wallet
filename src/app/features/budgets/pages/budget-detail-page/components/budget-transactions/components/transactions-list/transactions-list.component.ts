@@ -84,23 +84,27 @@ export class TransactionsList {
     {
       key: 'category',
       header: 'Categoría',
+      sortable: true,
       accessor: (row) =>
         row.budgetCategoryValue?.budgetCategory?.name ?? 'Sin categoría',
     },
     {
       key: 'category-value',
       header: 'Valor de categoría',
+      sortable: true,
       accessor: (row) => row.budgetCategoryValue?.name ?? 'Sin valor',
     },
     {
       key: 'created-at',
       header: 'Fecha',
+      sortable: true,
       accessor: (row) => row.createdAt,
       pipe: 'date',
     },
     {
       key: 'amount',
       header: 'Monto',
+      sortable: true,
       accessor: (row) => row.amount,
       pipe: 'currency',
     },

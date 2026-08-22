@@ -9,6 +9,8 @@
   [data]="budgetsData()"
   [pagination]="pagination()"
   [columns]="columns"
+  [searchable]="true"
+  searchPlaceholder="Buscar presupuesto..."
   [isLoading]="budgetsResource.isLoading()"
   [error]="budgetsResource.error()"
   (rowClick)="openDetail($event.id)"

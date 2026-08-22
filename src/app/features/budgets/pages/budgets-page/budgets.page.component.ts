@@ -63,12 +63,13 @@ export class BudgetsPageComponent {
 
   public loading = signal(false);
   public columns: ColumnDef<any>[] = [
-    { key: 'startDate', header: 'Fecha de inicio', pipe: 'date' },
-    { key: 'endDate', header: 'Fecha de término', pipe: 'date' },
-    { key: 'title', header: 'Nombre' },
+    { key: 'startDate', header: 'Fecha de inicio', pipe: 'date', sortable: true },
+    { key: 'endDate', header: 'Fecha de término', pipe: 'date', sortable: true },
+    { key: 'title', header: 'Nombre', sortable: true },
     {
       key: 'isShared',
       header: 'Acceso',
+      sortable: true,
       formatter: (v) => (v ? 'Compartido' : 'Privado'),
     },
     {
@@ -88,6 +89,7 @@ export class BudgetsPageComponent {
       header: 'Dinero destinado',
       align: 'center',
       pipe: 'currency',
+      sortable: true,
     },
     {
       key: 'actions',
