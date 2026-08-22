@@ -1,5 +1,12 @@
 export type ColumnAlign = 'left' | 'center' | 'right';
 
+export type SortDirection = 'asc' | 'desc' | null;
+
+export interface SortState {
+  active: string;
+  direction: SortDirection;
+}
+
 export type ColumnDef<T> = {
   key: keyof T | string;
   header: string;
@@ -7,6 +14,10 @@ export type ColumnDef<T> = {
 
   accessor?: (row: T) => unknown;
   formatter?: (value: unknown, row: T) => string;
+
+  sortable?: boolean;
+  sortKey?: string;
+  sortFn?: (a: T, b: T, direction: 'asc' | 'desc') => number;
 
   headerClass?: string;
   cellClass?: string;

@@ -129,8 +129,8 @@ export class CategoriesPageComponent {
   }
 
   public columnsCategoryValues: ColumnDef<any>[] = [
-    { key: 'id', header: 'ID' },
-    { key: 'name', header: 'Nombre' },
+    { key: 'id', header: 'ID', sortable: true },
+    { key: 'name', header: 'Nombre', sortable: true },
     {
       key: 'actions',
       header: 'Acciones',
@@ -160,11 +160,12 @@ export class CategoriesPageComponent {
   ];
 
   public columnsCategories: ColumnDef<any>[] = [
-    { key: 'id', header: 'ID' },
-    { key: 'name', header: 'Nombre' },
+    { key: 'id', header: 'ID', sortable: true },
+    { key: 'name', header: 'Nombre', sortable: true },
     {
       key: 'rule',
       header: 'Regla',
+      sortable: true,
     },
     {
       key: 'actions',

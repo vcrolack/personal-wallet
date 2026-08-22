@@ -1,19 +1,68 @@
 <!-- table.component.html -->
 <div class="w-full">
+  <!-- Search Toolbar -->
+  @if (searchable()) {
+    <div class="mb-3 flex items-center justify-between gap-4">
+      <div class="relative flex-1 max-w-xs sm:max-w-sm">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-content-muted">
+          <lucide-icon [img]="Search" class="h-4 w-4"></lucide-icon>
+        </div>
+        <input
+          type="text"
+          [value]="searchValue()"
+          (input)="onSearchInput($any($event.target).value)"
+          [placeholder]="searchPlaceholder()"
+          class="w-full rounded-xl border border-border-subtle bg-surface-raised py-2 pl-9 pr-8 text-sm text-content-primary placeholder:text-content-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+        />
+        @if (searchValue()) {
+          <button
+            type="button"
+            (click)="clearSearch()"
+            class="absolute inset-y-0 right-0 flex items-center pr-2.5 text-content-muted hover:text-content-primary"
+            title="Limpiar búsqueda"
+          >
+            <lucide-icon [img]="X" class="h-4 w-4"></lucide-icon>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
   <div class="overflow-x-auto rounded-2xl border border-border-subtle bg-surface-raised">
     <table class="min-w-full border-separate border-spacing-0">
       <thead class="bg-surface-subtle">
         <tr>
-          @for (col of columns(); track col) {
+          @for (col of columns(); track col.key) {
             <th
-              class="sticky top-0 z-10 border-b border-border-subtle px-4 py-3 text-xs font-semibold uppercase tracking-wide text-content-secondary"
+              class="sticky top-0 z-10 border-b border-border-subtle px-4 py-3 text-xs font-semibold uppercase tracking-wide text-content-secondary transition-colors"
+              [class.cursor-pointer]="col.sortable"
+              [class.select-none]="col.sortable"
+              [class.hover:bg-surface-raised]="col.sortable"
               [ngClass]="[
                 col.headerClass ?? '',
                 col.widthClass ?? '',
                 getAlignClass(col.align),
               ]"
+              (click)="toggleSort(col)"
             >
-              {{ col.header }}
+              <div
+                class="inline-flex items-center gap-1.5"
+                [ngClass]="getHeaderFlexAlignClass(col.align)"
+              >
+                <span>{{ col.header }}</span>
+                @if (col.sortable) {
+                  @let sortDir = getSortDirection(col);
+                  <span class="inline-flex text-content-muted">
+                    @if (sortDir === 'asc') {
+                      <lucide-icon [img]="ChevronUp" class="h-4 w-4 text-primary font-bold"></lucide-icon>
+                    } @else if (sortDir === 'desc') {
+                      <lucide-icon [img]="ChevronDown" class="h-4 w-4 text-primary font-bold"></lucide-icon>
+                    } @else {
+                      <lucide-icon [img]="ChevronsUpDown" class="h-4 w-4 opacity-40 hover:opacity-100 transition-opacity"></lucide-icon>
+                    }
+                  </span>
+                }
+              </div>
             </th>
           }
         </tr>
@@ -24,7 +73,7 @@
         @if (isLoading()) {
           @for (_ of [1, 2, 3, 4, 5]; track _) {
             <tr>
-              @for (col of columns(); track col) {
+              @for (col of columns(); track col.key) {
                 <td class="border-b border-border-subtle px-4 py-3">
                   <div
                     class="h-4 w-full animate-pulse rounded bg-surface-subtle"
@@ -49,7 +98,7 @@
           </tr>
         } @else {
           <!-- Empty -->
-          @if (!data().length) {
+          @if (!processedData().length) {
             <tr>
               <td
                 [attr.colspan]="colCount()"
@@ -60,12 +109,12 @@
             </tr>
           }
           <!-- Rows -->
-          @for (row of data(); track trackBy()($index, row)) {
+          @for (row of processedData(); track trackBy()($index, row)) {
             <tr
               class="cursor-pointer hover:bg-surface-subtle"
               (click)="rowClick.emit(row)"
             >
-              @for (col of columns(); track col) {
+              @for (col of columns(); track col.key) {
                 <td
                   class="border-b border-border-subtle px-4 py-3 text-sm text-content-primary"
                   [ngClass]="[
